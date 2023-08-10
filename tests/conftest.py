@@ -135,7 +135,7 @@ def get_full_name_from_components(
 # ------------------------------------------------------------------
 @pytest.helpers.register  # type: ignore[attr-defined]
 def get_os_independent_name(file_name: pathlib.Path | str) -> str:
-    """Get the platform-independent name..
+    """Get the platform-independent name.
 
     Args:
         file_name (pathlib.Path | str): File name or file path.

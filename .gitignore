@@ -3,11 +3,13 @@
 /.mypy_cache/
 /.pytest_cache/
 /build/
+/docs/build/.doctrees/
 /docs/build/doctrees/
 /docs/build/pdf/.doctrees/
 /docs/build/pdf/manual.rtc
 /docs/build/pdf/manual.stylelog
 /iotemplateapp/iotemplateapp.egg-info/
+/resources/Gammadyne/timer.txt
 *.log
 .coverage
 .pytest_cache

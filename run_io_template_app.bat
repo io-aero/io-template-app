@@ -11,7 +11,7 @@ setlocal EnableDelayedExpansion
 set ERRORLEVEL=
 
 if ["!ENV_FOR_DYNACONF!"] EQU [""] (
-    set ENV_FOR_DYNACONF=dev
+    set ENV_FOR_DYNACONF=prod
 )
 set PYTHONPATH=
 
@@ -25,7 +25,7 @@ if exist logging_io_template_app.log (
 echo =======================================================================
 echo Start %0
 echo -----------------------------------------------------------------------
-echo IO_TEMPLATE_APP - Template Library.
+echo IO_TEMPLATE_APP - Template Application.
 echo -----------------------------------------------------------------------
 echo ENVIRONMENT_TYPE : %ENV_FOR_DYNACONF%
 echo PYTHONPATH       : %PYTHONPATH%
@@ -33,9 +33,9 @@ echo -----------------------------------------------------------------------
 echo:| TIME
 echo =======================================================================
 
-pipenv run python src\launcher.py
+pipenv run python scripts\launcher.py
 if ERRORLEVEL 1 (
-    echo Processing of the script: %0 - step: 'python src\launcher.py was aborted
+    echo Processing of the script: %0 - step: 'python scripts\launcher.py was aborted
 )
 
 echo.

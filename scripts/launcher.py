@@ -4,14 +4,13 @@
 
 """Module iotemplateapp: Entry Point Functionality.
 
-This is the entry point to the library IO-TEMPLATE-APP.
+This is the entry point to the application IO-TEMPLATE-APP.
 """
 import locale
 import sys
 
 from iotemplatelib import io_glob
-from iotemplatelib import io_glob
-from iotemplatelib import io_utils
+from iotemplatelib import io_logger
 
 # -----------------------------------------------------------------------------
 # Global variables.
@@ -31,7 +30,7 @@ def main(argv: list[str]) -> None:
         argv (list[str]): Command line arguments.
     """
     # Initialise the logging functionality.
-    io_utils.initialise_logger()
+    io_logger.initialise_logger()
 
     io_glob.logger.debug(io_glob.LOGGER_START)
     io_glob.logger.debug("param argv=%s", argv)

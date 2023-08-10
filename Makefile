@@ -48,6 +48,8 @@ dev: format lint tests
 dist: docs source-dist dist-copy
 ## docs:               Check the API documentation, create and upload the user documentation.
 docs: pydocstyle sphinx
+## final:              Format, lint and test the code and create the documentation.
+final: format lint docs tests
 ## format:             Format the code with isort, Black and docformatter.
 format: isort docformatter black
 ## lint:               Lint the code with Bandit, Flake8, Pylint and Mypy.
@@ -145,18 +147,6 @@ isort:              ## Edit and sort the imports with isort.
 	${PIPENV} run isort ${PYTHONPATH} tests
 	@echo Info **********  End:   isort ****************************************
 
-# Project documentation with Markdown.
-# https://github.com/mkdocs/mkdocs/
-# Configuration file: none
-mkdocs:             ## Create and upload the user documentation with MkDocs.
-	@echo Info **********  Start: MkDocs ***************************************
-	@echo PIPENV=${PIPENV}
-	@echo ----------------------------------------------------------------------
-	${PIPENV} run mkdocs --version
-	@echo ----------------------------------------------------------------------
-	${PIPENV} run mkdocs build
-	@echo Info **********  End:   MkDocs ***************************************
-
 # Mypy: Static Typing for Python
 # https://github.com/python/mypy
 # Configuration file: pyproject.toml
@@ -172,7 +162,7 @@ mypy:               ## Find typing issues with Mypy.
 
 mypy-stubgen:       ## Autogenerate stub files
 	@echo Info **********  Start: Mypy *****************************************
-	@echo PIPENV                  =${PIPENV}
+	@echo PIPENV    =${PIPENV}
 	@echo ALL_IO_TEMPLATE_APP_CHECKED_DIRS=${ALL_IO_TEMPLATE_APP_CHECKED_DIRS}
 	@echo ----------------------------------------------------------------------
 	${PIPENV} run stubgen ${ALL_IO_TEMPLATE_APP_CHECKED_FILES}
@@ -336,7 +326,7 @@ sphinx:            ##  Create the user documentation with Sphinx.
 
 
 sphinx-api:
-	${PIPENV} run sphinx-apidoc -o ${SPHINX_SOURCEDIR} ${PYTHONPATH_IO_TEMPLATE_APP}
+	${PIPENV} run sphinx-apidoc -o ${SPHINX_SOURCEDIR} ${PYTHONPATH}
 
 version:            ## Show the installed software versions.
 	@echo Info **********  Start: version **************************************
