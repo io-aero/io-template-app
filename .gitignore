@@ -1,0 +1,17 @@
+/.history/
+/.idea/
+/.mypy_cache/
+/.pytest_cache/
+/build/
+/docs/build/doctrees/
+/docs/build/pdf/.doctrees/
+/docs/build/pdf/manual.rtc
+/docs/build/pdf/manual.stylelog
+/iotemplateapp/iotemplateapp.egg-info/
+*.log
+.coverage
+.pytest_cache
+.settings.io_template_app.toml
+Pipfile.lock
+__pycache__
+coverage.xml
