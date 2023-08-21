@@ -3,9 +3,11 @@
 ifeq ($(OS),Windows_NT)
 	export ALL_IO_TEMPLATE_APP_CHECKED_DIRS=iotemplateapp iotemplateapp\\tools iotemplateapp\\lidar tests
 	export ALL_IO_TEMPLATE_APP_CHECKED_FILES=iotemplateapp\\*.py iotemplateapp\\tools\\*.py iotemplateapp\\lidar\\*.py
-	export CONDA_PYTHON=~\\miniconda3\\bin\\python
+	export DELETE_BUILD=if exist build rd /s /q build
 	export DELETE_SPHINX_1=del /f /q docs\\build\\*
 	export DELETE_SPHINX_2=del /f /q docs\\source\\modules.rst
+	export ENV_FOR_DYNACONF=test
+	export PIPENV=py -m pipenv
 	export PYTHON=py
 	export SPHINX_BUILDDIR=docs\\build
 	export SPHINX_SOURCEDIR=docs\\source
@@ -14,9 +16,11 @@ ifeq ($(OS),Windows_NT)
 else
 	export ALL_IO_TEMPLATE_APP_CHECKED_DIRS=iotemplateapp tests
 	export ALL_IO_TEMPLATE_APP_CHECKED_FILES=iotemplateapp/*.py
-	export CONDA_PYTHON=~/miniconda3/bin/python
+	export DELETE_BUILD=rm -rf build
 	export DELETE_SPHINX_1=rm -rf docs/build/* docs/source/sua.rst docs/source/sua.vector3d.rst
 	export DELETE_SPHINX_2=rm -rf docs/source/modules.rst
+	export ENV_FOR_DYNACONF=test
+	export PIPENV=python3 -m pipenv
 	export PYTHON=python3
 	export SPHINX_BUILDDIR=docs/build
 	export SPHINX_SOURCEDIR=docs/source
@@ -24,9 +28,12 @@ else
 	export IO_LIBS_DIR=~/0-io-libs/io-vector
 endif
 
+export CONDA_ARG=--site-packages
+export CONDA_ARG=
 export MODULE=iotemplateapp
-export PIPENV=pipenv
 export PYTHONPATH=${MODULE} scripts
+export VERSION_PIPENV=v2023.7.23
+export VERSION_PYTHON=3.10
 
 ##                                                                            .
 ## =============================================================================
@@ -98,6 +105,33 @@ compileall:         ## Byte-compile the Python libraries.
 	@echo ----------------------------------------------------------------------
 	${PYTHON} -m compileall
 	@echo Info **********  End:   Compile All Python Scripts *******************
+
+# Miniconda - Minimal installer for conda.
+# https://docs.conda.io/en/latest/miniconda.html
+# Configuration file: pyproject.toml
+conda-env:          ## Create a new environment.
+	@echo Info **********  Start: Miniconda create environment *****************
+	conda --version
+	@echo ----------------------------------------------------------------------
+	conda create --yes --name ${MODULE}
+	conda activate ${MODULE}
+	conda remove --yes --name ${MODULE} --all
+	conda create --yes --name ${MODULE} python=${VERSION_PYTHON}
+	conda activate ${MODULE}
+	conda install --yes -c conda-forge gdal pdal python-pdal rasterio
+	@echo ----------------------------------------------------------------------
+	python --version
+	conda info --envs
+	conda list
+	@echo Info **********  End:   Miniconda create environment *****************
+conda-update:       ## Update Miniconda.
+	@echo Info **********  Start: Miniconda update *****************************
+	conda --version
+	@echo ----------------------------------------------------------------------
+	conda update --yes conda
+	@echo ----------------------------------------------------------------------
+	conda --version
+	@echo Info **********  End:   Miniconda update *****************************
 
 # Copy all source dist to the libs folder
 dist-copy:          ## Distribute the source dist into the libs folder
@@ -182,12 +216,13 @@ pipenv-dev:         ## Install the package dependencies for development.
 	@echo PYTHON    =${PYTHON}
 	@echo ----------------------------------------------------------------------
 	${PYTHON} -m pip install --upgrade pip
-	${PYTHON} -m pip install --upgrade pipenv
+	${PYTHON} -m pip install --upgrade pipenv==${VERSION_PIPENV}
 	${PYTHON} -m pip install --upgrade virtualenv
+	${DELETE_BUILD}
 	${DELETE_PIPFILE_LOCK}
 	@echo ----------------------------------------------------------------------
 	aws codeartifact login --tool pip --repository io-aero-pypi --domain io-aero --domain-owner 444046118275 --region us-east-1
-	${PIPENV} install --dev
+	${PIPENV} install ${CONDA_ARG} --dev
 	@echo ----------------------------------------------------------------------
 	${PIPENV} run pip freeze
 	@echo ----------------------------------------------------------------------
@@ -203,12 +238,13 @@ pipenv-prod:        ## Install the package dependencies for production.
 	@echo PYTHON             =${PYTHON}
 	@echo ----------------------------------------------------------------------
 	${PYTHON} -m pip install --upgrade pip
-	${PYTHON} -m pip install --upgrade pipenv
+	${PYTHON} -m pip install --upgrade pipenv==${VERSION_PIPENV}
 	${PYTHON} -m pip install --upgrade virtualenv
+	${DELETE_BUILD}
 	${DELETE_PIPFILE_LOCK}
 	@echo ----------------------------------------------------------------------
 	aws codeartifact login --tool pip --repository io-aero-pypi --domain io-aero --domain-owner 444046118275 --region us-east-1
-	${PIPENV} install
+	${PIPENV} install ${CONDA_ARG}
 	@echo ----------------------------------------------------------------------
 	${PIPENV} run pip freeze
 	@echo ----------------------------------------------------------------------
@@ -323,7 +359,6 @@ sphinx:            ##  Create the user documentation with Sphinx.
 #	${PIPENV} run sphinx-build -b rinoh ${SPHINX_SOURCEDIR} ${SPHINX_BUILDDIR}/pdf
 	cd ..
 	@echo Info **********  End:   sphinx ***************************************
-
 
 sphinx-api:
 	${PIPENV} run sphinx-apidoc -o ${SPHINX_SOURCEDIR} ${PYTHONPATH}

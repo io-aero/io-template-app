@@ -1,8 +1,5 @@
 [packages]
-dynaconf = "*"
 iotemplatelib = "*"
-pyyaml = "<=6.0.0"
-toml = "*"
 
 [dev-packages]
 bandit = "*"

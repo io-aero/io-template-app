@@ -1,5 +1,5 @@
 Welcome to IO-TEMPLATE-APP
-======================
+==========================
 
 .. toctree::
    :maxdepth: 1
