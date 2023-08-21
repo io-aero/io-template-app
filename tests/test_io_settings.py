@@ -1,5 +1,5 @@
 """Test the configuration main file."""
-from iotemplateapp.io_settings import settings
+from iotemplatelib.io_settings import settings
 
 
 def test_dynaconf_settings():

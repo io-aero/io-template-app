@@ -2,7 +2,7 @@ Configuration
 =============
 
 settings.io_template_app.toml
--------------------------
+-----------------------------
 
 This file controls the behaviour of the **IO-TEMPLATE-APP** library.
 

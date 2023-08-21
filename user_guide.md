@@ -44,8 +44,6 @@ As described [here](https://docs.github.com/en/repositories/creating-and-managin
 
 ### 5. Rename the following file directories and files
 
-Delete the two files `user_guide.md` and `user_guide.pdf` and rename the following files: 
-
 | Old name                        | New name                |
 |:--------------------------------|:------------------------|
 | `iotemplateapp`                 | `myapp`                 |

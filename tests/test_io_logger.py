@@ -3,7 +3,7 @@
 # be found in the LICENSE.md file.
 """io_utils: coverage testing."""
 
-from iotemplateapp import io_logger
+from iotemplatelib import io_logger
 
 # -----------------------------------------------------------------------------
 # Constants & Globals.
