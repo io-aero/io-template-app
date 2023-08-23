@@ -1,9 +1,11 @@
 [packages]
+iocommon = "*"
 iotemplatelib = "*"
 
 [dev-packages]
 bandit = "*"
 black = "*"
+build = "*"
 coveralls = "*"
 docformatter = "*"
 flake8 = "*"
@@ -21,7 +23,8 @@ pytest-helpers-namespace = "*"
 pytest-random-order = "*"
 rinohtype = "*"
 sphinx = "*"
-types-pyyaml = "*"
+types-setuptools = "*"
+wheel = "*"
 
 [requires]
 python_version = "3.10"

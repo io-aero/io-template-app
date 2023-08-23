@@ -1,8 +1,5 @@
 [tool.bandit]
 
-[tool.coverage.run]
-omit = ["setup.py"]
-
 [tool.isort]
 float_to_top = true
 force_single_line = true
@@ -15,7 +12,7 @@ match = '((?!test_).*\.py)'
 [tool.pytest.ini_options]
 console_output_style = "count"
 log_cli_level = "INFO"
-log_file = "logging_io-template-app_pytest.log"
+log_file = "logging_io_aero_pytest.log"
 log_file_level = "DEBUG"
 log_level = "DEBUG"
 markers = ["issue"]
