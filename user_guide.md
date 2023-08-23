@@ -71,7 +71,32 @@ It is absolutely necessary to respect the capitalization!
 
 ### 6. Test the current state of the new application
 
-    make pipenv-dev
-    make-final
+#### 6.1 If Miniconda is required 
 
-### 7. Commit and push all changes to the repository as 'Base version'
+- Install Miniconda
+- Run `make conda-dev`
+- Run `make-final`
+
+#### 6.2 If Miniconda is not required
+
+- Run `make pipenv-dev`
+- Run `make-final`
+
+### 7. Define GitHub Actions secrets
+
+Under 'settings' -> 'Secrets and variables' -> 'Actions' -> Tab 'Secrets' define the following 'New repository secret's:
+
+    AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY
+    GLOBAL_USER_EMAIL
+
+### 8. Define GitHub repository variables
+
+Under 'settings' -> 'Secrets and variables' -> 'Actions' -> Tab 'Variables' define the following 'New repository variable's:
+
+| Name    | Value  | Reason                     |
+|---------|--------|----------------------------|
+| `CONDA` | `true` | To get Miniconda installed |
+
+
+### 9. Commit and push all changes to the repository as 'Base version'

@@ -3,7 +3,6 @@
 .history/
 .idea/
 .mypy_cache/
-.pytest_cache
 .pytest_cache/
 .settings.io_aero.toml
 Pipfile.lock
