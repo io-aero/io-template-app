@@ -99,5 +99,4 @@ Under 'settings' -> 'Secrets and variables' -> 'Actions' -> Tab 'Variables' defi
 | `CONDA`     | `true` | Include Miniconda |
 | `COVERALLS` | `true` | Run coveralls.io  |
 
-
 ### 9. Commit and push all changes to the repository as 'Base version'
