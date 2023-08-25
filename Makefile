@@ -4,6 +4,7 @@ ifeq ($(OS),Windows_NT)
 	export ALL_IO_TEMPLATE_APP_CHECKED_DIRS=iotemplateapp iotemplateapp\\tools iotemplateapp\\lidar tests
 	export ALL_IO_TEMPLATE_APP_CHECKED_FILES=iotemplateapp\\*.py iotemplateapp\\tools\\*.py iotemplateapp\\lidar\\*.py
 	export CONDA_SHELL=
+	export CREATE_DIST=if not exist dist mkdir dist
 	export DELETE_BUILD=if exist build rd /s /q build
 	export DELETE_DIST=if exist dist rd /s /q dist
 	export DELETE_PIPFILE_LOCK=del /f /q Pipfile.lock
@@ -33,6 +34,7 @@ export CONDA_PACKAGES=gdal pdal python-pdal rasterio
 export CONDA_ARG=--site-packages
 export CONDA_ARG=
 
+export COVERALLS_REPO_TOKEN=<see coveralls.io>
 export ENV_FOR_DYNACONF=test
 export MODULE=iotemplateapp
 export PYTHONPATH=${MODULE} scripts
@@ -138,6 +140,17 @@ conda-action:       ## Create a new environment.
 	conda install --yes -c conda-forge ${CONDA_PACKAGES}
 	conda list
 	@echo Info **********  End:   Miniconda create environment *****************
+
+# Requires a public repository !!!
+# Python interface to coveralls.io API
+# https://github.com/TheKevJames/coveralls-python
+# Configuration file: none
+coveralls:          ## Run all the tests and upload the coverage data to coveralls.
+	@echo Info **********  Start: coveralls ***********************************
+	${PIPENV} run pytest --cov=${MODULE} --cov-report=xml --random-order tests
+	@echo ---------------------------------------------------------------------
+	${PIPENV} run coveralls --service=github
+	@echo Info **********  End:   coveralls ***********************************
 
 # Formats docstrings to follow PEP 257
 # https://github.com/PyCQA/docformatter
