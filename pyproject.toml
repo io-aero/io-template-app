@@ -1,3 +1,46 @@
+[build-system]
+requires = [
+    "setuptools>=61.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+authors = [
+    { name = "Team IO-Aero", email = "info@io-aero.com" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: Other/Proprietary License",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering",
+    "Typing :: Typed",
+]
+dependencies = [
+    "iocommon",
+    "iotemplatelib",
+]
+description = "Template for an Application Repository"
+keywords = [
+    "application",
+]
+maintainers = [
+    { name = "Team IO-Aero", email = "info@io-aero.ch" },
+]
+name = "iotemplateapp"
+readme = "README.md"
+requires-python = ">=3.10"
+version = "1.3.1"
+
+[project.urls]
+"Bug Tracker" = "https://github.com/io-aero/io-template-app/issues"
+Documentation = "https://io-aero.github.io/io-template-app/"
+Homepage = "https://github.com/io-aero/io-template-app"
+"Release History" = "https://io-aero.github.io/io-template-app/release_history/"
+"Release Notes" = "https://io-aero.github.io/io-template-app/release_notes/"
+Source = "https://github.com/io-aero/io-template-app/tree/main/iotemplateapp"
+
 [tool.bandit]
 
 [tool.isort]
@@ -7,7 +50,7 @@ overwrite_in_place = true
 profile = "black"
 
 [tool.pydocstyle]
-match = '((?!test_).*\.py)'
+match = "((?!test_).*\\.py)"
 
 [tool.pytest.ini_options]
 console_output_style = "count"
@@ -15,7 +58,20 @@ log_cli_level = "INFO"
 log_file = "logging_io_aero_pytest.log"
 log_file_level = "DEBUG"
 log_level = "DEBUG"
-markers = ["issue"]
+markers = [
+    "issue",
+]
 norecursedirs = "./tests/helpers"
 pythonpath = "./iotemplateapp/"
 testpaths = "./tests/"
+
+[tool.setuptools]
+packages = [
+    "iotemplateapp",
+]
+
+[tool.setuptools.package-data]
+iotemplateapp = [
+    "*.pyi",
+    "py.typed",
+]

@@ -5,7 +5,6 @@
 
 This is the entry point to the application IO-TEMPLATE-APP.
 """
-import importlib
 import locale
 import sys
 
@@ -39,12 +38,8 @@ def main(argv: list[str]) -> None:
 
     io_glob.logger.info("Start launcher.py")
 
-    try:
-        print(f"Version iotemplateapp: {importlib.metadata.version('iotemplateapp')}")
-        file.print_package_content("iotemplateapp")
-    except importlib.metadata.PackageNotFoundError:
-        print("Version iotemplateapp: package not found")
-    file.print_package_content("iocommon")
+    file.print_version_pkg_struct("iotemplateapp")
+    file.print_pkg_structs(["iocommon", "iotemplatelib"])
 
     io_glob.logger.info("End   launcher.py")
     io_glob.logger.debug(io_glob.LOGGER_END)

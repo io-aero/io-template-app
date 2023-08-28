@@ -10,6 +10,7 @@ ifeq ($(OS),Windows_NT)
 	export DELETE_PIPFILE_LOCK=del /f /q Pipfile.lock
 	export DELETE_SPHINX_1=del /f /q docs\\build\\*
 	export DELETE_SPHINX_2=del /f /q docs\\source\\modules.rst
+	export OPTION_NUITKA=
 	export PIPENV=py -m pipenv
 	export PYTHON=py
 	export SPHINX_BUILDDIR=docs\\build
@@ -24,6 +25,7 @@ else
 	export DELETE_PIPFILE_LOCK=rm -rf Pipfile.lock
 	export DELETE_SPHINX_1=rm -rf docs/build/* docs/source/sua.rst docs/source/sua.vector3d.rst
 	export DELETE_SPHINX_2=rm -rf docs/source/modules.rst
+	export OPTION_NUITKA=--disable-ccache
 	export PIPENV=python3 -m pipenv
 	export PYTHON=python3
 	export SPHINX_BUILDDIR=docs/build
@@ -217,6 +219,26 @@ mypy-stubgen:       ## Autogenerate stub files
 	rm -rf out
 	@echo Info **********  End:   Mypy *****************************************
 
+# Nuitka: Python compiler written in Python
+# https://github.com/Nuitka/Nuitka
+nuitka:             ## Create a dynamic link library.
+	@echo Info **********  Start: nuitka ***************************************
+	@echo CREATE_DIST  =${CREATE_DIST}
+	@echo DELETE_DIST  =${DELETE_DIST}
+	@echo MODULE       =${MODULE}
+	@echo OPTION_NUITKA=${OPTION_NUITKA}
+	@echo PYTHON       =${PYTHON}
+	@echo ----------------------------------------------------------------------
+	${PIPENV} run ${PYTHON} -m nuitka --version
+	@echo ----------------------------------------------------------------------
+	${DELETE_DIST}
+	${CREATE_DIST}
+	${PIPENV} run ${PYTHON} -m nuitka ${OPTION_NUITKA} --include-package=${MODULE} --module ${MODULE} --no-pyi-file --output-dir=dist --remove-output
+	@echo Info **********  End:   nuitka ***************************************
+
+# pip is the package installer for Python.
+# https://pypi.org/project/pip/
+# Configuration file: none
 # Pipenv: Python Development Workflow for Humans.
 # https://github.com/pypa/pipenv
 # Configuration file: Pipfile
@@ -374,12 +396,15 @@ upload-io-aero:     ## Upload the distribution archive to io-aero-pypi.
 	@echo Info **********  Start: twine io-aero-pypi ***************************
 	@echo CREATE_DIST=${CREATE_DIST}
 	@echo DELETE_DIST=${DELETE_DIST}
+	@echo PIPENV     =${PIPENV}
 	@echo PYTHON     =${PYTHON}
+	@echo ----------------------------------------------------------------------
 	${PYTHON} -m build --version
 	${PYTHON} -m twine --version
 	@echo ----------------------------------------------------------------------
 	${DELETE_DIST}
 	${CREATE_DIST}
+	${PIPENV} run ${PYTHON} scripts\next_version.py
 	${PYTHON} -m build
 	aws codeartifact login --tool twine --repository io-aero-pypi --domain io-aero --domain-owner 444046118275 --region us-east-1
 	${PYTHON} -m twine upload --repository codeartifact --verbose dist/*
@@ -391,12 +416,15 @@ upload-pypi:        ## Upload the distribution archive to PyPi.
 	@echo Info **********  Start: twine pypi ***********************************
 	@echo CREATE_DIST=${CREATE_DIST}
 	@echo DELETE_DIST=${DELETE_DIST}
+	@echo PIPENV     =${PIPENV}
 	@echo PYTHON     =${PYTHON}
+	@echo ----------------------------------------------------------------------
 	${PYTHON} -m build --version
 	${PYTHON} -m twine --version
 	@echo ----------------------------------------------------------------------
 	${DELETE_DIST}
 	${CREATE_DIST}
+	${PIPENV} run ${PYTHON} scripts\next_version.py
 	${PYTHON} -m build
 	${PYTHON} -m twine upload -p $(SECRET_PYPI) -u io-aero dist/*
 	@echo Info **********  End:   twine pypi ***********************************
@@ -408,12 +436,15 @@ upload-testpypi:    ## Upload the distribution archive to Test PyPi.
 	@echo Info **********  Start: twine testpypi *******************************
 	@echo CREATE_DIST=${CREATE_DIST}
 	@echo DELETE_DIST=${DELETE_DIST}
+	@echo PIPENV     =${PIPENV}
 	@echo PYTHON     =${PYTHON}
+	@echo ----------------------------------------------------------------------
 	${PYTHON} -m build --version
 	${PYTHON} -m twine --version
 	@echo ----------------------------------------------------------------------
 	${DELETE_DIST}
 	${CREATE_DIST}
+	${PIPENV} run ${PYTHON} scripts\next_version.py
 	${PYTHON} -m  build
 	${PYTHON} -m  twine upload -p $(SECRET_TEST_PYPI) -r testpypi -u io-aero-test --verbose dist/*
 	@echo Info **********  End:   twine testpypi *******************************
