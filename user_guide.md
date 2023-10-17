@@ -2,7 +2,7 @@
 
 `IO-TEMPLATE-APP` is a template repository for creating Python applications. 
 This document describes how to use this repository to create a new repository. 
-In the following instructions, we assume that the new repository should be named `my-repo` and the application to be created with it should be named `myapp`.
+In the following instructions, we assume that the new repository should be named `my-app` and the application to be created with it should be named `myapp`.
 
 ## I. Requirements
 
@@ -11,9 +11,9 @@ Furthermore, the use of an IDE or a text editor that can replace texts across fi
 
 ## II. Repository creation
 
-### 1. Create the new repository `my-repo`
+### 1. Create the new repository `my-app`
 
-As described [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository), the new repository my-repo must first be created. The creation of a very minimal basic version is sufficient, i.e. the only necessary parameter is the repository name.
+As described [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository), the new repository my-app must first be created. The creation of a very minimal basic version is sufficient, i.e. the only necessary parameter is the repository name.
 
 ### 2. Copy the repository `io-template-app`
 
@@ -26,16 +26,16 @@ As described [here](https://docs.github.com/en/repositories/creating-and-managin
 - Mirror-push to the new repository
 
     cd io-template-app.git
-    git push --mirror https://github.com/io-aero/my-repo
+    git push --mirror https://github.com/io-aero/my-app
 ---
 - Remove the temporary local repository you created earlier
 
     cd ..
     rm -rf io-template-app.git
 
-### 3. Create a local copy of the new repositoy `my-repo`
+### 3. Create a local copy of the new repositoy `my-app`
 
-    git clone https://github.com/io-aero/my-repo
+    git clone https://github.com/io-aero/my-app
 
 ### 4. Delete the two files with the User's Guide
 
@@ -44,24 +44,23 @@ As described [here](https://docs.github.com/en/repositories/creating-and-managin
 
 ### 5. Rename the following file directories and files
 
-| Old name                        | New name                |
-|:--------------------------------|:------------------------|
-| `iotemplateapp`                 | `myapp`                 |
-| `run_io_template_app.bat`       | `run_my_repo.bat`       |
-| `run_io_template_app.sh`        | `run_my_repo.sh`        |
-| `settings_io_template_app.toml` | `settings_my_repo.toml` |
+| Old name                  | New name         |
+|:--------------------------|:-----------------|
+| `iotemplateapp`           | `myapp`        |
+| `run_io_template_app.bat` | `run_my_app.bat` |
+| `run_io_template_app.sh`  | `run_my_app.sh`  |
 
-### 4. Replacing texts in the new repository `my-repo`
+### 4. Replacing texts in the new repository `my-app`
 
 It is absolutely necessary to respect the capitalization!
 
 | Old text           | New text   |
 |:-------------------|:-----------|
-| `IO-TEMPLATE-APP`  | `MY-REPO`  |
-| `IO_TEMPLATE_APP`  | `MY_REPO`  |
-| `io-template-app`  | `my-repo`  |
-| `io_template_app`  | `my_repo`  |
-| `iotemplateapp`    | `myrepo`   |
+| `IO-TEMPLATE-APP`  | `MY-APP`  |
+| `IO_TEMPLATE_APP`  | `MY_APP`  |
+| `io-template-app`  | `my-app`  |
+| `io_template_app`  | `my_app`  |
+| `iotemplateapp`    | `myapp`   |
 
 ### 5. Store your AWS access rights in file `~/.aws/credentials`
 
@@ -75,12 +74,12 @@ It is absolutely necessary to respect the capitalization!
 
 - Install Miniconda
 - Run `make conda-dev`
-- Run `make-final`
+- Run `make final`
 
 #### 6.2 If Miniconda is not required
 
 - Run `make pipenv-dev`
-- Run `make-final`
+- Run `make final`
 
 ### 7. Define GitHub Actions secrets
 
