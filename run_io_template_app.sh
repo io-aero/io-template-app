@@ -14,13 +14,15 @@ fi
 
 export PYTHONPATH=.
 
+rm -f logging_io_aero.log
+
 echo "================================================================================"
 echo "Start $0"
 echo "--------------------------------------------------------------------------------"
 echo "IO_TEMPLATE_APP - Template Application."
 echo "--------------------------------------------------------------------------------"
-echo "ENVIRONMENT_TYPE : ${PYTHONPATH}"
-echo "PYTHONPATH       : ${ENVIRONMENT_TYPE}"
+echo "ENVIRONMENT_TYPE : ${ENV_FOR_DYNACONF}"
+echo "PYTHONPATH       : ${PYTHONPATH}"
 echo "--------------------------------------------------------------------------------"
 date +"DATE TIME : %d.%m.%Y %H:%M:%S"
 echo "================================================================================"
