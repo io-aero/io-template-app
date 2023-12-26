@@ -24,11 +24,6 @@ aws --version
 echo "=========================================================================="
 echo "Configuring AWS CLI. Please enter your credentials."
 echo "--------------------------------------------------------------------------"
-echo "AWS Access Key ID:     AKIAWOYZWBWB6ALP6JDX                               "
-echo "AWS Secret Access Key: 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           "
-echo "Default region name:   us-east-1                                          "
-echo "Default output format:                                                    "
-echo "--------------------------------------------------------------------------"
 aws configure
 
 rm -r aws
