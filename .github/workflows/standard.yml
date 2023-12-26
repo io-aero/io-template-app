@@ -2,30 +2,25 @@ name: Standard
 
 on:
   pull_request:
-    branches: [ 'main' ]
+    branches: ['main']
+
+env:
+  CONDA: 'false'
+  COVERALLS: 'false'
+  PAGES: 'true'
 
 jobs:
   standard:
     name: OS ${{ matrix.os }} - Python ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
-    defaults:
-      run:
-        shell: bash -el {0}
     strategy:
-      max-parallel: 1
+      fail-fast: true
       matrix:
-        os: ["ubuntu-latest"]
-        python-version: ["3.10"]
-    steps:
-      - name: Debug COVERALLS variable
-        run: echo "COVERALLS is $COVERALLS"
-        env:
-          CONDA: 'false'
-          COVERALLS: 'false'
-          PAGES: 'true'
+        os: [ubuntu-latest, macos-latest]
+        python-version: ['3.10']
 
+    steps:
       - name: Show the environment variables
-        if: runner.os != 'Windows'
         run: |
           echo "CONDA    = $CONDA"
           echo "COVERALLS= $COVERALLS"
@@ -54,16 +49,16 @@ jobs:
       - name: Preparing scripts - Ubuntu
         if: runner.os == 'Linux'
         run: |
-            sudo apt-get update && sudo apt-get install -y dos2unix
-            chmod +x scripts/run_prep_*.sh
-            ./scripts/run_prep_bash_scripts.sh
+          sudo apt-get update && sudo apt-get install -y dos2unix
+          chmod +x scripts/run_prep_*.sh
+          ./scripts/run_prep_bash_scripts.sh
 
       - name: Preparing scripts - macOS
         if: runner.os == 'macOS'
         run: |
-            brew install dos2unix
-            chmod +x scripts/run_prep_*.zsh
-            ./scripts/run_prep_bash_scripts.zsh
+          brew install dos2unix
+          chmod +x scripts/run_prep_*.zsh
+          ./scripts/run_prep_bash_scripts.zsh
 
       - name: Set up Python
         uses: actions/setup-python@v5
