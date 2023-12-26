@@ -1,20 +1,11 @@
-# ==============================================================================
-# GitHub Actions: Standard - Start
-# ------------------------------------------------------------------------------
 name: Standard
 
 on:
   pull_request:
     branches: [ 'main' ]
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 jobs:
   standard:
-    # --------------------------------------------------------------------------
-    # Standard - Configuration
-    # --------------------------------------------------------------------------
     name: OS ${{ matrix.os }} - Python ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
     defaults:
@@ -23,14 +14,9 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-#       os: ["ubuntu-latest", "macos-latest", "windows-latest"]
-#       os: ["ubuntu-latest", "macos-latest", ]
-        os: ["ubuntu-latest", ]
+        os: ["ubuntu-latest"]
         python-version: ["3.10"]
     steps:
-      # ------------------------------------------------------------------------
-      # Standard - Install Foundational Software
-      # ------------------------------------------------------------------------
       - name: Debug COVERALLS variable
         run: echo "COVERALLS is $COVERALLS"
         env:
@@ -41,18 +27,15 @@ jobs:
       - name: Show the environment variables
         if: runner.os != 'Windows'
         run: |
-          echo ""
-          echo "CONDA    =env.CONDA"
-          echo "COVERALLS=env.COVERALLS"
-          echo "PAGES    =env.PAGES"
+          echo "CONDA    = $CONDA"
+          echo "COVERALLS= $COVERALLS"
+          echo "PAGES    = $PAGES"
 
       - name: Set Timezone
         run: echo "TZ=UTC" >> $GITHUB_ENV
 
       - name: Checking out the repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 1  # no history, just HEAD
 
       - name: Set Locale - Ubuntu
         if: runner.os == 'Linux'
@@ -62,7 +45,7 @@ jobs:
           sudo locale-gen en_US.UTF-8
           sudo update-locale LANG=en_US.UTF-8
 
-      - name: Set Locale - mamakcOS
+      - name: Set Locale - macOS
         if: runner.os == 'macOS'
         run: |
           echo "LANG=en_US.UTF-8" >> $GITHUB_ENV
@@ -82,7 +65,7 @@ jobs:
             chmod +x scripts/run_prep_*.zsh
             ./scripts/run_prep_bash_scripts.zsh
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
@@ -94,71 +77,43 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-# ToDo: If Conda needed.
-#      - name: Set up Miniconda
-#        if: env.CONDA == "true"
-#        uses: conda-incubator/setup-miniconda@v3
-#        with:
-#          auto-update-conda: true
-#          miniconda-version: "latest"
-#          python-version: ${{ matrix.python-version }}
-
-# ToDo: If Docker needed.
-#      - name: Set up Docker
-#        uses: docker/setup-buildx-action@v3
-
-      # ------------------------------------------------------------------------
-      # Standard - Run Production Environment.
-      # ------------------------------------------------------------------------
       - name: Install dependencies - pipenv - prod
-        if: env.CONDA != 'true'
+        if: ${{ env.CONDA != 'true' }}
         run: make pipenv-prod
 
       - name: Install dependencies - Conda & pipenv - prod
-        if: env.CONDA == 'true'
+        if: ${{ env.CONDA == 'true' }}
         run: make conda-prod
 
-      - name: Compile the Python code- prod
+      - name: Compile the Python code - prod
         run: make compileall
 
       - name: Run pytest - prod
         run: make pytest-ci
 
-      # ------------------------------------------------------------------------
-      # Standard - Run Development Environment.
-      # ------------------------------------------------------------------------
       - name: Install dependencies - pipenv - dev
-        if: env.CONDA != 'true'
+        if: ${{ env.CONDA != 'true' }}
         run: make pipenv-dev
 
       - name: Install dependencies - Conda & pipenv - dev
-        if: env.CONDA == 'true'
+        if: ${{ env.CONDA == 'true' }}
         run: make conda-dev
 
       - name: Run pytest - dev
         run: make isort black lint docs tests
-#           make final
-#           make format lint docs tests
-#           make isort black docformatter lint docs tests
 
-      # ------------------------------------------------------------------------
-      # Standard - Coverage Data.
-      # ------------------------------------------------------------------------
       - name: Coveralls
-        if: env.COVERALLS == 'true' && runner.os == 'Linux'
+        if: ${{ env.COVERALLS == 'true' && runner.os == 'Linux' }}
         uses: coverallsapp/github-action@v1.1.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./coverage.lcov  # Update this path if necessary
+          path-to-lcov: ./coverage.lcov
           flag-name: run-${{ matrix.os }}-py${{ matrix.python-version }}
           parallel: false
           parallel-finished: true
 
-      # ------------------------------------------------------------------------
-      # Standard - GitHub Pages.
-      # ------------------------------------------------------------------------
       - name: Deploy to GitHub Pages
-        if: env.PAGES == 'true' && runner.os == 'Linux'
+        if: ${{ env.PAGES == 'true' && runner.os == 'Linux' }}
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
