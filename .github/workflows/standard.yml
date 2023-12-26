@@ -38,8 +38,10 @@ jobs:
       - name: Show the repository variables
         if: runner.os != 'Windows'
         run: |
-          echo CONDA=${{ vars.CONDA }}
-          echo COVERALLS=${{ vars.COVERALLS }}
+          echo ""
+          echo "CONDA    =${{ env.CONDA }}"
+          echo "COVERALLS=${{ env.COVERALLS }}"
+          echo "PAGES    =${{ env.PAGES }}"
 
       - name: Checking out the repository
         uses: actions/checkout@v4
@@ -102,7 +104,7 @@ jobs:
 
 # ToDo: If Conda needed.
 #      - name: Set up Miniconda
-#        if: ${{ vars.CONDA }} == "true"
+#        if: ${{ env.CONDA }} == "true"
 #        uses: conda-incubator/setup-miniconda@v3
 #        with:
 #          auto-update-conda: true
@@ -117,11 +119,11 @@ jobs:
       # Standard - Run Production Environment.
       # ------------------------------------------------------------------------
       - name: Install dependencies - pipenv - prod
-        if: ${{ vars.CONDA != 'true' }}
+        if: ${{ env.CONDA != 'true' }}
         run: make pipenv-prod
 
       - name: Install dependencies - Conda & pipenv - prod
-        if: ${{ vars.CONDA == 'true' }}
+        if: ${{ env.CONDA == 'true' }}
         run: make conda-prod
 
       - name: Compile the Python code- prod
@@ -134,11 +136,11 @@ jobs:
       # Standard - Run Development Environment.
       # ------------------------------------------------------------------------
       - name: Install dependencies - pipenv - dev
-        if: ${{ vars.CONDA != 'true' }}
+        if: ${{ env.CONDA != 'true' }}
         run: make pipenv-dev
 
       - name: Install dependencies - Conda & pipenv - dev
-        if: ${{ vars.CONDA == 'true' }}
+        if: ${{ env.CONDA == 'true' }}
         run: make conda-dev
 
       - name: Run pytest - dev
@@ -151,21 +153,20 @@ jobs:
       # Standard - Coverage Data.
       # ------------------------------------------------------------------------
       - name: Coveralls
-        if: ${{ vars.COVERALLS == 'true' }} && runner.os == 'Linux'
+        if: ${{ env.COVERALLS == 'true' }} && runner.os == 'Linux'
         uses: coverallsapp/github-action@v1.1.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          coveralls-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
           path-to-lcov: ./coverage.lcov  # Update this path if necessary
           flag-name: run-${{ matrix.os }}-py${{ matrix.python-version }}
-          parallel: true
+          parallel: false
           parallel-finished: true
 
       # ------------------------------------------------------------------------
       # Standard - GitHub Pages.
       # ------------------------------------------------------------------------
       - name: Deploy to GitHub Pages
-        if: ${{ vars.PAGES == 'true' }} && runner.os == 'Linux'
+        if: ${{ env.PAGES == 'true' }} && runner.os == 'Linux'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GH_PAGES_TOKEN }}
