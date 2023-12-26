@@ -1,0 +1,165 @@
+# ==============================================================================
+# GitHub Actions: Standard - Start
+# ------------------------------------------------------------------------------
+name: Standard
+
+on:
+  pull_request:
+    branches: [ 'main' ]
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  standard:
+    # --------------------------------------------------------------------------
+    # Standard - Configuration
+    # --------------------------------------------------------------------------
+    name: OS ${{ matrix.os }} - Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash -el {0}
+    strategy:
+      max-parallel: 1
+      matrix:
+#       os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+        os: ["ubuntu-latest", "macos-latest", ]
+        python-version: ["3.10"]
+    steps:
+      # ------------------------------------------------------------------------
+      # Standard - Install Foundational Software
+      # ------------------------------------------------------------------------
+
+      - name: Set Timezone
+        run: echo "TZ=UTC" >> $GITHUB_ENV
+
+      - name: Show the repository variables
+        if: runner.os != 'Windows'
+        run: |
+          echo CONDA=${{ vars.CONDA }}
+          echo COVERALLS=${{ vars.COVERALLS }}
+
+      - name: Checking out the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1  # no history, just HEAD
+
+      - name: Set Locale - Ubuntu
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y locales
+          sudo locale-gen en_US.UTF-8
+          sudo update-locale LANG=en_US.UTF-8
+
+      - name: Set Locale - mamakcOS
+        if: runner.os == 'macOS'
+        run: |
+          echo "LANG=en_US.UTF-8" >> $GITHUB_ENV
+          echo "LC_ALL=en_US.UTF-8" >> $GITHUB_ENV
+
+      - name: Preparing scripts - Ubuntu
+        if: runner.os == 'Linux'
+        run: |
+            sudo apt-get update && sudo apt-get install -y dos2unix
+            chmod +x scripts/run_prep_*.sh
+            ./scripts/run_prep_bash_scripts.sh
+
+      - name: Preparing scripts - macOS
+        if: runner.os == 'macOS'
+        run: |
+            brew install dos2unix
+            chmod +x scripts/run_prep_*.zsh
+            ./scripts/run_prep_bash_scripts.zsh
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install AWS CLI - Ubuntu
+        if: runner.os == 'Linux'
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+
+      - name: Install AWS CLI - macOS
+        if: runner.os == 'macOS'
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-macos.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+# ToDo: If Conda needed.
+#      - name: Set up Miniconda
+#        if: ${{ vars.CONDA }} == "true"
+#        uses: conda-incubator/setup-miniconda@v3
+#        with:
+#          auto-update-conda: true
+#          miniconda-version: "latest"
+#          python-version: ${{ matrix.python-version }}
+
+# ToDo: If Docker needed.
+#      - name: Set up Docker
+#        uses: docker/setup-buildx-action@v3
+
+      # ------------------------------------------------------------------------
+      # Standard - Run Production Environment.
+      # ------------------------------------------------------------------------
+      - name: Install dependencies - pipenv - prod
+        if: ${{ vars.CONDA != 'true' }}
+        run: make pipenv-prod
+
+      - name: Install dependencies - Conda & pipenv - prod
+        if: ${{ vars.CONDA == 'true' }}
+        run: make conda-prod
+
+      - name: Compile the Python code- prod
+        run: make compileall
+
+      - name: Run pytest - prod
+        run: make pytest-ci
+
+      # ------------------------------------------------------------------------
+      # Standard - Run Development Environment.
+      # ------------------------------------------------------------------------
+      - name: Set up AWS credentials - dev
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Install dependencies - pipenv - dev
+        if: ${{ vars.CONDA != 'true' }}
+        run: make pipenv-dev
+
+      - name: Install dependencies - Conda & pipenv - dev
+        if: ${{ vars.CONDA == 'true' }}
+        run: make conda-dev
+
+      - name: Run pytest - dev
+        run: make isort black lint docs tests
+#           make final
+#           make format lint docs tests
+#           make isort black docformatter lint docs tests
+
+      # ------------------------------------------------------------------------
+      # Standard - Coverage Data.
+      # ------------------------------------------------------------------------
+#      - name: Create the coverage data
+#        if: ${{ vars.COVERALLS == 'true' }}
+#        run: make coveralls
+#
+#      - name: Publish the code coverage to coveralls.io
+#        if: ${{ vars.COVERALLS == 'true' }}
+#        uses: coverallsapp/github-action@v2
