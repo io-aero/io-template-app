@@ -31,6 +31,10 @@ jobs:
       # ------------------------------------------------------------------------
       # Standard - Install Foundational Software
       # ------------------------------------------------------------------------
+      - name: Debug COVERALLS variable
+        run: echo "COVERALLS is $COVERALLS"
+        env:
+          COVERALLS: ${{ secrets.COVERALLS }}
 
       - name: Set Timezone
         run: echo "TZ=UTC" >> $GITHUB_ENV
@@ -139,7 +143,7 @@ jobs:
       # Standard - Coverage Data.
       # ------------------------------------------------------------------------
       - name: Coveralls
-        if: ${{ vars.COVERALLS == 'true' }} && runner.os == 'Linux'
+        if: env.COVERALLS == 'true' && runner.os == 'Linux'
         uses: coverallsapp/github-action@v1.1.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
