@@ -24,7 +24,8 @@ jobs:
       max-parallel: 1
       matrix:
 #       os: ["ubuntu-latest", "macos-latest", "windows-latest"]
-        os: ["ubuntu-latest", "macos-latest", ]
+#       os: ["ubuntu-latest", "macos-latest", ]
+        os: ["ubuntu-latest", ]
         python-version: ["3.10"]
     steps:
       # ------------------------------------------------------------------------
@@ -132,13 +133,6 @@ jobs:
       # ------------------------------------------------------------------------
       # Standard - Run Development Environment.
       # ------------------------------------------------------------------------
-      - name: Set up AWS credentials - dev
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
       - name: Install dependencies - pipenv - dev
         if: ${{ vars.CONDA != 'true' }}
         run: make pipenv-dev
@@ -156,10 +150,23 @@ jobs:
       # ------------------------------------------------------------------------
       # Standard - Coverage Data.
       # ------------------------------------------------------------------------
-#      - name: Create the coverage data
-#        if: ${{ vars.COVERALLS == 'true' }}
-#        run: make coveralls
-#
-#      - name: Publish the code coverage to coveralls.io
-#        if: ${{ vars.COVERALLS == 'true' }}
-#        uses: coverallsapp/github-action@v2
+      - name: Coveralls
+        if: ${{ vars.COVERALLS == 'true' }} && runner.os == 'Linux'
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          coveralls-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          path-to-lcov: ./coverage.lcov  # Update this path if necessary
+          flag-name: run-${{ matrix.os }}-py${{ matrix.python-version }}
+          parallel: true
+          parallel-finished: true
+
+      # ------------------------------------------------------------------------
+      # Standard - GitHub Pages.
+      # ------------------------------------------------------------------------
+      - name: Deploy to GitHub Pages
+        if: runner.os == 'Linux'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_PAGES_TOKEN }}
+          publish_dir: ./docs/build/html

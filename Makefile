@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 
 ifeq ($(OS),Windows_NT)
-	export ACT_INSTALL=-winget install nektos.act
+	export ACT_INSTALL=-@winget install nektos.act || echo "Already up to date"
 	export ALL_IO_TEMPLATE_APP_CHECKED_DIRS=iotemplateapp iotemplateapp\\tools iotemplateapp\\lidar tests
 	export ALL_IO_TEMPLATE_APP_CHECKED_FILES=iotemplateapp\\*.py iotemplateapp\\tools\\*.py iotemplateapp\\lidar\\*.py
 	export CREATE_DIST=if not exist dist mkdir dist
@@ -92,7 +92,7 @@ action-std:         ## Run the GitHub Actions locally: standard.
 	@echo ----------------------------------------------------------------------
 	$(ACT_INSTALL)
 	@echo ----------------------------------------------------------------------
-	act  --quiet --secret-file .act_secrets --var-file .act_vars
+	act  --quiet --secret-file .act_secrets --var-file .act_vars --verbose
 	@echo Info **********  End:   action ***************************************
 
 # Bandit is a tool designed to find common security issues in Python code.
@@ -332,7 +332,7 @@ pytest:             ## Run all tests with pytest.
 	${PIPENV} run pytest --version
 	@echo ----------------------------------------------------------------------
 	${PIPENV} run pytest --dead-fixtures tests
-	${PIPENV} run pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -v tests
+	${PIPENV} run pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered --cov-report=lcov -v tests
 	@echo Info **********  End:   pytest ***************************************
 pytest-ci:          ## Run all tests with pytest after test tool installation.
 	@echo Info **********  Start: pytest ***************************************

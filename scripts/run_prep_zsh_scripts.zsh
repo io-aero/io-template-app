@@ -4,27 +4,40 @@ set -e
 
 # ------------------------------------------------------------------------------
 #
-# run_prep_zsh_scripts.zsh: Configure EOL and execution rights.
+# run_prep_bash_scripts.sh: Configure EOL and execution rights.
 #
 # ------------------------------------------------------------------------------
 
-print "\n======================================================================="
-print "\nStart $0"
-print "\n-----------------------------------------------------------------------"
-print "\nConfigure EOL and execution rights - macOS."
-print "\n-----------------------------------------------------------------------"
+echo "=========================================================================="
+echo "Start $0"
+echo "--------------------------------------------------------------------------"
+echo "Configure EOL and execution rights - macOS."
+echo "--------------------------------------------------------------------------"
 date +"DATE TIME : %d.%m.%Y %H:%M:%S"
-print "\n======================================================================="
+echo "=========================================================================="
 
-chmod +x ./*.zsh
-chmod +x ./*/*.zsh
+# Check if Homebrew is installed
+if ! command -v brew &> /dev/null
+then
+    echo "Homebrew not installed. Installing now."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
-# Notice the '' after the -i option, which is required on macOS
-sed -i '' 's/\r$//' ./*.zsh
-sed -i '' 's/\r$//' ./*/*.zsh
+# Install dos2unix if not already installed
+if ! command -v dos2unix &> /dev/null
+then
+    echo "Installing dos2unix."
+    brew install dos2unix
+fi
 
-print "\n-----------------------------------------------------------------------"
+chmod +x ./*.sh
+chmod +x ./*/*.sh
+
+dos2unix ./*.sh
+dos2unix ./*/*.sh
+
+echo "--------------------------------------------------------------------------"
 date +"DATE TIME : %d.%m.%Y %H:%M:%S"
-print "\n-----------------------------------------------------------------------"
-print "\nEnd   $0"
-print "\n======================================================================="
+echo "--------------------------------------------------------------------------"
+echo "End   $0"
+echo "=========================================================================="
