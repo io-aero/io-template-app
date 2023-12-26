@@ -86,20 +86,6 @@ jobs:
           unzip awscliv2.zip
           sudo ./aws/install
 
-      - name: Install AWS CLI - macOS
-        if: runner.os == 'macOS'
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-macos.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install
-
-      - name: Set up AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
 # ToDo: If Conda needed.
 #      - name: Set up Miniconda
 #        if: ${{ vars.CONDA }} == "true"
