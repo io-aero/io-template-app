@@ -22,9 +22,9 @@ jobs:
     steps:
       - name: Show the environment variables
         run: |
-          echo "CONDA    = $CONDA"
-          echo "COVERALLS= $COVERALLS"
-          echo "PAGES    = $PAGES"
+          echo "CONDA    = ${{ env.CONDA }}"
+          echo "COVERALLS= ${{ env.COVERALLS }}"
+          echo "PAGES    = ${{ env.PAGES }}"
 
       - name: Set Timezone
         run: echo "TZ=UTC" >> $GITHUB_ENV
@@ -58,7 +58,7 @@ jobs:
         run: |
           brew install dos2unix
           chmod +x scripts/run_prep_*.zsh
-          ./scripts/run_prep_bash_scripts.zsh
+          ./scripts/run_prep_zsh_scripts.zsh
 
       - name: Set up Python
         uses: actions/setup-python@v5
