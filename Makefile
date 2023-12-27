@@ -1,6 +1,7 @@
 .DEFAULT_GOAL := help
 
 ifeq ($(OS),Windows_NT)
+	export ACT_INSTALL=-@winget install nektos.act || echo "Already up to date"
 	export ALL_IO_TEMPLATE_APP_CHECKED_DIRS=iotemplateapp iotemplateapp\\tools iotemplateapp\\lidar tests
 	export ALL_IO_TEMPLATE_APP_CHECKED_FILES=iotemplateapp\\*.py iotemplateapp\\tools\\*.py iotemplateapp\\lidar\\*.py
 	export CREATE_DIST=if not exist dist mkdir dist
@@ -32,6 +33,7 @@ else
 	export SPHINX_SOURCEDIR=docs/source
 endif
 
+# ToDo: If Conda needed.
 export CONDA_PACKAGES=gdal pdal python-pdal rasterio
 export CONDA_ARG=--site-packages
 export CONDA_ARG=
@@ -54,12 +56,14 @@ export VERSION_PYTHON=3.10
 ## -----------------------------------------------------------------------------
 ## help:               Show this help.
 ## -----------------------------------------------------------------------------
+## action:             Run the GitHub Actions locally.
+action: action-std
 ## conda-dev:          Install the package dependencies for development incl.
 ##                     Conda & pipenv.
-conda-dev: conda pipenv-dev
+conda-dev: conda pipenv-dev-int
 ## conda-prod:         Install the package dependencies for production incl.
 ##                     Conda & pipenv.
-conda-prod: conda pipenv-prod
+conda-prod: conda pipenv-prod-int
 ## dev:                Format, lint and test the code.
 dev: format lint tests
 ## docs:               Check the API documentation, create and upload the user documentation.
@@ -78,6 +82,18 @@ tests: pytest
 
 help:
 	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
+
+# Run the GitHub Actions locally.
+# https://github.com/nektos/act
+# Configuration files: .act_secrets & .act_vars
+action-std:         ## Run the GitHub Actions locally: standard.
+	@echo Info **********  Start: action ***************************************
+	@echo Copy your .aws/creedentials to .aws_secrets
+	@echo ----------------------------------------------------------------------
+	$(ACT_INSTALL)
+	@echo ----------------------------------------------------------------------
+	act  --quiet --secret-file .act_secrets --var-file .act_vars --verbose
+	@echo Info **********  End:   action ***************************************
 
 # Bandit is a tool designed to find common security issues in Python code.
 # https://github.com/PyCQA/bandit
@@ -122,6 +138,7 @@ compileall:         ## Byte-compile the Python libraries.
 # Configuration file: none
 conda:              ## Create a new environment.
 	@echo Info **********  Start: Miniconda create environment *****************
+	conda update conda
 	conda --version
 	@echo ----------------------------------------------------------------------
 	conda install --yes -c conda-forge ${CONDA_PACKAGES}
@@ -229,6 +246,8 @@ nuitka:             ## Create a dynamic link library.
 # Pipenv: Python Development Workflow for Humans.
 # https://github.com/pypa/pipenv
 # Configuration file: Pipfile
+# ToDo: If Conda needed.
+# pipenv-dev-int:     ## Install the package dependencies for development.
 pipenv-dev:         ## Install the package dependencies for development.
 	@echo Info **********  Start: Installation of Development Packages *********
 	@echo DELETE_PIPFILE_LOCK=${DELETE_PIPFILE_LOCK}
@@ -251,6 +270,8 @@ pipenv-dev:         ## Install the package dependencies for development.
 	${PYTHON} -m pipenv --version
 	${PYTHON} -m virtualenv --version
 	@echo Info **********  End:   Installation of Development Packages *********
+# ToDo: If Conda needed.
+# pipenv-prod-int:    ## Install the package dependencies for production.
 pipenv-prod:        ## Install the package dependencies for production.
 	@echo Info **********  Start: Installation of Production Packages **********
 	@echo DELETE_PIPFILE_LOCK=${DELETE_PIPFILE_LOCK}
@@ -311,18 +332,14 @@ pytest:             ## Run all tests with pytest.
 	${PIPENV} run pytest --version
 	@echo ----------------------------------------------------------------------
 	${PIPENV} run pytest --dead-fixtures tests
-	${PIPENV} run pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -v tests
+	${PIPENV} run pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered --cov-report=lcov -v tests
 	@echo Info **********  End:   pytest ***************************************
 pytest-ci:          ## Run all tests with pytest after test tool installation.
 	@echo Info **********  Start: pytest ***************************************
 	@echo PIPENV    =${PIPENV}
 	@echo PYTHONPATH=${PYTHONPATH}
 	@echo ----------------------------------------------------------------------
-	${PIPENV} install pytest
-	${PIPENV} install pytest-cov
-	${PIPENV} install pytest-deadfixtures
-	${PIPENV} install pytest-helpers-namespace
-	${PIPENV} install pytest-random-order
+	${PIPENV} install pytest pytest-cov pytest-deadfixtures pytest-helpers-namespace pytest-random-order
 	@echo ----------------------------------------------------------------------
 	${PIPENV} run pytest --version
 	@echo ----------------------------------------------------------------------
@@ -366,12 +383,10 @@ sphinx:            ##  Create the user documentation with Sphinx.
 	@echo SPHINX_SOURCEDIR=${SPHINX_SOURCEDIR}
 	@echo ----------------------------------------------------------------------
 	${DELETE_SPHINX_1}
-	cd ${DOCUMENTATION_DIR}
 	${PIPENV} run sphinx-apidoc -o ${SPHINX_SOURCEDIR} ${PYTHONPATH}
 	${DELETE_SPHINX_2}
 	${PIPENV} run sphinx-build -M html ${SPHINX_SOURCEDIR} ${SPHINX_BUILDDIR}
-#	${PIPENV} run sphinx-build -b rinoh ${SPHINX_SOURCEDIR} ${SPHINX_BUILDDIR}/pdf
-	cd ..
+	${PIPENV} run sphinx-build -b rinoh ${SPHINX_SOURCEDIR} ${SPHINX_BUILDDIR}/pdf
 	@echo Info **********  End:   sphinx ***************************************
 
 sphinx-api:
