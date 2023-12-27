@@ -364,14 +364,11 @@ pytest-issue:       ## Run only the tests with pytest which are marked with 'iss
 	@echo ----------------------------------------------------------------------
 	${PIPENV} run pytest --cache-clear --capture=no --cov=${MODULE} --cov-report term-missing:skip-covered -m issue -rP -v -x tests
 	@echo Info **********  End:   pytest ***************************************
-pytest-module:      ## Run tests of specific module(s) with pytest - test_all & test_cfg_cls_setup & test_db_cls.
+pytest-module:      ## Run test of a specific module with pytest.
 	@echo Info **********  Start: pytest ***************************************
-	@echo PIPENV    =${PIPENV}
-	@echo PYTHONPATH=${PYTHONPATH}
+	@echo TESTMODULE=tests/$(module)
 	@echo ----------------------------------------------------------------------
-	${PIPENV} run pytest --version
-	@echo ----------------------------------------------------------------------
-	${PIPENV} run pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -v tests/test_db_cls_action.py
+	${PIPENV} run pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -v tests/$(module)
 	@echo Info **********  End:   pytest ***************************************
 
 sphinx:            ##  Create the user documentation with Sphinx.
