@@ -15,6 +15,6 @@
 /docs/build/pdf/manual.stylelog
 Pipfile.lock
 __pycache__
-coverage.xml
+coverage.lcov
 iotemplateapp.egg-info/
 resources/Gammadyne/timer.txt
