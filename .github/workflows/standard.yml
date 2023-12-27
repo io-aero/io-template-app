@@ -72,19 +72,21 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Install AWS CLI - Ubuntu
-        if: runner.os == 'Linux'
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install --update
+# ToDo: local run
+#      - name: Install AWS CLI - Ubuntu
+#        if: runner.os == 'Linux'
+#        run: |
+#          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#          unzip awscliv2.zip
+#          sudo ./aws/install
 
-      - name: Install AWS CLI - macOS
-        if: runner.os == 'macOS'
-        run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-macosx-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install --update
+# ToDo: local run
+#      - name: Install AWS CLI - macOS
+#        if: runner.os == 'macOS'
+#        run: |
+#          curl "https://awscli.amazonaws.com/awscli-exe-macosx-x86_64.zip" -o "awscliv2.zip"
+#          unzip awscliv2.zip
+#          sudo ./aws/install
 
       - name: Install dependencies - pipenv - prod
         if: ${{ env.CONDA != 'true' }}
