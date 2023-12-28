@@ -13,7 +13,7 @@ set ERRORLEVEL=
 if ["!ENV_FOR_DYNACONF!"] EQU [""] (
     set ENV_FOR_DYNACONF=prod
 )
-set PYTHONPATH=
+set PYTHONPATH=.
 
 echo.
 echo Script %0 is now running
