@@ -42,6 +42,7 @@ export COVERALLS_REPO_TOKEN=<see coveralls.io>
 export ENV_FOR_DYNACONF=test
 export MODULE=iotemplateapp
 export PYTHONPATH=${MODULE} scripts
+#export VERSION_PIPENV=v2023.7.23
 export VERSION_PYTHON=3.10
 
 ##                                                                            .
@@ -90,9 +91,9 @@ action-std:         ## Run the GitHub Actions locally: standard.
 	@echo Info **********  Start: action ***************************************
 	@echo Copy your .aws/creedentials to .aws_secrets
 	@echo ----------------------------------------------------------------------
-	$(ACT_INSTALL)
+	act --version
 	@echo ----------------------------------------------------------------------
-	act  --quiet --secret-file .act_secrets --var-file .act_vars --verbose
+	act  --quiet --secret-file .act_secrets --verbose
 	@echo Info **********  End:   action ***************************************
 
 # Bandit is a tool designed to find common security issues in Python code.
@@ -160,7 +161,7 @@ coveralls:          ## Run all the tests and upload the coverage data to coveral
 
 # Formats docstrings to follow PEP 257
 # https://github.com/PyCQA/docformatter
-# Configuration file: none
+# Configuration file: pyproject.toml
 docformatter:       ## Format the docstrings with docformatter.
 	@echo Info **********  Start: docformatter *********************************
 	@echo PIPENV    =${PIPENV}
@@ -168,8 +169,8 @@ docformatter:       ## Format the docstrings with docformatter.
 	@echo ----------------------------------------------------------------------
 	${PIPENV} run docformatter --version
 	@echo ----------------------------------------------------------------------
-	${PIPENV} run docformatter --in-place -r ${PYTHONPATH}
-	${PIPENV} run docformatter --in-place -r tests
+	${PIPENV} run docformatter -r ${PYTHONPATH}
+	${PIPENV} run docformatter -r tests
 	@echo Info **********  End:   docformatter *********************************
 
 # Flake8: Your Tool For Style Guide Enforcement.
@@ -255,6 +256,7 @@ pipenv-dev:         ## Install the package dependencies for development.
 	@echo PYTHON    =${PYTHON}
 	@echo ----------------------------------------------------------------------
 	${PYTHON} -m pip install --upgrade pip
+#	${PYTHON} -m pip install --upgrade pipenv==${VERSION_PIPENV}
 	${PYTHON} -m pip install --upgrade pipenv
 	${PYTHON} -m pip install --upgrade virtualenv
 	${DELETE_BUILD}
@@ -279,6 +281,7 @@ pipenv-prod:        ## Install the package dependencies for production.
 	@echo PYTHON             =${PYTHON}
 	@echo ----------------------------------------------------------------------
 	${PYTHON} -m pip install --upgrade pip
+#	${PYTHON} -m pip install --upgrade pipenv==${VERSION_PIPENV}
 	${PYTHON} -m pip install --upgrade pipenv
 	${PYTHON} -m pip install --upgrade virtualenv
 	${DELETE_BUILD}
