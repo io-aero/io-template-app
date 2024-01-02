@@ -125,6 +125,7 @@ def progress_msg(msg: str) -> None:
 
     Args:
         msg (str): Progress message
+
     """
     if io_config.settings.is_verbose:
         io_utils.progress_msg_core(msg)
@@ -139,6 +140,7 @@ def progress_msg_time_elapsed(duration: int, event: str) -> None:
     Args:
         duration (int): Time elapsed in ns.
         event (str): Event description.
+
     """
     io_utils.progress_msg_time_elapsed(duration, event)
 
@@ -151,6 +153,7 @@ def terminate_fatal(error_msg: str) -> None:
 
     Args:
         error_msg (str): Error message
+
     """
     io_utils.terminate_fatal(error_msg)
 
@@ -164,5 +167,6 @@ def version() -> str:
     Returns:
         str:
             The version number of the IO-XPA-DATA application
+
     """
     return glob.IO_TEMPLATE_APP_VERSION

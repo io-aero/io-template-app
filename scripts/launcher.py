@@ -32,9 +32,9 @@ def main(argv: list[str]) -> None:
     """Entry point.
 
     The processes to be carried out are selected via command line arguments.
-
     Args:
         argv (list[str]): Command line arguments.
+
     """
     # Start time measurement.
     start_time = time.time_ns()
