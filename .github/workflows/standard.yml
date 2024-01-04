@@ -8,7 +8,7 @@ env:
   IO_CONDA: 'false'
   IO_COVERALLS: 'false'
   IO_DOCKER: 'false'
-  IO_LOCAL: 'false'
+  IO_LOCAL: 'true'
   IO_PAGES: 'true'
 
 jobs:
