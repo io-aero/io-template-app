@@ -15,7 +15,7 @@ Furthermore, the use of an IDE or a text editor that can replace texts across fi
 
 As described [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template), the new repository my-app must first be created.
 
-### 2. Create a local copy of the new repositoy `my-app`
+### 2. Create a local copy of the new repository `my-app`
 
     git clone https://github.com/io-aero/my-app
 

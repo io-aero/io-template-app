@@ -2,7 +2,7 @@
 
 rem ----------------------------------------------------------------------------
 rem
-rem run_io_template_app.bat: Process IO-TEMPLATE-APP tasks.
+rem run_io_template_app_pytest.bat: Process IO-TEMPLATE-APP tasks.
 rem
 rem ----------------------------------------------------------------------------
 

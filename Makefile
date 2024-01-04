@@ -1,12 +1,13 @@
 .DEFAULT_GOAL := help
 
 ifeq ($(OS),Windows_NT)
-	export ACT_INSTALL=-@winget install nektos.act || echo "Already up to date"
 	export ALL_IO_TEMPLATE_APP_CHECKED_DIRS=iotemplateapp iotemplateapp\\tools iotemplateapp\\lidar tests
 	export ALL_IO_TEMPLATE_APP_CHECKED_FILES=iotemplateapp\\*.py iotemplateapp\\tools\\*.py iotemplateapp\\lidar\\*.py
 	export CREATE_DIST=if not exist dist mkdir dist
+	export CREATE_LIB=ren dist lib
 	export DELETE_BUILD=if exist build rd /s /q build
 	export DELETE_DIST=if exist dist rd /s /q dist
+	export DELETE_LIB=if exist lib rd /s /q lib
 	export DELETE_PIPFILE_LOCK=del /f /q Pipfile.lock
 	export DELETE_SPHINX_1=del /f /q docs\\build\\*
 	export DELETE_SPHINX_2=del /f /q docs\\source\\modules.rst
@@ -20,8 +21,10 @@ else
 	export ALL_IO_TEMPLATE_APP_CHECKED_DIRS=iotemplateapp tests
 	export ALL_IO_TEMPLATE_APP_CHECKED_FILES=iotemplateapp/*.py
 	export CREATE_DIST=mkdir -p dist
+	export CREATE_LIB=mv dist lib
 	export DELETE_BUILD=rm -rf build
 	export DELETE_DIST=rm -rf dist
+	export DELETE_LIB=rm -rf lib
 	export DELETE_PIPFILE_LOCK=rm -rf Pipfile.lock
 	export DELETE_SPHINX_1=rm -rf docs/build/* docs/source/sua.rst docs/source/sua.vector3d.rst
 	export DELETE_SPHINX_2=rm -rf docs/source/modules.rst
@@ -93,7 +96,7 @@ action-std:         ## Run the GitHub Actions locally: standard.
 	@echo ----------------------------------------------------------------------
 	act --version
 	@echo ----------------------------------------------------------------------
-	act  --quiet --secret-file .act_secrets --verbose
+	act  --quiet --secret-file .act_secrets --var IO_LOCAL='true' --verbose
 	@echo Info **********  End:   action ***************************************
 
 # Bandit is a tool designed to find common security issues in Python code.
@@ -169,8 +172,10 @@ docformatter:       ## Format the docstrings with docformatter.
 	@echo ----------------------------------------------------------------------
 	${PIPENV} run docformatter --version
 	@echo ----------------------------------------------------------------------
-	${PIPENV} run docformatter -r ${PYTHONPATH}
-	${PIPENV} run docformatter -r tests
+	${PIPENV} run docformatter --in-place -r ${PYTHONPATH}
+	${PIPENV} run docformatter --in-place -r tests
+#	${PIPENV} run docformatter -r ${PYTHONPATH}
+#	${PIPENV} run docformatter -r tests
 	@echo Info **********  End:   docformatter *********************************
 
 # Flake8: Your Tool For Style Guide Enforcement.
@@ -410,6 +415,8 @@ upload-io-aero:     ## Upload the distribution archive to io-aero-pypi.
 	${PYTHON} -m build
 	aws codeartifact login --tool twine --repository io-aero-pypi --domain io-aero --domain-owner 444046118275 --region us-east-1
 	${PYTHON} -m twine upload --repository codeartifact --verbose dist/*
+	${DELETE_LIB}
+	${CREATE_LIB}
 	@echo Info **********  End:   twine io-aero-pypi ***************************
 
 # twine: Collection of utilities for publishing packages on PyPI.
@@ -429,6 +436,8 @@ upload-pypi:        ## Upload the distribution archive to PyPi.
 	${PIPENV} run ${PYTHON} scripts\next_version.py
 	${PYTHON} -m build
 	${PYTHON} -m twine upload -p $(SECRET_PYPI) -u io-aero dist/*
+	${DELETE_LIB}
+	${CREATE_LIB}
 	@echo Info **********  End:   twine pypi ***********************************
 
 # twine: Collection of utilities for publishing packages on Test PyPI.
