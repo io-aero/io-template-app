@@ -16,7 +16,7 @@ Welcome to IO-TEMPLATE-APP
    :maxdepth: 1
    :caption: API Documentation
 
-   iotemplateapp
+   modules
 
 .. toctree::
    :maxdepth: 1
