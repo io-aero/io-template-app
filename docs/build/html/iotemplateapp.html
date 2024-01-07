@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Release Notes" href="release_notes.html" /><link rel="prev" title="Advanced Usage" href="advanced_usage.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Release Notes" href="release_notes.html" /><link rel="prev" title="iotemplateapp" href="modules.html" />
 
     <link rel="shortcut icon" href="_static/IO-Aero_1_Favicon.ico"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>iotemplateapp package - IO-TEMPLATE-APP ?-?-? documentation</title>
+        <title>iotemplateapp package - IO-TEMPLATE-APP 1-3-3 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">IO-TEMPLATE-APP ?-?-? documentation</div></a>
+      <a href="index.html"><div class="brand">IO-TEMPLATE-APP 1-3-3 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -167,7 +167,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">iotemplateapp package</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="modules.html">iotemplateapp</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of iotemplateapp</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">iotemplateapp package</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">About</span></p>
 <ul>
@@ -212,6 +215,87 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
+<section id="module-iotemplateapp.glob">
+<span id="iotemplateapp-glob-module"></span><h2>iotemplateapp.glob module<a class="headerlink" href="#module-iotemplateapp.glob" title="Link to this heading">#</a></h2>
+<p>Global constants and variables.</p>
+</section>
+<section id="module-iotemplateapp.templateapp">
+<span id="iotemplateapp-templateapp-module"></span><h2>iotemplateapp.templateapp module<a class="headerlink" href="#module-iotemplateapp.templateapp" title="Link to this heading">#</a></h2>
+<p>IO-TEMPLATE-APP interface.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.check_arg_task">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">check_arg_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Namespace</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.check_arg_task" title="Link to this definition">#</a></dt>
+<dd><p>Check the command line argument: -t / –task.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>args</strong> (<em>argparse.Namespace</em>) – Command line arguments.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.get_args">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">get_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.get_args" title="Link to this definition">#</a></dt>
+<dd><p>Load the command line arguments into the memory.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.initialise_logger">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">initialise_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.initialise_logger" title="Link to this definition">#</a></dt>
+<dd><p>Initialise the root logging functionality.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.progress_msg">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">progress_msg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.progress_msg" title="Link to this definition">#</a></dt>
+<dd><p>Create a progress message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>str</em>) – Progress message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.progress_msg_time_elapsed">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">progress_msg_time_elapsed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.progress_msg_time_elapsed" title="Link to this definition">#</a></dt>
+<dd><p>Create a time elapsed message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>int</em>) – Time elapsed in ns.</p></li>
+<li><p><strong>event</strong> (<em>str</em>) – Event description.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.terminate_fatal">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">terminate_fatal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.terminate_fatal" title="Link to this definition">#</a></dt>
+<dd><p>Terminate the application immediately.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>error_msg</strong> (<em>str</em>) – Error message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.version">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.version" title="Link to this definition">#</a></dt>
+<dd><p>Return the version number of the IO-XPA-DATA application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The version number of the IO-XPA-DATA application</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-iotemplateapp">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-iotemplateapp" title="Link to this heading">#</a></h2>
 <p>IO-TEMPLATE-APP.</p>
@@ -234,14 +318,14 @@
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="advanced_usage.html">
+          <a class="prev-page" href="modules.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Advanced Usage</div>
+                <div class="title">iotemplateapp</div>
                 
               </div>
             </a>
@@ -277,6 +361,17 @@
             <ul>
 <li><a class="reference internal" href="#">iotemplateapp package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-iotemplateapp.glob">iotemplateapp.glob module</a></li>
+<li><a class="reference internal" href="#module-iotemplateapp.templateapp">iotemplateapp.templateapp module</a><ul>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.check_arg_task"><code class="docutils literal notranslate"><span class="pre">check_arg_task()</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.get_args"><code class="docutils literal notranslate"><span class="pre">get_args()</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.initialise_logger"><code class="docutils literal notranslate"><span class="pre">initialise_logger()</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.progress_msg"><code class="docutils literal notranslate"><span class="pre">progress_msg()</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.progress_msg_time_elapsed"><code class="docutils literal notranslate"><span class="pre">progress_msg_time_elapsed()</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.terminate_fatal"><code class="docutils literal notranslate"><span class="pre">terminate_fatal()</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.version"><code class="docutils literal notranslate"><span class="pre">version()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-iotemplateapp">Module contents</a></li>
 </ul>
 </li>
@@ -289,7 +384,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=adb365ff"></script>
+</div><script src="_static/documentation_options.js?v=b2cb575b"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>
