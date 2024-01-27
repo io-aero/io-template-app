@@ -12,7 +12,7 @@ The project repository contains a ``scripts`` directory that includes operating 
 
 - **Windows**: The ``run_install_python.bat`` script is tailored for users on Windows systems. It is designed to be run in the Command Prompt and automates the Python installation process on Windows.
 
-These scripts are named according to the convention ``run_install_python.<ext>``, where ``<ext>`` corresponds to the script extension appropriate for the target operating system and shell environment (e.g., `.bat` for Windows, `.sh` for Ubuntu Bash, `.zsh` for macOS Zsh). Users are recommended to execute the script matching their OS to ensure an efficient Python setup.
+These scripts are named according to the convention ``run_install_python.<ext>``, where ``<ext>`` corresponds to the script extension appropriate for the target operating system and shell environment (e.g., `.bat` for Windows, `.sh` for Ubuntu Bash, `.zsh` for macOS). Users are recommended to execute the script matching their OS to ensure an efficient Python setup.
 
 AWS Command Line Interface
 --------------------------
@@ -52,6 +52,25 @@ The ``scripts`` directory contains scripts that assist with installing Docker De
 - **Windows**: For Windows users, it is recommended to download and install Docker Desktop using the traditional installer available at `Docker Desktop for Windows <https://www.docker.com/products/docker-desktop>`_. This approach guarantees the most stable version and is tailored to integrate seamlessly with Windows-specific features and configurations.
 
 Please select and execute the appropriate script for your operating system from the ``scripts`` directory. Windows users should follow the provided link to obtain the official installer for a guided installation experience.
+
+MS Access Database Engine
+-------------------------
+
+- **Windows**: The software can be downloaded from `here <https://www.microsoft.com/en-us/download/details.aspx?id=54920>`__\  and then installed according to the instructions provided.
+
+- **Ubuntu Bash Shell**: The necessary software can be downloaded with the package manager ``apt`` as follows:
+
+.. code-block:: bash
+
+    sudo apt-get update -y
+    sudo apt-get install -y unixodbc-dev
+
+- **macOS Zsh Shell**: The necessary software can be downloaded with the package manager ``Homebrew`` as follows:
+
+.. code-block:: zsh
+
+    brew update
+    brew install unixodbc
 
 DBeaver - optional
 ------------------

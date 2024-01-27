@@ -42,10 +42,10 @@ def _print_project_version():
 
     # Check if the version is found and print it
     if version:
-        print(f"IO-TEMPLATE-LIB version: {version}")
+        print(f"IO-TEMPLATE-APP version: {version}")
     else:
         # If the version isn't found, print an appropriate message
-        print("IO-TEMPLATE-LIB version not found in pyproject.toml")
+        print("IO-TEMPLATE-APP version not found in pyproject.toml")
 
 
 # -----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ def main(argv: list[str]) -> None:
     if templateapp.ARG_TASK == glob.ARG_TASK_VERSION:
         file.print_version_pkg_struct("iotemplateapp")
         file.print_pkg_structs(["iocommon"])
-	    _print_project_version()
+        _print_project_version()
     else:
         io_utils.terminate_fatal(
             # FATAL.00.926 The task '{task}' is invalid
