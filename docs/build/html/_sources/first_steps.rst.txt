@@ -266,7 +266,7 @@ Downloading Database Files (Optional)
 .....................................
 
 Database files can be downloaded from the IO-Aero Google Drive directory
-`io_aero_data/io-xpa/database/io_xpa_db` to your local repository directory `data`.
+`io_aero_data/TO DO/database/TO DO` to your local repository directory `data`.
 Before extracting, if a `postgres` directory exists within the `data` directory, it should be deleted.
 
 Follow these steps to manage the database files:
@@ -274,7 +274,7 @@ Follow these steps to manage the database files:
 a. Access the IO-Aero Google Drive Directory:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Navigate to the IO-Aero Google Drive and locate the directory `io_aero_data/io-xpa/database/io_xpa_db`.
+Navigate to the IO-Aero Google Drive and locate the directory `io_aero_data/TO DO/database/TO DO`.
 
 b. Download Database Files:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

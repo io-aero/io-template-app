@@ -10,7 +10,6 @@ from rinoh.frontend.rst import DocutilsInlineNode
 
 sys.path.insert(0, os.path.abspath("../../"))
 
-from iocommon import io_glob
 import importlib.metadata
 
 # -- Project information -----------------------------------------------------

@@ -8,7 +8,8 @@ Welcome to IO-TEMPLATE-APP
    introduction
    requirements
    installation
-   configuration
+   configuration_io_template_app
+   configuration_logging
    first_steps
    advanced_usage
 
@@ -24,7 +25,6 @@ Welcome to IO-TEMPLATE-APP
 
    release_notes
    LICENSE
-
 
 Indices and tables
 ==================
