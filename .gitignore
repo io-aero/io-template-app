@@ -5,6 +5,7 @@
 .pytest_cache/
 .settings.io_aero.toml
 /.act_secrets
+/build/
 /data/*_postgres.zip
 /data/postgres/
 /data/postgres_test/

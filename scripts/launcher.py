@@ -11,6 +11,7 @@ import logging
 import sys
 import time
 
+import tomli
 from iocommon import file
 from iocommon import io_glob
 from iocommon import io_logger
@@ -26,12 +27,35 @@ _LOCALE = "en_US.UTF-8"
 
 
 # -----------------------------------------------------------------------------
+# Print the version number from pyproject.toml.
+# -----------------------------------------------------------------------------
+def _print_project_version():
+    """Print the version number from pyproject.toml."""
+    # Open the pyproject.toml file in read mode
+    with open("pyproject.toml", "rb") as toml_file:
+        # Use toml.load() to parse the file and store the data in a dictionary
+        pyproject = tomli.load(toml_file)
+
+    # Extract the version information
+    # This method safely handles cases where the key might not exist
+    version = pyproject.get("project", {}).get("version")
+
+    # Check if the version is found and print it
+    if version:
+        print(f"IO-TEMPLATE-LIB version: {version}")
+    else:
+        # If the version isn't found, print an appropriate message
+        print("IO-TEMPLATE-LIB version not found in pyproject.toml")
+
+
+# -----------------------------------------------------------------------------
 # Initialising the logging functionality.
 # -----------------------------------------------------------------------------
 def main(argv: list[str]) -> None:
     """Entry point.
 
     The processes to be carried out are selected via command line arguments.
+
     Args:
         argv (list[str]): Command line arguments.
 
@@ -66,8 +90,9 @@ def main(argv: list[str]) -> None:
 
     # Perform the processing
     if templateapp.ARG_TASK == glob.ARG_TASK_VERSION:
-        # file.print_version_pkg_struct("iotemplateapp")
+        file.print_version_pkg_struct("iotemplateapp")
         file.print_pkg_structs(["iocommon"])
+	    _print_project_version()
     else:
         io_utils.terminate_fatal(
             # FATAL.00.926 The task '{task}' is invalid

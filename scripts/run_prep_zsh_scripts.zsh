@@ -4,7 +4,7 @@ set -e
 
 # ------------------------------------------------------------------------------
 #
-# run_prep_bash_scripts.sh: Configure EOL and execution rights.
+# run_prep_bash_scripts.zsh: Configure EOL and execution rights.
 #
 # ------------------------------------------------------------------------------
 
@@ -30,11 +30,13 @@ then
     brew install dos2unix
 fi
 
-chmod +x ./*.sh
-chmod +x ./*/*.sh
+# Set execute permissions on .sh files
+chmod +x *.zsh
+chmod +x */*.zsh
 
-dos2unix ./*.sh
-dos2unix ./*/*.sh
+# Convert EOL characters from Windows to Unix style
+dos2unix *.zsh
+dos2unix */*.zsh
 
 echo "--------------------------------------------------------------------------"
 date +"DATE TIME : %d.%m.%Y %H:%M:%S"

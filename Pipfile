@@ -1,6 +1,9 @@
 [packages]
 iocommon = "*"
 iotemplatelib = "*"
+PyYAML = "*"
+tomli = "*"
+tomli-w = "*"
 
 [dev-packages]
 bandit = "*"
@@ -26,7 +29,9 @@ pytest-random-order = "*"
 rinohtype = "*"
 sphinx = "*"
 sphinx-autodoc-typehints = "*"
+types-pyyaml = "*"
 types-setuptools = "*"
+types-toml = "*"
 wheel = "*"
 
 [requires]

@@ -1,4 +1,4 @@
-# IO-TEMPLATE-APPS - File Directory **`.github/workflows`**
+# IO-TEMPLATE-APP - File Directory **`.github/workflows`**
 
 This directory contains the following GitHub Action workflow:
 
