@@ -1,7 +1,7 @@
 Requirements
 ============
 
-The required software is listed below. 
+The required software is listed below.
 Regarding the corresponding software versions, you will find the detailed information in the
 `Release Notes <https://github.com/io-aero/io-template-app/blob/main/docs/release_notes.md>`__\.
 
@@ -70,7 +70,7 @@ Utilizing Miniconda ensures that you have the necessary Conda environment with t
 `MS Access Database Engine <https://www.microsoft.com/en-us/download/details.aspx?id=54920>`__\
 -----------------------------------------------------------------------------------------------
 
-This Software consists of a set of components that facilitate the transfer of data between existing Microsoft Office files such as Microsoft Office Access (\*.mdb and \*.accdb) files and Microsoft Office Excel (*.xls, *.xlsx, and *.xlsb) files to other data sources.
+This Software consists of a set of components that facilitate the transfer of data between existing Microsoft Office files such as Microsoft Office Access (\*.mdb and \*.accdb) files and Microsoft Office Excel (\*.xls, \*.xlsx, and \*.xlsb) files to other data sources.
 Connectivity to existing text files is also supported.
 
 `DBeaver Community <https://dbeaver.io>`__\  - optional
