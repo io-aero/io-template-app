@@ -4,10 +4,10 @@ iotemplateapp package
 Submodules
 ----------
 
-iotemplateapp.glob module
--------------------------
+iotemplateapp.glob\_local module
+--------------------------------
 
-.. automodule:: iotemplateapp.glob
+.. automodule:: iotemplateapp.glob_local
    :members:
    :undoc-members:
    :show-inheritance:
