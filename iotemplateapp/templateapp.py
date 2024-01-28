@@ -13,7 +13,7 @@ from iocommon import io_glob
 from iocommon import io_logger
 from iocommon import io_utils
 
-from iotemplateapp import glob
+from iotemplateapp import glob_local
 
 # -----------------------------------------------------------------------------
 # Global variables.
@@ -40,14 +40,14 @@ def check_arg_task(args: argparse.Namespace) -> None:
     if not (
         ARG_TASK
         in [
-            glob.ARG_TASK_VERSION,
+            glob_local.ARG_TASK_VERSION,
         ]
     ):
         terminate_fatal(
             "The specified task '"
             + ARG_TASK
             + "' is neither '"
-            + glob.ARG_TASK_VERSION
+            + glob_local.ARG_TASK_VERSION
             + f"': {args.task}",
         )
 
@@ -82,7 +82,7 @@ def get_args() -> None:
         "-t",
         "--task",
         help="the task to execute: '"
-        + glob.ARG_TASK_VERSION
+        + glob_local.ARG_TASK_VERSION
         + "' (Show the current version of IO-IO-XPA-DATA)",
         metavar="task",
         required=True,
@@ -101,7 +101,7 @@ def get_args() -> None:
     # --------------------------------------------------------------------------
     # INFO.00.005 Arguments {task}='{value_task}'
     progress_msg(
-        glob.INFO_00_005.replace("{task}", glob.ARG_TASK).replace(
+        glob_local.INFO_00_005.replace("{task}", glob_local.ARG_TASK).replace(
             "{value_task}", parsed_args.task
         ),
     )
@@ -169,4 +169,4 @@ def version() -> str:
             The version number of the IO-XPA-DATA application
 
     """
-    return glob.IO_TEMPLATE_APP_VERSION
+    return glob_local.IO_TEMPLATE_APP_VERSION

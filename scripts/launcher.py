@@ -17,7 +17,7 @@ from iocommon import io_glob
 from iocommon import io_logger
 from iocommon import io_utils
 
-from iotemplateapp import glob
+from iotemplateapp import glob_local
 from iotemplateapp import templateapp
 
 # -----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ def main(argv: list[str]) -> None:
     # Provide progress messages.
     io_utils.progress_msg("=" * 79)
     # INFO.00.004 Start Launcher.
-    io_utils.progress_msg(glob.INFO_00_004)
+    io_utils.progress_msg(glob_local.INFO_00_004)
 
     # Initialise the logging functionality.
     io_logger.initialise_logger()
@@ -79,7 +79,7 @@ def main(argv: list[str]) -> None:
     logger.info("Start launcher.py")
 
     try:
-        locale.setlocale(locale.LC_ALL, glob.LOCALE)
+        locale.setlocale(locale.LC_ALL, glob_local.LOCALE)
     except locale.Error:
         locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
@@ -89,14 +89,14 @@ def main(argv: list[str]) -> None:
     templateapp.get_args()
 
     # Perform the processing
-    if templateapp.ARG_TASK == glob.ARG_TASK_VERSION:
+    if templateapp.ARG_TASK == glob_local.ARG_TASK_VERSION:
         file.print_version_pkg_struct("iotemplateapp")
         file.print_pkg_structs(["iocommon"])
         _print_project_version()
     else:
         io_utils.terminate_fatal(
             # FATAL.00.926 The task '{task}' is invalid
-            glob.FATAL_00_926.replace("{task}", templateapp.ARG_TASK)
+            glob_local.FATAL_00_926.replace("{task}", templateapp.ARG_TASK)
         )
 
     io_utils.progress_msg("-" * 79)
@@ -108,7 +108,7 @@ def main(argv: list[str]) -> None:
     )
 
     # INFO.00.006 End   Launcher
-    io_utils.progress_msg(glob.INFO_00_006)
+    io_utils.progress_msg(glob_local.INFO_00_006)
     io_utils.progress_msg("=" * 79)
 
     logger.debug(io_glob.LOGGER_END)
