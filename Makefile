@@ -10,7 +10,6 @@ ifeq ($(OS),Windows_NT)
 	export DELETE_LIB=if exist lib rd /s /q lib
 	export DELETE_PIPFILE_LOCK=del /f /q Pipfile.lock
 	export DELETE_SPHINX_1=del /f /q docs\\build\\*
-	export DELETE_SPHINX_2=del /f /q docs\\source\\iotemplateapp.rst docs\\source\\modules.rst
 	export OPTION_NUITKA=
 	export PYTHON=py
 	export SHELL=cmd
@@ -26,7 +25,6 @@ else
 	export DELETE_LIB=rm -rf lib
 	export DELETE_PIPFILE_LOCK=rm -rf Pipfile.lock
 	export DELETE_SPHINX_1=rm -rf docs/build/* docs/source/sua.rst docs/source/sua.vector3d.rst
-	export DELETE_SPHINX_2=rm -rf docs/source/iotemplateapp.rst docs/source/modules.rst
 	export OPTION_NUITKA=--disable-ccache
 	export PYTHON=python3
 	export SHELL=/bin/bash
@@ -138,10 +136,11 @@ compileall:         ## Byte-compile the Python libraries.
 # Configuration file: none
 conda:              ## Create a new environment.
 	@echo Info **********  Start: Miniconda create environment *****************
+	conda config --set always_yes true
 	conda update conda
 	conda --version
 	@echo ----------------------------------------------------------------------
-	conda install --yes -c conda-forge ${CONDA_PACKAGES}
+	conda install -c conda-forge ${CONDA_PACKAGES}
 	@echo ----------------------------------------------------------------------
 	conda list
 	conda info --envs
@@ -370,14 +369,11 @@ pytest-module:      ## Run test of a specific module with pytest.
 sphinx:            ##  Create the user documentation with Sphinx.
 	@echo Info **********  Start: sphinx ***************************************
 	@echo DELETE_SPHINX_1 =${DELETE_SPHINX_1}
-	@echo DELETE_SPHINX_2 =${DELETE_SPHINX_2}
 	@echo SPHINX_BUILDDIR =${SPHINX_BUILDDIR}
 	@echo SPHINX_SOURCEDIR=${SPHINX_SOURCEDIR}
 	@echo ----------------------------------------------------------------------
 	${DELETE_SPHINX_1}
-	${DELETE_SPHINX_2}
 	pip install .
-	pipenv run sphinx-apidoc -o ${SPHINX_SOURCEDIR} ${PYTHONPATH}
 	pipenv run sphinx-build -M html ${SPHINX_SOURCEDIR} ${SPHINX_BUILDDIR}
 	pipenv run sphinx-build -b rinoh ${SPHINX_SOURCEDIR} ${SPHINX_BUILDDIR}/pdf
 	@echo Info **********  End:   sphinx ***************************************
