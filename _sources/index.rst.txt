@@ -1,9 +1,11 @@
 Welcome to IO-TEMPLATE-APP
 ==========================
 
+General Documentation
+---------------------
+
 .. toctree::
    :maxdepth: 1
-   :caption: General Documentation
 
    introduction
    requirements
@@ -13,24 +15,14 @@ Welcome to IO-TEMPLATE-APP
    first_steps
    advanced_usage
 
-.. toctree::
-   :maxdepth: 1
-   :caption: API Documentation
-
-   modules
+About
+-----
 
 .. toctree::
    :maxdepth: 1
-   :caption: About
 
    release_notes
    LICENSE
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
 
 Repository
 ..........
