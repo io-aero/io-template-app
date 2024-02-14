@@ -10,7 +10,6 @@ ifeq ($(OS),Windows_NT)
 	export DELETE_LIB=if exist lib rd /s /q lib
 	export DELETE_PIPFILE_LOCK=del /f /q Pipfile.lock
 	export DELETE_SPHINX_1=del /f /q docs\\build\\*
-	export GH_PAGES_SOURCEDIR=docs\build\html
 	export OPTION_NUITKA=
 	export PYTHON=py
 	export SHELL=cmd
@@ -26,7 +25,6 @@ else
 	export DELETE_LIB=rm -rf lib
 	export DELETE_PIPFILE_LOCK=rm -rf Pipfile.lock
 	export DELETE_SPHINX_1=rm -rf docs/build/* docs/source/sua.rst docs/source/sua.vector3d.rst
-	export GH_PAGES_SOURCEDIR=docs/build/html
 	export OPTION_NUITKA=--disable-ccache
 	export PYTHON=python3
 	export SHELL=/bin/bash
@@ -41,7 +39,6 @@ export CONDA_ARG=
 
 export COVERALLS_REPO_TOKEN=<see coveralls.io>
 export ENV_FOR_DYNACONF=test
-export GH_PAGES_BRANCH=gh-pages
 export MODULE=iotemplateapp
 export PYTHONPATH=${MODULE} scripts
 #export VERSION_PIPENV=v2023.7.23
@@ -79,8 +76,6 @@ final: format lint docs tests
 format: isort black docformatter
 ## lint:               Lint the code with Bandit, Flake8, Pylint and Mypy.
 lint: bandit flake8 pylint mypy
-## pages:              Create the documentation and update the GitHub pages.
-pages: docs gh-pages
 ## tests:              Run all tests with pytest.
 tests: pytest
 ## -----------------------------------------------------------------------------
@@ -188,27 +183,6 @@ flake8:             ## Enforce the Python Style Guides with Flake8.
 	@echo ----------------------------------------------------------------------
 	pipenv run flake8 ${PYTHONPATH} tests
 	@echo Info **********  End:   Flake8 ***************************************
-
-# Upload Documentation to GitHub Pages
-gh-pages:           ## Upload the generated documentation to GitHub Pages.
-	@echo Info **********  Start: Upload to GitHub Pages ***********************
-ifeq ($(OS),Windows_NT)
-	@if exist .gh-pages-temp rmdir /s /q .gh-pages-temp
-	git clone -b gh-pages https://github.com/io-aero/io-template-app .gh-pages-temp
-	-@cd .gh-pages-temp && del /f /q /s *.* && cd ..
-	xcopy /E /I /Y "$(GH_PAGES_SOURCEDIR)" .gh-pages-temp
-	cd .gh-pages-temp && git add --all && git commit -m "Update documentation" && git push origin gh-pages
-else
-	rm -rf .gh-pages-temp
-	git clone -b gh-pages https://github.com/io-aero/io-template-app .gh-pages-temp
-	rm -rf .gh-pages-temp/*
-	cp -r $(GH_PAGES_SOURCEDIR)/* .gh-pages-temp/
-	cd .gh-pages-temp && git add --all && git commit -m "Update documentation" && git push origin gh-pages
-endif
-	git add --all && \
-	git commit -m "Update documentation" && \
-	git push origin $(GH_PAGES_BRANCH)
-	@echo Info **********  End:   Upload to GitHub Pages ***********************
 
 # isort your imports, so you don't have to.
 # https://github.com/PyCQA/isort
