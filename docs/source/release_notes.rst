@@ -65,10 +65,6 @@ Applied Software
      - 23.3.1
      -
      -
-   * - PostgreSQL
-     - 16.1
-     -
-     -
    * - Python
      - 3.10.11
      -
