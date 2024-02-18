@@ -4,6 +4,7 @@ iotemplatelib = "*"
 PyYAML = "*"
 tomli = "*"
 tomli-w = "*"
+virtualenv = "*"
 
 [dev-packages]
 bandit = "*"
