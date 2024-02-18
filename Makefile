@@ -119,9 +119,9 @@ compileall:         ## Byte-compile the Python libraries.
 	@echo Info **********  Start: Compile All Python Scripts *******************
 	@echo PYTHON=${PYTHON}
 	@echo ----------------------------------------------------------------------
-	${PYTHON} --version
+	pipenv run ${PYTHON} --version
 	@echo ----------------------------------------------------------------------
-	${PYTHON} -m compileall
+	pipenv run ${PYTHON} -m compileall
 	@echo Info **********  End:   Compile All Python Scripts *******************
 
 # Miniconda - Minimal installer for conda.
@@ -238,10 +238,10 @@ pipenv-dev:         ## Install the package dependencies for development.
 	@echo ----------------------------------------------------------------------
 	pipenv run pip freeze
 	@echo ----------------------------------------------------------------------
-	${PYTHON} --version
+	pipenv run ${PYTHON} --version
 	$(PIP) --version
 	pipenv --version
-	${PYTHON} -m virtualenv --version
+	pipenv run ${PYTHON} -m virtualenv --version
 	@echo Info **********  End:   Installation of Development Packages *********
 # ToDo: If Conda needed.
 # pipenv-prod-int:    ## Install the package dependencies for production.
@@ -263,10 +263,10 @@ pipenv-prod:        ## Install the package dependencies for production.
 	@echo ----------------------------------------------------------------------
 	pipenv run pip freeze
 	@echo ----------------------------------------------------------------------
-	${PYTHON} --version
+	pipenv run ${PYTHON} --version
 	$(PIP) --version
 	pipenv --version
-	${PYTHON} -m virtualenv --version
+	pipenv run ${PYTHON} -m virtualenv --version
 	@echo Info **********  End:   Installation of Production Packages **********
 
 # pydocstyle - docstring style checker.
