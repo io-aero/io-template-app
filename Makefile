@@ -1,41 +1,42 @@
 .DEFAULT_GOAL := help
 
+MODULE=iotemplateapp
+
 ifeq ($(OS),Windows_NT)
-	export ALL_IO_TEMPLATE_APP_CHECKED_DIRS=iotemplateapp iotemplateapp\\tools iotemplateapp\\lidar tests
-	export ALL_IO_TEMPLATE_APP_CHECKED_FILES=iotemplateapp\\*.py iotemplateapp\\tools\\*.py iotemplateapp\\lidar\\*.py
-	export DELETE_BUILD=if exist build rd /s /q build
-	export DELETE_PIPFILE_LOCK=del /f /q Pipfile.lock
-	export DELETE_SPHINX=del /f /q docs\\build\\*
-	export PIP=pip
-	export PYTHON=py
-	export SHELL=cmd
-	export SPHINX_BUILDDIR=docs\\build
-	export SPHINX_SOURCEDIR=docs\\source
+	COPY_MYPY_STUBGEN=xcopy /y out\\$(MODULE)\\*.* .\\$(MODULE)\\
+	DELETE_BUILD=if exist build rd /s /q build
+	DELETE_MYPY_STUBGEN=if exist out rd /s /q out
+	DELETE_PIPFILE_LOCK=del /f /q Pipfile.lock
+	DELETE_SPHINX=del /f /q docs\\build\\*
+	PIP=pip
+	PYTHON=py
+	SHELL=cmd
+	SPHINX_BUILDDIR=docs\\build
+	SPHINX_SOURCEDIR=docs\\source
 else
-	export ALL_IO_TEMPLATE_APP_CHECKED_DIRS=iotemplateapp tests
-	export ALL_IO_TEMPLATE_APP_CHECKED_FILES=iotemplateapp/*.py
-	export DELETE_BUILD=rm -rf build
-	export DELETE_PIPFILE_LOCK=rm -rf Pipfile.lock
-	export DELETE_SPHINX=rm -rf docs/build/* docs/source/sua.rst docs/source/sua.vector3d.rst
-	export PIP=pip3
-	export PYTHON=python3
-	export SHELL=/bin/bash
-	export SPHINX_BUILDDIR=docs/build
-	export SPHINX_SOURCEDIR=docs/source
+	COPY_MYPY_STUBGEN=cp -f out/$(MODULE)/* ./$(MODULE)/
+	DELETE_BUILD=rm -rf build
+	DELETE_MYPY_STUBGEN=rm -rf out
+	DELETE_PIPFILE_LOCK=rm -rf Pipfile.lock
+	DELETE_SPHINX=rm -rf docs/build/* docs/source/sua.rst docs/source/sua.vector3d.rst
+	PIP=pip3
+	PYTHON=python3
+	SHELL=/bin/bash
+	SPHINX_BUILDDIR=docs/build
+	SPHINX_SOURCEDIR=docs/source
 endif
 
 # ToDo: If Conda needed.
-export CONDA_PACKAGES=gdal pdal python-pdal rasterio
-export CONDA_ARG=--site-packages
-export CONDA_ARG=
+CONDA_PACKAGES=gdal pdal python-pdal rasterio
+CONDA_ARG=--site-packages
+CONDA_ARG=
+COVERALLS_REPO_TOKEN=<see coveralls.io>
+PYTHONPATH=${MODULE} scripts
+#VERSION_PIPENV=v2023.7.23
+VERSION_PYTHON=3.10
 
-export COVERALLS_REPO_TOKEN=<see coveralls.io>
 export ENV_FOR_DYNACONF=test
 export LANG=en_US.UTF-8
-export MODULE=iotemplateapp
-export PYTHONPATH=${MODULE} scripts
-#export VERSION_PIPENV=v2023.7.23
-export VERSION_PYTHON=3.10
 
 ##                                                                            .
 ## =============================================================================
@@ -119,9 +120,9 @@ compileall:         ## Byte-compile the Python libraries.
 	@echo Info **********  Start: Compile All Python Scripts *******************
 	@echo PYTHON=${PYTHON}
 	@echo ----------------------------------------------------------------------
-	pipenv run ${PYTHON} --version
+	pipenv run python --version
 	@echo ----------------------------------------------------------------------
-	pipenv run ${PYTHON} -m compileall
+	pipenv run python -m compileall
 	@echo Info **********  End:   Compile All Python Scripts *******************
 
 # Miniconda - Minimal installer for conda.
@@ -203,13 +204,14 @@ mypy:               ## Find typing issues with Mypy.
 
 mypy-stubgen:       ## Autogenerate stub files
 	@echo Info **********  Start: Mypy *****************************************
-	@echo ALL_IO_TEMPLATE_APP_CHECKED_DIRS=${ALL_IO_TEMPLATE_APP_CHECKED_DIRS}
+	@echo COPY_MYPY_STUBGEN  =${COPY_MYPY_STUBGEN}
+	@echo DELETE_MYPY_STUBGEN=${DELETE_MYPY_STUBGEN}
+	@echo MODULE             =${MODULE}
 	@echo ----------------------------------------------------------------------
-	pipenv run stubgen ${ALL_IO_TEMPLATE_APP_CHECKED_FILES}
-	mv out/iotemplateapp/*.pyi iotemplateapp/
-	mv out/iotemplateapp/tools/*.pyi iotemplateapp/tools/
-	mv out/iotemplateapp/lidar/*.pyi iotemplateapp/lidar/
-	rm -rf out
+	${DELETE_MYPY_STUBGEN}
+	pipenv run stubgen --package ${MODULE}
+	${COPY_MYPY_STUBGEN}
+	${DELETE_MYPY_STUBGEN}
 	@echo Info **********  End:   Mypy *****************************************
 
 # $(PIP) is the package installer for Python.
@@ -238,10 +240,10 @@ pipenv-dev:         ## Install the package dependencies for development.
 	@echo ----------------------------------------------------------------------
 	pipenv run pip freeze
 	@echo ----------------------------------------------------------------------
-	pipenv run ${PYTHON} --version
+	pipenv run python --version
 	$(PIP) --version
 	pipenv --version
-	pipenv run ${PYTHON} -m virtualenv --version
+	pipenv run python -m virtualenv --version
 	@echo Info **********  End:   Installation of Development Packages *********
 # ToDo: If Conda needed.
 # pipenv-prod-int:    ## Install the package dependencies for production.
@@ -263,10 +265,10 @@ pipenv-prod:        ## Install the package dependencies for production.
 	@echo ----------------------------------------------------------------------
 	pipenv run pip freeze
 	@echo ----------------------------------------------------------------------
-	pipenv run ${PYTHON} --version
+	pipenv run python --version
 	$(PIP) --version
 	pipenv --version
-	pipenv run ${PYTHON} -m virtualenv --version
+	pipenv run python -m virtualenv --version
 	@echo Info **********  End:   Installation of Production Packages **********
 
 # pydocstyle - docstring style checker.

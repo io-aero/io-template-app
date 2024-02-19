@@ -1,0 +1,13 @@
+from _typeshed import Incomplete
+
+ARG_TASK: str
+ARG_TASK_CHOICE: str
+ARG_TASK_VERSION: str
+CHECK_VALUE_TEST: Incomplete
+FATAL_00_926: str
+INFO_00_004: str
+INFO_00_005: str
+INFO_00_006: str
+INFORMATION_NOT_YET_AVAILABLE: str
+IO_TEMPLATE_APP_VERSION: str
+LOCALE: str
