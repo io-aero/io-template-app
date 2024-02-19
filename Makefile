@@ -18,7 +18,7 @@ else
 	DELETE_BUILD=rm -rf build
 	DELETE_MYPY_STUBGEN=rm -rf out
 	DELETE_PIPFILE_LOCK=rm -rf Pipfile.lock
-	DELETE_SPHINX=rm -rf docs/build/* docs/source/sua.rst docs/source/sua.vector3d.rst
+	DELETE_SPHINX=rm -rf docs/build/*
 	PIP=pip3
 	PYTHON=python3
 	SHELL=/bin/bash
