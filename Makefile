@@ -7,23 +7,23 @@ ifeq ($(OS),Windows_NT)
 	DELETE_BUILD=if exist build rd /s /q build
 	DELETE_MYPY_STUBGEN=if exist out rd /s /q out
 	DELETE_PIPFILE_LOCK=del /f /q Pipfile.lock
-	DELETE_SPHINX=del /f /q docs\\build\\*
 	PIP=pip
 	PYTHON=py
 	SHELL=cmd
 	SPHINX_BUILDDIR=docs\\build
 	SPHINX_SOURCEDIR=docs\\source
+	DELETE_SPHINX=del /f /q $(SPHINX_BUILDDIR)\\*
 else
 	COPY_MYPY_STUBGEN=cp -f out/$(MODULE)/* ./$(MODULE)/
 	DELETE_BUILD=rm -rf build
 	DELETE_MYPY_STUBGEN=rm -rf out
 	DELETE_PIPFILE_LOCK=rm -rf Pipfile.lock
-	DELETE_SPHINX=rm -rf docs/build/* docs/source/sua.rst docs/source/sua.vector3d.rst
 	PIP=pip3
 	PYTHON=python3
 	SHELL=/bin/bash
 	SPHINX_BUILDDIR=docs/build
 	SPHINX_SOURCEDIR=docs/source
+	DELETE_SPHINX=rm -rf $(SPHINX_BUILDDIR)/*
 endif
 
 # ToDo: If Conda needed.
