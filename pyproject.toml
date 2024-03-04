@@ -82,3 +82,7 @@ iotemplateapp = [
     "*.pyi",
     "py.typed",
 ]
+
+[tool.vulture]
+make_whitelist = true
+min_confidence = 100

@@ -33,6 +33,7 @@ sphinx-autodoc-typehints = "*"
 types-pyyaml = "*"
 types-setuptools = "*"
 types-toml = "*"
+vulture = "*"
 wheel = "*"
 
 [requires]
