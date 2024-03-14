@@ -72,7 +72,16 @@ To install Docker Desktop, run:
 
     ./scripts/run_install_docker.zsh
 
-f. Optionally Install DBeaver
+f. Install Terraform
+~~~~~~~~~~~~~~~~~~~~
+
+To install Docker Desktop, run:
+
+.. code-block:: bash
+
+    ./scripts/run_install_terraform.zsh
+
+g. Optionally Install DBeaver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If needed, install DBeaver using the following script:
@@ -81,7 +90,7 @@ If needed, install DBeaver using the following script:
 
     ./scripts/run_install_dbeaver.zsh
 
-g. Close the Terminal Window
+h. Close the Terminal Window
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Once all installations are complete, close the terminal window.
@@ -130,13 +139,24 @@ Use the following script to install Miniconda and set the right Python version:
 e. Install Docker Desktop
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+This step is not required for WSL (Windows Subsystem for Linux) if Decker Desktop is installed in Windows and this is configured for WSL 2 based engine.
+
 To install Docker Desktop, run:
 
 .. code-block:: bash
 
     ./scripts/run_install_docker.sh
 
-f. Optionally Install DBeaver
+f. Install Terraform
+~~~~~~~~~~~~~~~~~~~~
+
+To install Docker Desktop, run:
+
+.. code-block:: bash
+
+    ./scripts/run_install_terraform.sh
+
+g. Optionally Install DBeaver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If needed, install DBeaver using the following script:
@@ -145,7 +165,7 @@ If needed, install DBeaver using the following script:
 
     ./scripts/run_install_dbeaver.sh
 
-g. Close the Terminal Window
+h. Close the Terminal Window
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Once all installations are complete, close the terminal window.
@@ -196,7 +216,16 @@ To install Docker Desktop, download the software from here:
 
 and follow the installation instructions.
 
-f. Optionally Install DBeaver
+f. Install Terraform
+~~~~~~~~~~~~~~~~~~~~
+
+To install Terraform, download the software from here:
+
+    https://developer.hashicorp.com/terraform/install?product_intent=terraform
+
+and follow the installation instructions.
+
+g. Optionally Install DBeaver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If needed, install DBeaver, download the software from here:
