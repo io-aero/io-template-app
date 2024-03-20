@@ -12,27 +12,25 @@ import sys
 import time
 
 import tomli
-from iocommon import file
-from iocommon import io_glob
-from iocommon import io_logger
-from iocommon import io_utils
+from iocommon import file, io_glob, io_logger, io_utils
 
-from iotemplateapp import glob_local
-from iotemplateapp import templateapp
+from iotemplateapp import glob_local, templateapp
 
 # -----------------------------------------------------------------------------
 # Global variables.
 # -----------------------------------------------------------------------------
 _LOCALE = "en_US.UTF-8"
 
+logger = logging.getLogger(__name__)
+
 
 # -----------------------------------------------------------------------------
 # Print the version number from pyproject.toml.
 # -----------------------------------------------------------------------------
-def _print_project_version():
+def _print_project_version() -> None:
     """Print the version number from pyproject.toml."""
     # Open the pyproject.toml file in read mode
-    with open("pyproject.toml", "rb") as toml_file:
+    with open("pyproject.toml", "rb") as toml_file:  # noqa: PTH123
         # Use toml.load() to parse the file and store the data in a dictionary
         pyproject = tomli.load(toml_file)
 
@@ -42,10 +40,10 @@ def _print_project_version():
 
     # Check if the version is found and print it
     if version:
-        print(f"IO-TEMPLATE-APP version: {version}")
+        logger.info("IO-TEMPLATE-APP version: %s", version)
     else:
         # If the version isn't found, print an appropriate message
-        print("IO-TEMPLATE-APP version not found in pyproject.toml")
+        logger.fatal("IO-TEMPLATE-APP version not found in pyproject.toml")
 
 
 # -----------------------------------------------------------------------------
@@ -57,6 +55,7 @@ def main(argv: list[str]) -> None:
     The processes to be carried out are selected via command line arguments.
 
     Args:
+    ----
         argv (list[str]): Command line arguments.
 
     """
@@ -70,8 +69,6 @@ def main(argv: list[str]) -> None:
 
     # Initialise the logging functionality.
     io_logger.initialise_logger()
-
-    logger = logging.getLogger(__name__)
 
     logger.debug(io_glob.LOGGER_START)
     logger.info("param argv=%s", argv)
@@ -96,7 +93,7 @@ def main(argv: list[str]) -> None:
     else:
         io_utils.terminate_fatal(
             # FATAL.00.926 The task '{task}' is invalid
-            glob_local.FATAL_00_926.replace("{task}", templateapp.ARG_TASK)
+            glob_local.FATAL_00_926.replace("{task}", templateapp.ARG_TASK),
         )
 
     io_utils.progress_msg("-" * 79)
