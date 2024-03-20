@@ -8,10 +8,7 @@ from __future__ import annotations
 import argparse
 import logging
 
-from iocommon import io_config
-from iocommon import io_glob
-from iocommon import io_logger
-from iocommon import io_utils
+from iocommon import io_config, io_glob, io_logger, io_utils
 
 from iotemplateapp import glob_local
 
@@ -31,18 +28,17 @@ def check_arg_task(args: argparse.Namespace) -> None:
     """Check the command line argument: -t / --task.
 
     Args:
+    ----
         args (argparse.Namespace): Command line arguments.
+
     """
     global ARG_TASK  # pylint: disable=global-statement
 
     ARG_TASK = args.task.lower()
 
-    if not (
-        ARG_TASK
-        in [
-            glob_local.ARG_TASK_VERSION,
-        ]
-    ):
+    if ARG_TASK not in [
+        glob_local.ARG_TASK_VERSION,
+    ]:
         terminate_fatal(
             "The specified task '"
             + ARG_TASK
@@ -102,7 +98,8 @@ def get_args() -> None:
     # INFO.00.005 Arguments {task}='{value_task}'
     progress_msg(
         glob_local.INFO_00_005.replace("{task}", glob_local.ARG_TASK).replace(
-            "{value_task}", parsed_args.task
+            "{value_task}",
+            parsed_args.task,
         ),
     )
 
@@ -124,6 +121,7 @@ def progress_msg(msg: str) -> None:
     """Create a progress message.
 
     Args:
+    ----
         msg (str): Progress message
 
     """
@@ -138,6 +136,7 @@ def progress_msg_time_elapsed(duration: int, event: str) -> None:
     """Create a time elapsed message.
 
     Args:
+    ----
         duration (int): Time elapsed in ns.
         event (str): Event description.
 
@@ -152,6 +151,7 @@ def terminate_fatal(error_msg: str) -> None:
     """Terminate the application immediately.
 
     Args:
+    ----
         error_msg (str): Error message
 
     """
@@ -164,7 +164,8 @@ def terminate_fatal(error_msg: str) -> None:
 def version() -> str:
     """Return the version number of the IO-XPA-DATA application.
 
-    Returns:
+    Returns
+    -------
         str:
             The version number of the IO-XPA-DATA application
 
