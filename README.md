@@ -25,20 +25,19 @@ Further IO-Aero software documentation can be found under the following links.
 
 ### 1. Directories
 
-| Directory         | Content                                                  |
-|-------------------|----------------------------------------------------------|
-| .github/workflows | GitHub Action workflows.                                 |
-| .pylintrc         | Pylint configuration file.                               |
-| .vscode           | Visual Studio Code configuration files.                  |
-| data              | Application data related files.                          |
-| dist              | Dynamic link library version of **IO-TEMPLATE-APP**.     |
-| docs              | Documentation files.                                     |
-| examples          | Scripts for examples and special tests.                  |
-| iotemplateapp     | Python script files.                                     |
-| libs              | Contains libraries that are not used via pipenv.         |
-| resources         | Selected manuals and software.                           |
-| scripts           | Scripts supporting Ubuntu and Windows.                   |
-| tests             | Scripts and data for examples and tests.                 |
+| Directory         | Content                                              |
+|-------------------|------------------------------------------------------|
+| .github/workflows | GitHub Action workflows.                             |
+| .vscode           | Visual Studio Code configuration files.              |
+| data              | Application data related files.                      |
+| dist              | Dynamic link library version of **IO-TEMPLATE-APP**. |
+| docs              | Documentation files.                                 |
+| examples          | Scripts for examples and special tests.              |
+| iotemplateapp     | Python script files.                                 |
+| libs              | Contains libraries that are not used via pipenv.     |
+| resources         | Selected manuals and software.                       |
+| scripts           | Scripts supporting macOS, Ubuntu and Windows.        |
+| tests             | Scripts and data for examples and tests.             |
 
 ### 2. Files
 
@@ -58,4 +57,4 @@ Further IO-Aero software documentation can be found under the following links.
 | run_io_template_app             | Main script for using the functionality of **IO-TEMPLATE-APP**.      |
 | run_io_template_app_pytest      | Main script for using the test functionality of **IO-TEMPLATE-APP**. |
 | settings.io_aero.toml           | Configuration data.                                                  |
-| setup.cfg                       | Configuration data for flake8.                                       |
+| setup.cfg                       | Configuration data.                                       |
