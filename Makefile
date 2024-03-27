@@ -68,7 +68,7 @@ everything: dev docs
 final: format lint docs tests
 ## format:             Format the code with Black and docformatter.
 format: black docformatter
-## lint:               Lint the code with ruff, Bandit, Flake8, vulture, Pylint and Mypy.
+## lint:               Lint the code with ruff, Bandit, vulture, Pylint and Mypy.
 lint: ruff bandit vulture pylint mypy
 ## tests:              Run all tests with pytest.
 tests: pytest
