@@ -1,5 +1,5 @@
 [packages]
-iocommon = {ref = "main", git = "https://github.com/io-aero/io-common.git"}
+iocommon = {ref = "main", git = "https://IoAeroMachineUser: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@github.com/io-aero/io-common.git"}
 iotemplatelib = {ref = "main", git = "git+https://github.com/io-aero/io-template-lib.git"}
 PyYAML = "*"
 tomli = "*"
