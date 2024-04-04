@@ -90,24 +90,12 @@ target-version = "py310"
 select = ["ALL"]
 ignore = [
     "C408",
-    "C901",
     "D211",
     "D213",
-    "EM101",
-    "PGH003",
-    "PLR0911",
-    "PLR0912",
-    "PLR0913",
-    "PLR0915",
-    "PLR2004",
     "PLW0603",
+    "PTH118",
     "S101",
     "S603",
-    "S608",
-    "SIM102",
-    "TCH002",
-    "TCH003",
-    "TRY003",
 ]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
