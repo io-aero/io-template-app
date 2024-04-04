@@ -1,6 +1,6 @@
 [packages]
 iocommon = "*"
-iotemplatelib = "*"
+iotemplatelib = {ref = "main", git = "git+https://github.com/io-aero/io-template-lib.git"}
 PyYAML = "*"
 tomli = "*"
 tomli-w = "*"
