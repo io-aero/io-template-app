@@ -201,6 +201,7 @@ pipenv-dev:         ## Install the package dependencies for development.
 	@echo DELETE_PIPFILE_LOCK=${DELETE_PIPFILE_LOCK}
 	@echo PIP                =${PIP}
 	@echo PYTHON             =${PYTHON}
+	@echo PYPI_PAT           =${PYPI_PAT}
 	@echo ----------------------------------------------------------------------
 	$(PIP) install --upgrade pip
 #	$(PIP) install --upgrade pipenv==${VERSION_PIPENV}
@@ -225,6 +226,7 @@ pipenv-prod:        ## Install the package dependencies for production.
 	@echo DELETE_PIPFILE_LOCK=${DELETE_PIPFILE_LOCK}
 	@echo PIP                =${PIP}
 	@echo PYTHON             =${PYTHON}
+	@echo PYPI_PAT           =${PYPI_PAT}
 	@echo ----------------------------------------------------------------------
 	$(PIP) install --upgrade pip
 #	$(PIP) install --upgrade pipenv==${VERSION_PIPENV}
