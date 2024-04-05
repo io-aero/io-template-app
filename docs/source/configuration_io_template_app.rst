@@ -14,8 +14,6 @@ The customisable entries are:
 ======================= ======================================
 Parameter               Description
 ======================= ======================================
-AWS_ACCESS_KEY_ID       AWS access key
-AWS_SECRET_ACCESS_KEY   AWS secret access key
 GLOBAL_USER_EMAIL       The global email address for GitHub
 ======================= ======================================
 
@@ -23,8 +21,6 @@ GLOBAL_USER_EMAIL       The global email address for GitHub
 
 .. code-block::
 
-    AWS_ACCESS_KEY_ID=<tbd>>
-    AWS_SECRET_ACCESS_KEY=<tbd>>
     GLOBAL_USER_EMAIL=a@b.com
 
 .settings.io_aero.toml

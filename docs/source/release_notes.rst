@@ -49,10 +49,6 @@ Applied Software
      - Version
      - Remark
      - Status
-   * - AWS CLI
-     - 2.15.3
-     -
-     -
    * - DBeaver - optional
      - 23.3.1
      -
