@@ -7,6 +7,7 @@ on:
 env:
   IO_CONDA: 'false'
   IO_PAGES: 'true'
+  PYPI_PAT: ${{ secrets.PYPI_PAT }}
 
 jobs:
   standard:
@@ -19,11 +20,10 @@ jobs:
         python-version: ["3.10"]
 
     steps:
-      - name: Set an OS environment variable
-        run: echo "PYPI_PAT=${{ secrets.PYPI_PAT }}" >> $GITHUB_ENV
       - name: Show the environment variables
         run: |
           echo "IO_CONDA    = ${{ env.IO_CONDA }}"
+          echo "IO_LOCAL    = ${{ vars.IO_LOCAL }}"
           echo "IO_PAGES    = ${{ env.IO_PAGES }}"
 
       - name: Set Timezone
@@ -59,7 +59,7 @@ jobs:
         run: make black docs
 
       - name: Deploy to GitHub Pages
-        if: ${{ env.IO_PAGES == 'true' }}
+        if: ${{ vars.IO_LOCAL != 'true' }}
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
