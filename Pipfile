@@ -29,10 +29,8 @@ ruff = "*"
 sphinx = "*"
 sphinx-autodoc-typehints = "*"
 types-pyyaml = "*"
-types-setuptools = "*"
 types-toml = "*"
 vulture = "*"
-wheel = "*"
 
 [requires]
 python_version = "3.10"
