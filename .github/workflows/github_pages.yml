@@ -51,7 +51,7 @@ jobs:
         run: |
           conda init --all
           source ~/.bashrc
-          conda activate$MODULE
+          conda activate $MODULE
           make black docs
 
       - name: Deploy to GitHub Pages
