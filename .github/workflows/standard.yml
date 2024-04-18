@@ -40,14 +40,14 @@ jobs:
       - name: Set Locale - macOS
         if: runner.os == 'macOS'
         run: |
-          echo "SHELL_CONFIG=$HOME/.zshrc" >> $GITHUB_ENV
+          echo "SHELL_CONFIG=.zshrc" >> $GITHUB_ENV
           echo "LANG=en_US.UTF-8" >> $GITHUB_ENV
           echo "LC_ALL=en_US.UTF-8" >> $GITHUB_ENV
 
       - name: Set Locale - Ubuntu
         if: runner.os == 'Linux'
         run: |
-          echo "SHELL_CONFIG=$HOME/.bashrc" >> $GITHUB_ENV
+          echo "SHELL_CONFIG=.bashrc" >> $GITHUB_ENV
           sudo apt-get update
           sudo apt-get install -y locales
           sudo locale-gen en_US.UTF-8
