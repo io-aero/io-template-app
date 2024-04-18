@@ -5,7 +5,6 @@ on:
     branches: ['main']
 
 env:
-  IO_CONDA: 'false'
   IO_COVERALLS: 'false'
   IO_DOCKER: 'false'
   IO_ODBC: 'false'
@@ -20,12 +19,11 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest]
 #       os: [ubuntu-latest]
-        python-version: ["3.10"]
+        python-version: ["3.12"]
 
     steps:
       - name: Show the environment variables
         run: |
-          echo "IO_CONDA    = ${{ env.IO_CONDA }}"
           echo "IO_COVERALLS= ${{ env.IO_COVERALLS }}"
           echo "IO_DOCKER   = ${{ env.IO_DOCKER }}"
           echo "IO_LOCAL    = ${{ vars.IO_LOCAL }}"
@@ -73,7 +71,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Set up Miniconda
-        if: ${{ env.IO_CONDA == 'true' }}
         uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
@@ -102,30 +99,26 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y unixodbc-dev
 
-      - name: Install dependencies - pipenv - prod
-        if: ${{ env.IO_CONDA != 'true' }}
-        run: make pipenv-prod
-
-      - name: Install dependencies - Conda & pipenv - prod
-        if: ${{ env.IO_CONDA == 'true' }}
+      - name: Install dependencies - Conda - prod
         run: make conda-prod
 
       - name: Compile the Python code - prod
-        run: make compileall
+        run: |
+          conda activate iotemplateapp
+          make compileall
 
       - name: Run pytest - prod
-        run: make pytest-ci
+        run: |
+          conda activate iotemplateapp
+          make pytest-ci
 
-      - name: Install dependencies - pipenv - dev
-        if: ${{ env.IO_CONDA != 'true' }}
-        run: make pipenv-dev
-
-      - name: Install dependencies - Conda & pipenv - dev
-        if: ${{ env.IO_CONDA == 'true' }}
+      - name: Install dependencies - Conda - dev
         run: make conda-dev
 
       - name: Run pytest - dev
-        run: make black lint docs tests
+        run: |
+          conda activate iotemplateapp
+          make black lint docs tests
 
       - name: Coveralls
         if: ${{ env.IO_COVERALLS == 'true' && runner.os == 'Linux' }}
