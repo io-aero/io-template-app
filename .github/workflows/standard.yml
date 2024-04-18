@@ -100,7 +100,9 @@ jobs:
           sudo apt-get install -y unixodbc-dev
 
       - name: Install dependencies - Conda - prod
-        run: make conda-prod
+        run: |
+          make conda-prod
+          conda init bash
 
       - name: Compile the Python code - prod
         run: |
@@ -113,7 +115,9 @@ jobs:
           make pytest-ci
 
       - name: Install dependencies - Conda - dev
-        run: make conda-dev
+        run: |
+          make conda-dev
+          conda init bash
 
       - name: Run pytest - dev
         run: |

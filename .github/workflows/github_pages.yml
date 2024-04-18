@@ -45,7 +45,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies - Conda - dev
-        run: make conda-dev
+        run: |
+          make conda-dev
+          conda init bash
 
       - name: Run docs - dev
         run: |
