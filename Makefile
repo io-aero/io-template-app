@@ -218,8 +218,6 @@ pytest-ci:          ## Run all tests with pytest after test tool installation.
 	@echo PIP       =${PIP}
 	@echo PYTHONPATH=${PYTHONPATH}
 	@echo ----------------------------------------------------------------------
-	pytest --version
-	@echo ----------------------------------------------------------------------
 	pip install pytest pytest-cov pytest-deadfixtures pytest-helpers-namespace pytest-random-order
 	@echo ----------------------------------------------------------------------
 	pytest --dead-fixtures tests
