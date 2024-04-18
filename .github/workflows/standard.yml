@@ -111,7 +111,6 @@ jobs:
 
       - name: Run pytest - prod
         run: |
-          conda activate iotemplateapp
           make pytest-ci
 
       - name: Install dependencies - Conda - dev
