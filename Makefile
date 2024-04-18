@@ -220,6 +220,8 @@ pytest-ci:          ## Run all tests with pytest after test tool installation.
 	@echo ----------------------------------------------------------------------
 	pip install pytest pytest-cov pytest-deadfixtures pytest-helpers-namespace pytest-random-order
 	@echo ----------------------------------------------------------------------
+	pytest --version
+	@echo ----------------------------------------------------------------------
 	pytest --dead-fixtures tests
 	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -v tests
 	@echo Info **********  End:   pytest ***************************************
@@ -271,6 +273,8 @@ sphinx:             ##  Create the user documentation with Sphinx.
 	@echo PIP             =${PIP}
 	@echo SPHINX_BUILDDIR =${SPHINX_BUILDDIR}
 	@echo SPHINX_SOURCEDIR=${SPHINX_SOURCEDIR}
+	@echo ----------------------------------------------------------------------
+	pip install .
 	@echo ----------------------------------------------------------------------
 	${DELETE_SPHINX}
 	sphinx-build -M html ${SPHINX_SOURCEDIR} ${SPHINX_BUILDDIR}

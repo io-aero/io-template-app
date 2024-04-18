@@ -5,16 +5,17 @@ channels:
 dependencies:
   - python=3.12
   - pip
-  - pyyaml
   - pip:
       - git+https://IoAeroMachineUser:${PYPI_PAT}@github.com/io-aero/io-common.git
       - git+https://@github.com/io-aero/io-template-lib.git
+      - pyyaml
       - tomli
       - tomli-w
       - virtualenv
       # Development dependencies
       - bandit
       - black
+      - build
       - coverage
       - coveralls
       - docformatter
@@ -32,9 +33,11 @@ dependencies:
       - pytest-random-order
       - rinohtype
       - ruff
+      - setuptools
       - sphinx
       - sphinx-autodoc-typehints
       - types-pyyaml
       - types-toml
       - vulture
+      - wheel
 
