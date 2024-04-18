@@ -40,12 +40,14 @@ jobs:
       - name: Set Locale - macOS
         if: runner.os == 'macOS'
         run: |
+          echo ".zshrc" >> $SHELL_CONFIG
           echo "LANG=en_US.UTF-8" >> $GITHUB_ENV
           echo "LC_ALL=en_US.UTF-8" >> $GITHUB_ENV
 
       - name: Set Locale - Ubuntu
         if: runner.os == 'Linux'
         run: |
+          echo ".bashrc" >> $SHELL_CONFIG
           sudo apt-get update
           sudo apt-get install -y locales
           sudo locale-gen en_US.UTF-8
@@ -105,14 +107,14 @@ jobs:
       - name: Compile the Python code - prod
         run: |
           conda init --all
-          source ~/.bashrc
+          source ~/$SHELL_CONFIG
           conda activate iotemplateapp
           make compileall
 
       - name: Run pytest - prod
         run: |
           conda init --all
-          source ~/.bashrc
+          source ~/$SHELL_CONFIG
           conda activate iotemplateapp
           make pytest-ci
 
@@ -122,7 +124,7 @@ jobs:
       - name: Run pytest - dev
         run: |
           conda init --all
-          source ~/.bashrc
+          source ~/$SHELL_CONFIG
           conda activate iotemplateapp
           make black lint docs tests
 
