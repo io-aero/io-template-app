@@ -5,6 +5,7 @@ on:
     branches: ['main']
 
 env:
+  IO_AWS_CLI: 'false'
   IO_COVERALLS: 'false'
   IO_DOCKER: 'false'
   IO_ODBC: 'false'
@@ -18,8 +19,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [macos-latest, ubuntu-latest]
-#       os: [ubuntu-latest]
-        python-version: ["3.12"]
+        python-version: ["3.10", "3.11", "3.12"]
 
     steps:
       - name: Show the environment variables
@@ -40,14 +40,14 @@ jobs:
       - name: Set Locale - macOS
         if: runner.os == 'macOS'
         run: |
-          echo ".zshrc" >> $SHELL_CONFIG
+          echo "SHELL_CONFIG=$HOME/.zshrc" >> $GITHUB_ENV
           echo "LANG=en_US.UTF-8" >> $GITHUB_ENV
           echo "LC_ALL=en_US.UTF-8" >> $GITHUB_ENV
 
       - name: Set Locale - Ubuntu
         if: runner.os == 'Linux'
         run: |
-          echo ".bashrc" >> $SHELL_CONFIG
+          echo "SHELL_CONFIG=$HOME/.bashrc" >> $GITHUB_ENV
           sudo apt-get update
           sudo apt-get install -y locales
           sudo locale-gen en_US.UTF-8
@@ -71,6 +71,30 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Set up AWS credentials
+        if: ${{ env.IO_AWS_CLI == 'true' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Install AWS CLI - macOS
+        if: ${{ env.IO_AWS_CLI == 'true' && vars.IO_LOCAL == 'true' && runner.os == 'macOS' }}
+        run: |
+          brew update
+          brew upgrade unzip
+          curl "https://awscli.amazonaws.com/awscli-exe-macosx-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+
+      - name: Install AWS CLI - Ubuntu
+        if: ${{ env.IO_AWS_CLI == 'true' && vars.IO_LOCAL == 'true' && runner.os == 'Linux' }}
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
 
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v3
