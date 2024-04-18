@@ -46,15 +46,8 @@ It is absolutely necessary to respect the capitalization!
 
 ### 6. Test the current state of the new application
 
-#### 6.1 If Miniconda is required 
-
 - Install Miniconda
 - Run `make conda-dev`
-- Run `make final`
-
-#### 6.2 If Miniconda is not required
-
-- Run `make pipenv-dev`
 - Run `make final`
 
 ### 7. Define GitHub Actions secrets

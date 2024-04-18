@@ -8,7 +8,7 @@ from __future__ import annotations
 import argparse
 import logging
 
-from iocommon import io_config, io_glob, io_logger, io_utils
+from iocommon import io_config, io_glob, io_utils
 
 from iotemplateapp import glob_local
 
@@ -17,8 +17,6 @@ from iotemplateapp import glob_local
 # -----------------------------------------------------------------------------
 
 ARG_TASK = ""
-
-logger = logging.getLogger(__name__)
 
 
 # -----------------------------------------------------------------------------
@@ -53,7 +51,7 @@ def check_arg_task(args: argparse.Namespace) -> None:
 # -----------------------------------------------------------------------------
 def get_args() -> None:
     """Load the command line arguments into the memory."""
-    logger.debug(io_glob.LOGGER_START)
+    logging.debug(io_glob.LOGGER_START)
 
     parser = argparse.ArgumentParser(
         description="Perform a IO-IO-XPA-DATA task",
@@ -103,15 +101,7 @@ def get_args() -> None:
         ),
     )
 
-    logger.debug(io_glob.LOGGER_END)
-
-
-# -----------------------------------------------------------------------------
-# Initialising the logging functionality.
-# -----------------------------------------------------------------------------
-def initialise_logger() -> None:
-    """Initialise the root logging functionality."""
-    io_logger.initialise_logger()
+    logging.debug(io_glob.LOGGER_END)
 
 
 # ------------------------------------------------------------------
