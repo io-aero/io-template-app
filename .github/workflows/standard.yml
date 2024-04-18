@@ -9,6 +9,7 @@ env:
   IO_COVERALLS: 'false'
   IO_DOCKER: 'false'
   IO_ODBC: 'false'
+  MODULE: 'iotemplateapp'
   PYPI_PAT: ${{ secrets.PYPI_PAT }}
 
 jobs:
@@ -24,10 +25,13 @@ jobs:
     steps:
       - name: Show the environment variables
         run: |
+          echo "IO_AWS_CLI  = ${{ env.IO_AWS_CLI }}"
           echo "IO_COVERALLS= ${{ env.IO_COVERALLS }}"
           echo "IO_DOCKER   = ${{ env.IO_DOCKER }}"
           echo "IO_LOCAL    = ${{ vars.IO_LOCAL }}"
           echo "IO_ODBC     = ${{ env.IO_ODBC }}"
+          echo "MODULE      = ${{ env.MODULE }}"
+          echo "PYPI_PAT    = ${{ secrets.PYPI_PAT }}"
 
       - name: Set Timezone
         run: echo "TZ=UTC" >> $GITHUB_ENV
@@ -132,14 +136,14 @@ jobs:
         run: |
           conda init --all
           source ~/$SHELL_CONFIG
-          conda activate iotemplateapp
+          conda activate $MODULE
           make compileall
 
       - name: Run pytest - prod
         run: |
           conda init --all
           source ~/$SHELL_CONFIG
-          conda activate iotemplateapp
+          conda activate $MODULE
           make pytest-ci
 
       - name: Install dependencies - Conda - dev
@@ -149,7 +153,7 @@ jobs:
         run: |
           conda init --all
           source ~/$SHELL_CONFIG
-          conda activate iotemplateapp
+          conda activate $MODULE
           make black lint docs tests
 
       - name: Coveralls
