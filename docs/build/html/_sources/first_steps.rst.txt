@@ -349,4 +349,3 @@ c. Windows 10/11 (cmd):
    scripts\run_io_template_app.cmd s_d_c
 
 These commands will initiate the process of creating the Docker container with PostgreSQL database software.
-
