@@ -17,6 +17,7 @@ from iotemplateapp import glob_local
 # -----------------------------------------------------------------------------
 
 ARG_TASK = ""
+"""str: Placeholder for the command line argument 'task'."""
 
 
 # -----------------------------------------------------------------------------
@@ -54,7 +55,7 @@ def get_args() -> None:
     logging.debug(io_glob.LOGGER_START)
 
     parser = argparse.ArgumentParser(
-        description="Perform a IO-IO-XPA-DATA task",
+        description="Perform an IO-IO-XPA-DATA task",
         prog="launcher",
         prefix_chars="--",
         usage="%(prog)s options",
@@ -120,7 +121,7 @@ def progress_msg(msg: str) -> None:
 
 
 # ------------------------------------------------------------------
-# Create a progress message.
+# Create a time elapsed message.
 # ------------------------------------------------------------------
 def progress_msg_time_elapsed(duration: int, event: str) -> None:
     """Create a time elapsed message.
@@ -156,8 +157,7 @@ def version() -> str:
 
     Returns
     -------
-        str:
-            The version number of the IO-XPA-DATA application
+        str: The version number of the IO-XPA-DATA application
 
     """
     return glob_local.IO_TEMPLATE_APP_VERSION
