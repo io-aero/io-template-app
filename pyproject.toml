@@ -40,6 +40,11 @@ Homepage = "https://github.com/io-aero/io-template-app"
 Source = "https://github.com/io-aero/io-template-app/tree/main/iotemplateapp"
 
 [tool.bandit]
+skips = [
+    "B101",
+    "B404",
+    "B603",
+]
 
 [tool.docformatter]
 black = true
@@ -84,9 +89,9 @@ target-version = "py312"
 # McCabe complexity (`C901`) by default.
 select = ["ALL"]
 ignore = [
-    "C408",
     "D211",
     "D213",
+    "PGH003",
     "PLW0603",
     "S101",
     "S603",
