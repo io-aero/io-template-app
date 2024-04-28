@@ -44,7 +44,9 @@ except importlib.metadata.PackageNotFoundError:
 
 release = version.replace(".", "-")
 
-todays_date = datetime.now(tz=UTC)
+todays_date = datetime.now(tz=UTC).strftime(
+    "%Y-%m-%d",
+)  # pylint: disable=invalid-name
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
