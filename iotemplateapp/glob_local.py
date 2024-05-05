@@ -4,11 +4,13 @@
 
 """Global constants and variables."""
 
-from iocommon import io_config
+from iocommon import io_logger, io_settings
 
 # -----------------------------------------------------------------------------
 # Global variables.
 # -----------------------------------------------------------------------------
+
+io_logger.initialise_logger()
 
 # pylint: disable=line-too-long
 ARG_TASK = "task"
@@ -20,8 +22,8 @@ ARG_TASK_CHOICE = ""
 ARG_TASK_VERSION = "version"
 """str: A constant key used to reference the 'version' argument for tasks, indicating the version of the task being used."""  # noqa: E501
 
-CHECK_VALUE_TEST = io_config.settings.check_value == "test"
-"""bool: A boolean indicating whether the check value from io_config is 'test'."""
+CHECK_VALUE_TEST = io_settings.settings.check_value == "test"
+"""bool: A boolean indicating whether the check value from io_settings is 'test'."""
 
 # Error messages.
 # ERROR_00_999 = "ERROR.00.999 ...

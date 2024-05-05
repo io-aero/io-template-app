@@ -6,6 +6,7 @@
 .pytest_cache/
 .settings.io_aero.toml
 /.act_secrets
+/.temp/
 /build/
 /data/*_postgres.zip
 /data/postgres/
@@ -14,6 +15,8 @@
 /docs/build/pdf/.doctrees
 /docs/build/pdf/manual.rtc
 /docs/build/pdf/manual.stylelog
+/launcher.build/
+/launcher.dist/
 /temp/
 Pipfile.lock
 __pycache__
