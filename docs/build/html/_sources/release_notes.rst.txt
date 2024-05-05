@@ -62,7 +62,7 @@ Applied Software
      -
      -
    * - Python
-     - 3.12.3
+     - 3.11.9
      -
      -
 

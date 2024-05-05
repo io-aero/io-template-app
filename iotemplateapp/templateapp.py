@@ -8,7 +8,7 @@ from __future__ import annotations
 import argparse
 import logging
 
-from iocommon import io_config, io_glob, io_utils
+from iocommon import io_glob, io_settings, io_utils
 
 from iotemplateapp import glob_local
 
@@ -116,7 +116,7 @@ def progress_msg(msg: str) -> None:
         msg (str): Progress message
 
     """
-    if io_config.settings.is_verbose:
+    if io_settings.settings.is_verbose:
         io_utils.progress_msg_core(msg)
 
 

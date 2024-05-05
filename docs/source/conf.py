@@ -27,9 +27,7 @@ author = "IO-Aero Team"  # pylint: disable=invalid-name
 copyright: str = (  # pylint: disable=redefined-builtin # noqa: A001
     "2022 - 2024, IO-Aero"  # pylint: disable=redefined-builtin
 )
-github_url = (  # pylint: disable=invalid-name
-    f"https://github.com/io-aero/{REPOSITORY_NAME}"
-)
+github_url = f"https://github.com/io-aero/{REPOSITORY_NAME}"  # pylint: disable=invalid-name
 project = REPOSITORY_NAME.upper()  # pylint: disable=invalid-name
 
 try:

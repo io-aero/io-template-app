@@ -2,7 +2,7 @@ name: iotemplateapp
 channels:
   - conda-forge
 dependencies:
-  - python=3.12
+  - python=3.11
   - pyyaml
   - tomli
   - tomli-w

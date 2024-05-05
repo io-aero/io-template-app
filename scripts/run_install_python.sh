@@ -9,7 +9,7 @@ set -e
 # ------------------------------------------------------------------------------
 
 # Set the Python version
-PYTHON_VERSION="3.12"
+PYTHON_VERSION="3.1"
 
 echo "=========================================================================="
 echo "Adding PPA for Python and updating package lists."

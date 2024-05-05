@@ -2,7 +2,7 @@ name: iotemplateapp
 channels:
   - conda-forge
 dependencies:
-  - python=3.12
+  - python=3.11
   - pyyaml
   - tomli
   - tomli-w
@@ -18,10 +18,8 @@ dependencies:
     - coveralls
     - docformatter
     - furo
-    - ipython
     - mypy
     - myst-parser
-    - nuitka
     - ordered-set
     - pylint
     - pytest

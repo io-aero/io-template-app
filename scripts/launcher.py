@@ -12,7 +12,7 @@ import time
 from pathlib import Path
 
 import tomli
-from iocommon import file, io_glob, io_logger, io_utils
+from iocommon import io_glob, io_logger, io_utils
 
 from iotemplateapp import glob_local, templateapp
 
@@ -85,8 +85,6 @@ def main(argv: list[str]) -> None:
 
     # Perform the processing
     if templateapp.ARG_TASK == glob_local.ARG_TASK_VERSION:
-        file.print_version_pkg_struct("iotemplateapp")
-        file.print_pkg_structs(["iocommon"])
         _print_project_version()
     else:
         io_utils.terminate_fatal(
