@@ -11,12 +11,11 @@
 /data/*_postgres.zip
 /data/postgres/
 /data/postgres_test/
+/dist/
 /docs/build/doctrees/
 /docs/build/pdf/.doctrees
 /docs/build/pdf/manual.rtc
 /docs/build/pdf/manual.stylelog
-/launcher.build/
-/launcher.dist/
 /temp/
 Pipfile.lock
 __pycache__

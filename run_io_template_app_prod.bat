@@ -59,7 +59,7 @@ rem ----------------------------------------------------------------------------
 rem Show the IO_TEMPLATE_APP version.
 rem ----------------------------------------------------------------------------
 if /I ["%IO_AERO_TASK%"] EQU ["version"] (
-    iotemplateapp.exe -t "%IO_AERO_TASK%"
+    dist\windows\iotemplateapp.exe -t "%IO_AERO_TASK%"
     if ERRORLEVEL 1 (
         echo Processing of the script run_io_template_app_prod was aborted
         exit 1
