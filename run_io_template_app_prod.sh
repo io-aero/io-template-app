@@ -55,7 +55,7 @@ if [ -f "${log_file}" ]; then
 fi
 
 # Redirection of the standard output and the standard error output to the log file
-exec > >(while read -r line; do log_message "$line"; done) 2> >(while read -r line; do log_message "ERROR: $line"; done)
+# exec > >(while read -r line; do log_message "$line"; done) 2> >(while read -r line; do log_message "ERROR: $line"; done)
 
 echo "======================================================================="
 echo "Start $0"
@@ -76,7 +76,7 @@ echo "======================================================================="
 # Task handling
 # ---------------------------------------------------------------------------
 if [[ "${IO_AERO_TASK}" =~ ^(version)$ ]]; then
-    if ! ( python scripts/launcher.py -t "${IO_AERO_TASK}" ); then
+    if ! ( ./dist/linux/iotemplateapp -t "${IO_AERO_TASK}" ); then
         exit 255
     fi
 
@@ -95,7 +95,7 @@ echo "End   $0"
 echo "======================================================================="
 
 # Close the log file
-exec > >(while read -r line; do echo "$line"; done) 2> >(while read -r line; do echo "ERROR: $line"; done)
+# exec > >(while read -r line; do echo "$line"; done) 2> >(while read -r line; do echo "ERROR: $line"; done)
 
 # Closing the log file
 log_message "Script finished."

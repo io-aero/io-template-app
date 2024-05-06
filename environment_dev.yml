@@ -3,7 +3,9 @@ channels:
   - conda-forge
 dependencies:
   - python=3.11
+  - nuitka
   - pyyaml
+  - scons
   - tomli
   - tomli-w
   - virtualenv
@@ -34,4 +36,3 @@ dependencies:
     - types-pyyaml
     - types-toml
     - vulture
-

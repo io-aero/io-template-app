@@ -6,15 +6,22 @@ ifeq (${OS},Windows_NT)
 	COPY_MYPY_STUBGEN=xcopy /y out\\${MODULE}\\*.* .\\${MODULE}\\
 	DELETE_MYPY_STUBGEN=if exist out rd /s /q out
 	NUITKA_OPTION=--msvc=latest
+	NUITKA_OS=windows
 	PIP=pip
 	PYTHON=python
 	SPHINX_BUILDDIR=docs\\build
 	SPHINX_SOURCEDIR=docs\\source
 	DELETE_SPHINX=del /f /q ${SPHINX_BUILDDIR}\\*
 else
+	OS := $(shell uname -s)
 	COPY_MYPY_STUBGEN=cp -f out/${MODULE}/* ./${MODULE}/
 	DELETE_MYPY_STUBGEN=rm -rf out
 	NUITKA_OPTION=--disable-ccache
+	ifeq (${OS},Linux)
+		NUITKA_OS=linux
+	else
+		NUITKA_OS=macos
+	endif
 	PIP=pip3
 	PYTHON=python3
 	SPHINX_BUILDDIR=docs/build
@@ -194,7 +201,7 @@ next-version:       ## Increment the version number.
 	@echo PYTHON    =${PYTHON}
 	@echo PYTHONPATH=${PYTHONPATH}
 	@echo ----------------------------------------------------------------------
-	$(PYTHON) scripts/next_version.py
+	${PYTHON} scripts/next_version.py
 	@echo Info **********  End:   next version *********************************
 
 # Nuitka: Python compiler written in Python
@@ -206,13 +213,11 @@ nuitka:             ## Create a dynamic link library.
 	@echo PIP          =${PIP}
 	@echo PYTHON       =${PYTHON}
 	@echo ----------------------------------------------------------------------
-	${PIP} install nuitka scons
-	@echo ----------------------------------------------------------------------
 	${PYTHON} -m nuitka ${NUITKA_OPTION} \
-			  --include-module=iocommon \
 			  --main=scripts/launcher.py \
 			  --onefile \
 			  --onefile-tempdir-spec=.temp \
+			  --output-dir=dist/${NUITKA_OS} \
 			  --output-filename=${MODULE} \
 			  --show-modules \
 			  --standalone \
