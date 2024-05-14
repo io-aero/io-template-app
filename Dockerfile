@@ -15,7 +15,7 @@ COPY environment.yml .
 RUN conda env create -f environment.yml
 
 # Copy the necessary files
-COPY entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh .
 COPY iotemplateapp/ ./iotemplateapp/
 COPY run_io_template_app.sh .
 COPY scripts/ ./scripts/
@@ -29,7 +29,7 @@ RUN chmod +x entrypoint.sh
 RUN chmod +x run_io_template_app.sh
 
 # Set the entrypoint
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
 
 # Command to run the script and keep the container running
 CMD ["./run_io_template_app.sh", "&&", "tail", "-f", "/dev/null"]
