@@ -3,30 +3,32 @@
 MODULE=iotemplateapp
 
 ifeq (${OS},Windows_NT)
-	COPY_MYPY_STUBGEN=xcopy /y out\\${MODULE}\\*.* .\\${MODULE}\\
-	DELETE_MYPY_STUBGEN=if exist out rd /s /q out
-	NUITKA_OPTION=--msvc=latest
-	NUITKA_OS=windows
-	PIP=pip
-	PYTHON=python
-	SPHINX_BUILDDIR=docs\\build
-	SPHINX_SOURCEDIR=docs\\source
-	DELETE_SPHINX=del /f /q ${SPHINX_BUILDDIR}\\*
+    COPY_MYPY_STUBGEN=xcopy /y out\\${MODULE}\\*.* .\\${MODULE}\\
+    DELETE_MYPY_STUBGEN=if exist out rd /s /q out
+    NUITKA_OPTION=--msvc=latest
+    NUITKA_OS=windows
+    PIP=pip
+    PYTHON=python
+    SPHINX_BUILDDIR=docs\\build
+    SPHINX_SOURCEDIR=docs\\source
+    DELETE_SPHINX=del /f /q ${SPHINX_BUILDDIR}\\*
+    REMOVE_DOCKER_CONTAINER=@FOR /F "tokens=*" %%i IN ('docker ps -aq --filter "name=${MODULE}"') DO (docker rm -f %%i)
 else
-	OS := $(shell uname -s)
-	COPY_MYPY_STUBGEN=cp -f out/${MODULE}/* ./${MODULE}/
-	DELETE_MYPY_STUBGEN=rm -rf out
-	NUITKA_OPTION=--disable-ccache
-	ifeq (${OS},Linux)
-		NUITKA_OS=linux
-	else
-		NUITKA_OS=macos
-	endif
-	PIP=pip3
-	PYTHON=python3
-	SPHINX_BUILDDIR=docs/build
-	SPHINX_SOURCEDIR=docs/source
-	DELETE_SPHINX=rm -rf ${SPHINX_BUILDDIR}/*
+    OS := $(shell uname -s)
+    COPY_MYPY_STUBGEN=cp -f out/${MODULE}/* ./${MODULE}/
+    DELETE_MYPY_STUBGEN=rm -rf out
+    NUITKA_OPTION=--disable-ccache
+    ifeq (${OS},Linux)
+        NUITKA_OS=linux
+    else
+        NUITKA_OS=macos
+    endif
+    PIP=pip3
+    PYTHON=python3
+    SPHINX_BUILDDIR=docs/build
+    SPHINX_SOURCEDIR=docs/source
+    DELETE_SPHINX=rm -rf ${SPHINX_BUILDDIR}/*
+    REMOVE_DOCKER_CONTAINER=@FOR /F "tokens=*" %%i IN ('docker ps -aq --filter "name=${MODULE}"') DO (docker rm -f %%i)
 endif
 
 COVERALLS_REPO_TOKEN=<see coveralls.io>
@@ -158,6 +160,23 @@ coveralls:          ## Run all the tests and upload the coverage data to coveral
 	@echo ---------------------------------------------------------------------
 	coveralls --service=github
 	@echo Info **********  End:   coveralls ***********************************
+
+# Formats docstrings to follow PEP 257
+# https://github.com/PyCQA/docformatter
+# Configuration file: Dockerfile
+docker:             ## Create a docker image.
+	@echo Info **********  Start: docker **************************************
+	@echo PYTHONPATH=${PYTHONPATH}
+	@echo ----------------------------------------------------------------------
+	${REMOVE_DOCKER_CONTAINER}
+	docker build --build-arg PYPI_PAT=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 -t ${MODULE} .
+	docker run -d --name ${MODULE} -v /path/to/local/data:/app/data \
+			   -v /path/to/local/.settings.io_aero.toml:/app/.settings.io_aero.toml \
+			   -v /path/to/local/logging_cfg.yaml:/app/logging_cfg.yaml \
+			   -v /path/to/local/settings.io_aero.toml:/app/settings.io_aero.toml \
+			   ${MODULE} tail -f /dev/null
+	docker exec -it iotemplateapp /bin/bash
+	@echo Info **********  End:   docker ***************************************
 
 # Formats docstrings to follow PEP 257
 # https://github.com/PyCQA/docformatter
