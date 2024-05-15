@@ -29,6 +29,8 @@ else
     SPHINX_BUILDDIR=docs/build
     SPHINX_SOURCEDIR=docs/source
     DELETE_SPHINX=rm -rf ${SPHINX_BUILDDIR}/*
+    REMOVE_DOCKER_CONTAINER=@sh -c 'docker ps -a | grep -q "${MODULE}" && docker rm --force ${MODULE} || echo "No existing container to remove."'
+    REMOVE_DOCKER_IMAGE=@sh -c 'docker image ls | grep -q "${MODULE}" && docker rmi --force ${MODULE}:latest || echo "No existing image to remove."'
 endif
 
 COVERALLS_REPO_TOKEN=<see coveralls.io>
@@ -76,10 +78,16 @@ help:
 # Configuration files: .act_secrets & .act_vars
 action-std:         ## Run the GitHub Actions locally: standard.
 	@echo "Info **********  Start: action ***************************************"
-	@echo "Copy your .aws/creedentials to .aws_secrets"
+	@echo "Copy your .aws/credentials to .aws_secrets"
 	@echo "----------------------------------------------------------------------"
 	act --version
 	@echo "----------------------------------------------------------------------"
+	act --quiet \
+        --secret-file .act_secrets \
+        --var IO_LOCAL='true' \
+        --verbose \
+        -P ubuntu-latest=catthehacker/ubuntu:act-latest \
+        -W .github/workflows/github_pages.yml
 	act --quiet \
         --secret-file .act_secrets \
         --var IO_LOCAL='true' \
@@ -181,23 +189,18 @@ docformatter:       ## Format the docstrings with docformatter.
 # ${MODULE} tail -f /dev/null
 docker:             ## Create a docker image.
 	@echo "Info **********  Start: docker ***************************************"
-ifeq (${OS},Windows_NT)
 	@echo PYTHONPATH=${PYTHONPATH}
 	@echo "----------------------------------------------------------------------"
 	${REMOVE_DOCKER_CONTAINER}
 	${REMOVE_DOCKER_IMAGE}
+	docker system prune -a -f
 	docker build --build-arg PYPI_PAT="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" -t ${MODULE} .
 	docker run -d --name ${MODULE} \
 			   -v $(CURRENT_DIR)/data:/app/data \
-			   -v $(CURRENT_DIR)/.settings.io_aero.toml:/app/.settings.io_aero.toml \
 			   -v $(CURRENT_DIR)/logging_cfg.yaml:/app/logging_cfg.yaml \
 			   -v $(CURRENT_DIR)/settings.io_aero.toml:/app/settings.io_aero.toml \
 			   ${MODULE} tail -f /dev/null
 	docker exec -it iotemplateapp bash -c "source /opt/conda/etc/profile.d/conda.sh && conda activate iotemplateapp && ./run_io_template_app.sh"
-
-else
-	@echo "FATAL ******** !!! This task is not supportedd with ${OS} !!! ********"
-endif
 	@echo "Info **********  End:   docker ***************************************"
 
 # Mypy: Static Typing for Python

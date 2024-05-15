@@ -1,6 +1,9 @@
 # Use the official Ubuntu base image
 FROM ubuntu:latest
 
+ENV REPO_MODULE=iotemplateapp
+ENV REPO_UNDERS=io_template_app
+
 # Set the working directory inside the container
 WORKDIR /app
 
@@ -44,21 +47,21 @@ RUN /opt/conda/bin/conda env create -f environment.yml
 
 # Copy the application code to the container
 COPY entrypoint.sh .
-COPY iotemplateapp/ ./iotemplateapp/
+COPY ${REPO_MODULE}/ ./${REPO_MODULE}/
 COPY pyproject.toml .
-COPY run_io_template_app.sh .
+COPY run_${REPO_UNDERS}.sh .
 COPY scripts/ ./scripts/
 
 # Set environment variables
 ENV ENV_FOR_DYNACONF=prod
-ENV PYTHONPATH=./iotemplateapp:./docs:./scripts:./tests
+ENV PYTHONPATH=./${REPO_MODULE}:./scripts
 
 # Make the scripts executable
 RUN chmod +x entrypoint.sh
-RUN chmod +x run_io_template_app.sh
+RUN chmod +x run_${REPO_UNDERS}.sh
 
 # Set the entrypoint
 ENTRYPOINT ["./entrypoint.sh"]
 
 # Ensure the environment is activated and keep the container running
-CMD ["bash", "-c", "source /opt/conda/etc/profile.d/conda.sh && conda activate iotemplateapp && ./run_io_template_app.sh && tail -f /dev/null"]
+CMD ["bash", "-c", "source /opt/conda/etc/profile.d/conda.sh && conda activate ${REPO_MODULE} && ./run_${REPO_UNDERS}.sh && tail -f /dev/null"]
