@@ -29,11 +29,10 @@ else
     SPHINX_BUILDDIR=docs/build
     SPHINX_SOURCEDIR=docs/source
     DELETE_SPHINX=rm -rf ${SPHINX_BUILDDIR}/*
-    REMOVE_DOCKER_CONTAINER=@if [ "$(docker ps -aq --filter name=${MODULE})" ]; then docker rm -f ${MODULE};         else echo "No existing container to remove."; fi
-	REMOVE_DOCKER_IMAGE=    @if [ "$(docker images -q ${MODULE}:latest)" ];     then docker rmi -f ${MODULE}:latest; else echo "No existing image to remove."; fi
 endif
 
 COVERALLS_REPO_TOKEN=<see coveralls.io>
+CURRENT_DIR := $(CURDIR)
 PYTHONPATH=${MODULE} docs scripts tests
 
 export ENV_FOR_DYNACONF=test
@@ -179,18 +178,26 @@ docformatter:       ## Format the docstrings with docformatter.
 # Formats docstrings to follow PEP 257
 # https://github.com/PyCQA/docformatter
 # Configuration file: Dockerfile
+# ${MODULE} tail -f /dev/null
 docker:             ## Create a docker image.
 	@echo "Info **********  Start: docker ***************************************"
+ifeq (${OS},Windows_NT)
 	@echo PYTHONPATH=${PYTHONPATH}
 	@echo "----------------------------------------------------------------------"
 	${REMOVE_DOCKER_CONTAINER}
 	${REMOVE_DOCKER_IMAGE}
-	docker build --build-arg PYPI_PAT="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" -t ${MODULE} .
-	docker run -d --name ${MODULE} -v /path/to/local/data:/app/data \
-			   -v /path/to/local/.settings.io_aero.toml:/app/.settings.io_aero.toml \
-			   -v /path/to/local/logging_cfg.yaml:/app/logging_cfg.yaml \
-			   -v /path/to/local/settings.io_aero.toml:/app/settings.io_aero.toml \
+	docker build --build-arg PYPI_PAT="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" -t ${MODULE} .
+	docker run -d --name ${MODULE} \
+			   -v $(CURRENT_DIR)/data:/app/data \
+			   -v $(CURRENT_DIR)/.settings.io_aero.toml:/app/.settings.io_aero.toml \
+			   -v $(CURRENT_DIR)/logging_cfg.yaml:/app/logging_cfg.yaml \
+			   -v $(CURRENT_DIR)/settings.io_aero.toml:/app/settings.io_aero.toml \
 			   ${MODULE} tail -f /dev/null
+	docker exec -it iotemplateapp bash -c "source /opt/conda/etc/profile.d/conda.sh && conda activate iotemplateapp && ./run_io_template_app.sh"
+
+else
+	@echo "FATAL ******** !!! This task is not supportedd with ${OS} !!! ********"
+endif
 	@echo "Info **********  End:   docker ***************************************"
 
 # Mypy: Static Typing for Python

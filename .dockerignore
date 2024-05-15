@@ -12,7 +12,6 @@ LICENSE.md
 Makefile
 README.md
 environment_dev.yml
-pyproject.toml
 run_io_template_app_prod.*
 run_io_template_app_pytest.*
 setup.cfg
