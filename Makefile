@@ -183,13 +183,12 @@ docformatter:       ## Format the docstrings with docformatter.
 #	docformatter -r ${PYTHONPATH}
 	@echo "Info **********  End:   docformatter *********************************"
 
-# Formats docstrings to follow PEP 257
-# https://github.com/PyCQA/docformatter
-# Configuration file: Dockerfile
-# ${MODULE} tail -f /dev/null
+# Creates as Docker image
+# Configuration files: .dockerignore & Dockerfile
 docker:             ## Create a docker image.
 	@echo "Info **********  Start: docker ***************************************"
-	@echo PYTHONPATH=${PYTHONPATH}
+ifeq (${OS},Windows_NT)
+	docker ps -a
 	@echo "----------------------------------------------------------------------"
 	${REMOVE_DOCKER_CONTAINER}
 	${REMOVE_DOCKER_IMAGE}
@@ -201,7 +200,30 @@ docker:             ## Create a docker image.
 			   -v $(CURRENT_DIR)/settings.io_aero.toml:/app/settings.io_aero.toml \
 			   ${MODULE} tail -f /dev/null
 	docker exec -it iotemplateapp bash -c "source /opt/conda/etc/profile.d/conda.sh && conda activate iotemplateapp && ./run_io_template_app.sh"
+else
+	@echo "FATAL ******** !!! This task is not supportedd with ${OS} !!! ********"
+endif
 	@echo "Info **********  End:   docker ***************************************"
+
+# Creates as Docker executable
+# https://github.com/rzane/docker2exe
+# Configuration file: none
+docker2exe:         ## Create a docker executable.
+	@echo "Info **********  Start: docker executable ****************************"
+ifeq (${OS},Linux)
+	./dist/docker2exe --help
+	@echo "----------------------------------------------------------------------"
+	./dist/docker2exe --name ${MODULE} --image ${MODULE}:latest
+	rm -rf app
+	mkdir -p app
+	mv dist/${MODULE}-linux-amd64 app/${MODULE}
+	chmod +x app/${MODULE}
+	mv dist/${MODULE}-windows-amd64 app/${MODULE}.exe
+	rm -f dist/iotemplateapp-darwin-*
+else
+	@echo "FATAL ******** !!! This task is not supportedd with ${OS} !!! ********"
+endif
+	@echo "Info **********  End:   docker executable ****************************"
 
 # Mypy: Static Typing for Python
 # https://github.com/python/mypy
@@ -332,7 +354,7 @@ ruff:               ## An extremely fast Python linter and code formatter.
 	ruff check --fix
 	@echo "Info **********  End:   ruff *****************************************"
 
-sphinx:             ##  Create the user documentation with Sphinx.
+sphinx:             ## Create the user documentation with Sphinx.
 	@echo "Info **********  Start: sphinx ***************************************"
 	@echo "DELETE_SPHINX   =${DELETE_SPHINX}"
 	@echo "PIP             =${PIP}"
@@ -358,7 +380,7 @@ version:            ## Show the installed software versions.
 # Find dead Python code
 # https://github.com/jendrikseipp/vulture
 # Configuration file: pyproject.toml
-vulture:            ##  Find dead Python code.
+vulture:            ## Find dead Python code.
 	@echo "Info **********  Start: vulture **************************************"
 	@echo "PYTHONPATH=${PYTHONPATH}"
 	@echo "----------------------------------------------------------------------"

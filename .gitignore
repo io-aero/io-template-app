@@ -7,6 +7,7 @@
 .settings.io_aero.toml
 /.act_secrets
 /.temp/
+/app/
 /app/logging_cfg.yaml
 /app/settings.io_aero.toml
 /build/
