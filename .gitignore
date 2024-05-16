@@ -14,7 +14,9 @@
 /data/*_postgres.zip
 /data/postgres/
 /data/postgres_test/
-/dist/
+/dist/iotemplateapp.exe
+/dist/linux/
+/dist/windows/
 /docs/build/doctrees/
 /docs/build/pdf/.doctrees
 /docs/build/pdf/manual.rtc
