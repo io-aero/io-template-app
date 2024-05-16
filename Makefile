@@ -213,13 +213,15 @@ docker2exe:         ## Create a docker executable.
 ifeq (${OS},Linux)
 	./dist/docker2exe --help
 	@echo "----------------------------------------------------------------------"
-	./dist/docker2exe --name ${MODULE} --image ${MODULE}:latest
+	./dist/docker2exe --name ${MODULE} --image ${MODULE}:latest --embed
 	rm -rf app
 	mkdir -p app
 	mv dist/${MODULE}-linux-amd64 app/${MODULE}
 	chmod +x app/${MODULE}
 	mv dist/${MODULE}-windows-amd64 app/${MODULE}.exe
 	rm -f dist/iotemplateapp-darwin-*
+	cp logging_cfg.yaml app/
+	cp settings.io_aero.toml app/
 else
 	@echo "FATAL ******** !!! This task is not supportedd with ${OS} !!! ********"
 endif
