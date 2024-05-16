@@ -58,4 +58,16 @@ Further IO-Aero software documentation can be found under the following links.
 | run_io_template_app             | Main script for using the functionality of **IO-TEMPLATE-APP**.      |
 | run_io_template_app_pytest      | Main script for using the test functionality of **IO-TEMPLATE-APP**. |
 | settings.io_aero.toml           | Configuration data.                                                  |
-| setup.cfg                       | Configuration data.                                       |
+| setup.cfg                       | Configuration data.                                                  |
+
+    ./iotemplateapp
+
+	docker exec -it iotemplateapp bash -c "source /opt/conda/etc/profile.d/conda.sh && conda activate iotemplateapp && ./run_io_template_app.sh"
+
+
+	docker run -d --name ${MODULE} \
+			   -v $(CURRENT_DIR)/data:/app/data \
+			   -v $(CURRENT_DIR)/logging_cfg.yaml:/app/logging_cfg.yaml \
+			   -v $(CURRENT_DIR)/settings.io_aero.toml:/app/settings.io_aero.toml \
+			   ${MODULE} tail -f /dev/null
+

@@ -8,8 +8,6 @@
 /.act_secrets
 /.temp/
 /app/
-/app/logging_cfg.yaml
-/app/settings.io_aero.toml
 /build/
 /data/*_postgres.zip
 /data/postgres/

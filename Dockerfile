@@ -46,11 +46,13 @@ RUN echo "PYPI_PAT: $PYPI_PAT" && \
 RUN /opt/conda/bin/conda env create -f environment.yml
 
 # Copy the application code to the container
-COPY entrypoint.sh .
 COPY ${REPO_MODULE}/ ./${REPO_MODULE}/
+COPY scripts/ ./scripts/
+COPY entrypoint.sh .
+COPY logging_cfg.yaml .
 COPY pyproject.toml .
 COPY run_${REPO_UNDERS}.sh .
-COPY scripts/ ./scripts/
+COPY settings.io_aero.toml .
 
 # Set environment variables
 ENV ENV_FOR_DYNACONF=prod

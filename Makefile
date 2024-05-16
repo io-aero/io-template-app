@@ -4,6 +4,7 @@ MODULE=iotemplateapp
 
 ifeq (${OS},Windows_NT)
     COPY_MYPY_STUBGEN=xcopy /y out\\${MODULE}\\*.* .\\${MODULE}\\
+    CURRENT_DIR := $(CURDIR)
     DELETE_MYPY_STUBGEN=if exist out rd /s /q out
     NUITKA_OPTION=--msvc=latest
     NUITKA_OS=windows
@@ -17,6 +18,7 @@ ifeq (${OS},Windows_NT)
 else
     OS := $(shell uname -s)
     COPY_MYPY_STUBGEN=cp -f out/${MODULE}/* ./${MODULE}/
+    CURRENT_DIR := $(PWD)
     DELETE_MYPY_STUBGEN=rm -rf out
     NUITKA_OPTION=--disable-ccache
     ifeq (${OS},Linux)
@@ -34,7 +36,6 @@ else
 endif
 
 COVERALLS_REPO_TOKEN=<see coveralls.io>
-CURRENT_DIR := $(CURDIR)
 PYTHONPATH=${MODULE} docs scripts tests
 
 export ENV_FOR_DYNACONF=test
@@ -183,49 +184,47 @@ docformatter:       ## Format the docstrings with docformatter.
 #	docformatter -r ${PYTHONPATH}
 	@echo "Info **********  End:   docformatter *********************************"
 
-# Creates as Docker image
+# Creates Docker executables
+# https://github.com/rzane/docker2exe
 # Configuration files: .dockerignore & Dockerfile
 docker:             ## Create a docker image.
-	@echo "Info **********  Start: docker ***************************************"
-ifeq (${OS},Windows_NT)
+	@echo "Info **********  Start: Docker ***************************************"
+ifeq (${OS},Linux)
 	docker ps -a
+	@echo "----------------------------------------------------------------------"
+	./dist/docker2exe --help
+	@echo "----------------------------------------------------------------------"
+	echo "CURRENT_DIR=${CURRENT_DIR}"
 	@echo "----------------------------------------------------------------------"
 	${REMOVE_DOCKER_CONTAINER}
 	${REMOVE_DOCKER_IMAGE}
 	docker system prune -a -f
 	docker build --build-arg PYPI_PAT=${PYPI_PAT} -t ${MODULE} .
 	docker run -d --name ${MODULE} \
-			   -v $(CURRENT_DIR)/data:/app/data \
-			   -v $(CURRENT_DIR)/logging_cfg.yaml:/app/logging_cfg.yaml \
-			   -v $(CURRENT_DIR)/settings.io_aero.toml:/app/settings.io_aero.toml \
+			   -v data:/app/data \
+			   -v ./logging_cfg.yaml:/app/logging_cfg.yaml \
+			   -v ./settings.io_aero.toml:/app/settings.io_aero.toml \
 			   ${MODULE} tail -f /dev/null
-	docker exec -it iotemplateapp bash -c "source /opt/conda/etc/profile.d/conda.sh && conda activate iotemplateapp && ./run_io_template_app.sh"
-else
-	@echo "FATAL ******** !!! This task is not supportedd with ${OS} !!! ********"
-endif
-	@echo "Info **********  End:   docker ***************************************"
-
-# Creates as Docker executable
-# https://github.com/rzane/docker2exe
-# Configuration file: none
-docker2exe:         ## Create a docker executable.
-	@echo "Info **********  Start: docker executable ****************************"
-ifeq (${OS},Linux)
-	./dist/docker2exe --help
 	@echo "----------------------------------------------------------------------"
 	./dist/docker2exe --name ${MODULE} --image ${MODULE}:latest --embed
-	rm -rf app
-	mkdir -p app
-	mv dist/${MODULE}-linux-amd64 app/${MODULE}
-	chmod +x app/${MODULE}
-	mv dist/${MODULE}-windows-amd64 app/${MODULE}.exe
-	rm -f dist/iotemplateapp-darwin-*
-	cp logging_cfg.yaml app/
-	cp settings.io_aero.toml app/
+	@echo "----------------------------------------------------------------------"
+	rm -rf $(CURRENT_DIR)/app
+	mkdir -p $(CURRENT_DIR)/app
+	mkdir -p $(CURRENT_DIR)/app/data
+	mv dist/${MODULE}-darwin-amd64 $(CURRENT_DIR)/app/
+	mv dist/${MODULE}-darwin-arm64 $(CURRENT_DIR)/app/
+	mv dist/${MODULE}-linux-amd64 $(CURRENT_DIR)/app/
+	mv dist/${MODULE}-windows-amd64 $(CURRENT_DIR)/app/${MODULE}-windows-amd64.exe
+	chmod +x $(CURRENT_DIR)/app/${MODULE}-darwin-* $(CURRENT_DIR)/app/${MODULE}-linux-*
+	@echo "----------------------------------------------------------------------"
+	cp logging_cfg.yaml $(CURRENT_DIR)/app/
+	cp run_iotemplateapp.* $(CURRENT_DIR)/app/
+	cp settings.io_aero.toml $(CURRENT_DIR)/app/
+	chmod +x $(CURRENT_DIR)/app/*.sh $(CURRENT_DIR)/app/*.zsh
 else
-	@echo "FATAL ******** !!! This task is not supportedd with ${OS} !!! ********"
+	@echo "FATAL ******** !!! This task is not supported with ${OS} !!! *********"
 endif
-	@echo "Info **********  End:   docker executable ****************************"
+	@echo "Info **********  End:   Docker ***************************************"
 
 # Mypy: Static Typing for Python
 # https://github.com/python/mypy
