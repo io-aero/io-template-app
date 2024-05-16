@@ -193,7 +193,7 @@ ifeq (${OS},Windows_NT)
 	${REMOVE_DOCKER_CONTAINER}
 	${REMOVE_DOCKER_IMAGE}
 	docker system prune -a -f
-	docker build --build-arg PYPI_PAT="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" -t ${MODULE} .
+	docker build --build-arg PYPI_PAT=${PYPI_PAT} -t ${MODULE} .
 	docker run -d --name ${MODULE} \
 			   -v $(CURRENT_DIR)/data:/app/data \
 			   -v $(CURRENT_DIR)/logging_cfg.yaml:/app/logging_cfg.yaml \
