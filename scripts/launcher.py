@@ -12,6 +12,7 @@ import time
 from pathlib import Path
 
 import tomli
+from dynaconf import Dynaconf  # type: ignore
 from iocommon import io_glob, io_logger, io_utils
 
 from iotemplateapp import glob_local, templateapp
@@ -23,6 +24,33 @@ from iotemplateapp import glob_local, templateapp
 io_logger.initialise_logger()
 
 _LOCALE = "en_US.UTF-8"
+
+
+# -----------------------------------------------------------------------------
+# Print all settings managed by Dynaconf.
+# -----------------------------------------------------------------------------
+def _print_dynaconf_settings() -> None:
+    """Print all settings managed by Dynaconf in a specific format.
+
+    This function initializes a Dynaconf instance (assuming default settings or you can customize
+    this part as needed) and prints each configuration parameter using a specific message format.
+
+    """
+    # Initialize Dynaconf instance with your config settings
+    settings = Dynaconf(
+        settings_files=["settings.toml", "settings.io_aero.toml"],  # Example config files
+    )
+
+    # Iterate through all settings and print them using the formatted message
+    for section, item in settings.as_dict().items():
+        for key, value in item.items():
+            # INFO.00.007 Section: '{section}' - Parameter: '{name}'='{value}'
+            message = (
+                glob_local.INFO_00_007.replace("{section}", section)
+                .replace("{name}", key)
+                .replace("{value}", str(value))
+            )
+            logging.info(message)
 
 
 # -----------------------------------------------------------------------------
@@ -82,6 +110,9 @@ def main(argv: list[str]) -> None:
 
     # Load the command line arguments.
     templateapp.get_args()
+
+    # Print the configuration parameters.
+    _print_dynaconf_settings()
 
     # Perform the processing
     if templateapp.ARG_TASK == glob_local.ARG_TASK_VERSION:

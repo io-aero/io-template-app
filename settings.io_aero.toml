@@ -19,4 +19,4 @@ postgres_connection_port = 5433
 postgres_container_name = "io_aero_db_test"
 postgres_password = "postgres_password"
 postgres_password_admin = "postgres_password_admin"
-postgres_pgdata ="data/postgres_test"
+postgres_pgdata = "data/postgres_test"

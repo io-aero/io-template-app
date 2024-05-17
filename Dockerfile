@@ -66,4 +66,6 @@ RUN chmod +x run_${REPO_UNDERS}.sh
 ENTRYPOINT ["./entrypoint.sh"]
 
 # Ensure the environment is activated and keep the container running
-CMD ["bash", "-c", "source /opt/conda/etc/profile.d/conda.sh && conda activate ${REPO_MODULE} && ./run_${REPO_UNDERS}.sh && tail -f /dev/null"]
+# CMD ["bash", "-c", "source /opt/conda/etc/profile.d/conda.sh && conda activate ${REPO_MODULE} && ./run_${REPO_UNDERS}.sh && tail -f /dev/null"]
+CMD ["bash", "-c", "source /opt/conda/etc/profile.d/conda.sh && conda activate ${REPO_MODULE} && ./run_${REPO_UNDERS}.sh"]
+# CMD ["bash", "-c", "trap 'echo caught signal; exit' SIGTERM SIGINT; source /opt/conda/etc/profile.d/conda.sh && conda activate ${REPO_MODULE} && ./run_${REPO_UNDERS}.sh; while true; do sleep 1; done"]
