@@ -200,22 +200,14 @@ docker:             ## Create a docker image.
 	${REMOVE_DOCKER_IMAGE}
 	docker system prune -a -f
 	docker build --build-arg PYPI_PAT=${PYPI_PAT} -t ${MODULE} .
-	ifeq (${OS},Windows_NT)
-		docker run -d --name ${MODULE} \
-				   -v $(CURRENT_DIR)/data:/app/data \
-				   -v $(CURRENT_DIR)/logging_cfg.yaml:/app/logging_cfg.yaml \
-				   -v $(CURRENT_DIR)/settings.io_aero.toml:/app/settings.io_aero.toml \
-				   ${MODULE} tail -f /dev/null
-	else
-		docker run -d --name ${MODULE} \
-				   -v data:/app/data \
-				   -v ./logging_cfg.yaml:/app/logging_cfg.yaml \
-				   -v ./settings.io_aero.toml:/app/settings.io_aero.toml \
-				   ${MODULE} tail -f /dev/null
-	endif
 	@echo "----------------------------------------------------------------------"
-	ifeq (${OS},Windows_NT)
-		dist\docker2exe --name ${MODULE} --image ${MODULE}:latest --embed
+ifeq (${OS},Windows_NT)
+		dist\docker2exe.exe --name ${MODULE} \
+							--image ${MODULE}:latest \
+							--embed \
+							-v ${CURRENT_DIR}\\data:/app/data \
+							-v ${CURRENT_DIR}\\logging_cfg.yaml:/app/logging_cfg.yaml \
+							-v ${CURRENT_DIR}\\settings.io_aero.toml:/app/settings.io_aero.toml
 		rmdir /s /q "$(CURRENT_DIR)\app"
 		mkdir "$(CURRENT_DIR)\app"
 		mkdir "$(CURRENT_DIR)\app\data"
@@ -226,8 +218,14 @@ docker:             ## Create a docker image.
 		copy "logging_cfg.yaml" "$(CURRENT_DIR)\app\"
 		copy "run_iotemplateapp.*" "$(CURRENT_DIR)\app\"
 		copy "settings.io_aero.toml" "$(CURRENT_DIR)\app\"
-	else
-		./dist/docker2exe --name ${MODULE} --image ${MODULE}:latest --embed
+else
+		./dist/docker2exe --name ${MODULE} \
+						  --image ${MODULE}:latest \
+						  --embed \
+						  --port 8080:80 \
+						  -v $(CURRENT_DIR)/data:/app/data \
+						  -v $(CURRENT_DIR)/logging_cfg.yaml:/app/logging_cfg.yaml \
+						  -v $(CURRENT_DIR)/settings.io_aero.toml:/app/settings.io_aero.toml
 		rm -rf $(CURRENT_DIR)/app
 		mkdir -p $(CURRENT_DIR)/app
 		mkdir -p $(CURRENT_DIR)/app/data
@@ -240,7 +238,7 @@ docker:             ## Create a docker image.
 		cp run_iotemplateapp.* $(CURRENT_DIR)/app/
 		cp settings.io_aero.toml $(CURRENT_DIR)/app/
 		chmod +x $(CURRENT_DIR)/app/*.sh $(CURRENT_DIR)/app/*.zsh
-	endif
+endif
 #else
 #	@echo "FATAL ******** !!! This task is not supported with ${OS} !!! *********"
 #endif
