@@ -4,7 +4,7 @@ MODULE=iotemplateapp
 
 ifeq (${OS},Windows_NT)
     COPY_MYPY_STUBGEN=xcopy /y out\\${MODULE}\\*.* .\\${MODULE}\\
-    CURRENT_DIR := $(CURDIR)
+    CURRENT_DIR := ${CURDIR}
     DELETE_MYPY_STUBGEN=if exist out rd /s /q out
     NUITKA_OPTION=--msvc=latest
     NUITKA_OS=windows
@@ -16,9 +16,9 @@ ifeq (${OS},Windows_NT)
     REMOVE_DOCKER_CONTAINER=@docker ps -a | findstr /r /c:"${MODULE}" && docker rm --force ${MODULE}         || echo "No existing container to remove."
     REMOVE_DOCKER_IMAGE=@docker image ls  | findstr /r /c:"${MODULE}" && docker rmi --force ${MODULE}:latest || echo "No existing image to remove."
 else
-    OS := $(shell uname -s)
+    OS := ${shell uname -s}
     COPY_MYPY_STUBGEN=cp -f out/${MODULE}/* ./${MODULE}/
-    CURRENT_DIR := $(PWD)
+    CURRENT_DIR := ${PWD}
     DELETE_MYPY_STUBGEN=rm -rf out
     NUITKA_OPTION=--disable-ccache
     ifeq (${OS},Linux)
@@ -208,36 +208,36 @@ ifeq (${OS},Windows_NT)
 							-v ${CURRENT_DIR}\\data:/app/data \
 							-v ${CURRENT_DIR}\\logging_cfg.yaml:/app/logging_cfg.yaml \
 							-v ${CURRENT_DIR}\\settings.io_aero.toml:/app/settings.io_aero.toml
-		rmdir /s /q "$(CURRENT_DIR)\app"
-		mkdir "$(CURRENT_DIR)\app"
-		mkdir "$(CURRENT_DIR)\app\data"
-		move "dist\${MODULE}-darwin-amd64" "$(CURRENT_DIR)\app\"
-		move "dist\${MODULE}-darwin-arm64" "$(CURRENT_DIR)\app\"
-		move "dist\${MODULE}-linux-amd64" "$(CURRENT_DIR)\app\"
-		move "dist\${MODULE}-windows-amd64" "$(CURRENT_DIR)\app\${MODULE}-windows-amd64.exe"
-		copy "logging_cfg.yaml" "$(CURRENT_DIR)\app\"
-		copy "run_iotemplateapp.*" "$(CURRENT_DIR)\app\"
-		copy "settings.io_aero.toml" "$(CURRENT_DIR)\app\"
+		rmdir /s /q "${CURRENT_DIR}\app"
+		mkdir "${CURRENT_DIR}\app"
+		mkdir "${CURRENT_DIR}\app\data"
+		move "dist\${MODULE}-darwin-amd64" "${CURRENT_DIR}\app\"
+		move "dist\${MODULE}-darwin-arm64" "${CURRENT_DIR}\app\"
+		move "dist\${MODULE}-linux-amd64" "${CURRENT_DIR}\app\"
+		move "dist\${MODULE}-windows-amd64" "${CURRENT_DIR}\app\${MODULE}-windows-amd64.exe"
+		copy "logging_cfg.yaml" "${CURRENT_DIR}\app\"
+		copy "run_iotemplateapp.*" "${CURRENT_DIR}\app\"
+		copy "settings.io_aero.toml" "${CURRENT_DIR}\app\"
 else
 		./dist/docker2exe --name ${MODULE} \
 						  --image ${MODULE}:latest \
 						  --embed \
 						  --port 8080:80 \
-						  -v $(CURRENT_DIR)/data:/app/data \
-						  -v $(CURRENT_DIR)/logging_cfg.yaml:/app/logging_cfg.yaml \
-						  -v $(CURRENT_DIR)/settings.io_aero.toml:/app/settings.io_aero.toml
-		rm -rf $(CURRENT_DIR)/app
-		mkdir -p $(CURRENT_DIR)/app
-		mkdir -p $(CURRENT_DIR)/app/data
-		mv dist/${MODULE}-darwin-amd64 $(CURRENT_DIR)/app/
-		mv dist/${MODULE}-darwin-arm64 $(CURRENT_DIR)/app/
-		mv dist/${MODULE}-linux-amd64 $(CURRENT_DIR)/app/
-		mv dist/${MODULE}-windows-amd64 $(CURRENT_DIR)/app/${MODULE}-windows-amd64.exe
-		chmod +x $(CURRENT_DIR)/app/${MODULE}-darwin-* $(CURRENT_DIR)/app/${MODULE}-linux-*
-		cp logging_cfg.yaml $(CURRENT_DIR)/app/
-		cp run_iotemplateapp.* $(CURRENT_DIR)/app/
-		cp settings.io_aero.toml $(CURRENT_DIR)/app/
-		chmod +x $(CURRENT_DIR)/app/*.sh $(CURRENT_DIR)/app/*.zsh
+						  -v ${CURRENT_DIR}/data:/app/data \
+						  -v ${CURRENT_DIR}/logging_cfg.yaml:/app/logging_cfg.yaml \
+						  -v ${CURRENT_DIR}/settings.io_aero.toml:/app/settings.io_aero.toml
+		rm -rf ${CURRENT_DIR}/app
+		mkdir -p ${CURRENT_DIR}/app
+		mkdir -p ${CURRENT_DIR}/app/data
+		mv dist/${MODULE}-darwin-amd64 ${CURRENT_DIR}/app/
+		mv dist/${MODULE}-darwin-arm64 ${CURRENT_DIR}/app/
+		mv dist/${MODULE}-linux-amd64 ${CURRENT_DIR}/app/
+		mv dist/${MODULE}-windows-amd64 ${CURRENT_DIR}/app/${MODULE}-windows-amd64.exe
+		chmod +x ${CURRENT_DIR}/app/${MODULE}-darwin-* ${CURRENT_DIR}/app/${MODULE}-linux-*
+		cp logging_cfg.yaml ${CURRENT_DIR}/app/
+		cp run_iotemplateapp.* ${CURRENT_DIR}/app/
+		cp settings.io_aero.toml ${CURRENT_DIR}/app/
+		chmod +x ${CURRENT_DIR}/app/*.sh ${CURRENT_DIR}/app/*.zsh
 endif
 #else
 #	@echo "FATAL ******** !!! This task is not supported with ${OS} !!! *********"
