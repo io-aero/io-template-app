@@ -222,7 +222,6 @@ else
 		./dist/docker2exe --name ${MODULE} \
 						  --image ${MODULE}:latest \
 						  --embed \
-						  --port 8080:80 \
 						  -v ${CURRENT_DIR}/data:/app/data \
 						  -v ${CURRENT_DIR}/logging_cfg.yaml:/app/logging_cfg.yaml \
 						  -v ${CURRENT_DIR}/settings.io_aero.toml:/app/settings.io_aero.toml
