@@ -7,13 +7,14 @@
 .settings.io_aero.toml
 /.act_secrets
 /.temp/
-/app/
+/app-*
 /build/
 /data/*_postgres.zip
 /data/postgres/
 /data/postgres_test/
 /dist/iotemplateapp.exe
 /dist/linux/
+/dist/macos/
 /dist/windows/
 /docs/build/doctrees/
 /docs/build/pdf/.doctrees

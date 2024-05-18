@@ -6,6 +6,7 @@ ifeq (${OS},Windows_NT)
     COPY_MYPY_STUBGEN=xcopy /y out\\${MODULE}\\*.* .\\${MODULE}\\
     CURRENT_DIR := ${CURDIR}
     DELETE_MYPY_STUBGEN=if exist out rd /s /q out
+    DOCKER2EXE=docker2exe-windows-amd64
     NUITKA_OPTION=--msvc=latest
     NUITKA_OS=windows
     PIP=pip
@@ -20,6 +21,11 @@ else
     COPY_MYPY_STUBGEN=cp -f out/${MODULE}/* ./${MODULE}/
     CURRENT_DIR := ${PWD}
     DELETE_MYPY_STUBGEN=rm -rf out
+    ifeq (${OS},Linux)
+        DOCKER2EXE=docker2exe-linux-amd64
+    else
+        DOCKER2EXE=docker2exe-darwin-arm64
+    endif
     NUITKA_OPTION=--disable-ccache
     ifeq (${OS},Linux)
         NUITKA_OS=linux
@@ -189,10 +195,7 @@ docformatter:       ## Format the docstrings with docformatter.
 # Configuration files: .dockerignore & Dockerfile
 docker:             ## Create a docker image.
 	@echo "Info **********  Start: Docker ***************************************"
-#ifeq (${OS},Linux)
 	docker ps -a
-	@echo "----------------------------------------------------------------------"
-	./dist/docker2exe --help
 	@echo "----------------------------------------------------------------------"
 	echo "CURRENT_DIR=${CURRENT_DIR}"
 	@echo "----------------------------------------------------------------------"
@@ -202,45 +205,66 @@ docker:             ## Create a docker image.
 	docker build --build-arg PYPI_PAT=${PYPI_PAT} -t ${MODULE} .
 	@echo "----------------------------------------------------------------------"
 ifeq (${OS},Windows_NT)
-		dist\docker2exe.exe --name ${MODULE} \
-							--image ${MODULE}:latest \
-							--embed \
-							-v ${CURRENT_DIR}\\data:/app/data \
-							-v ${CURRENT_DIR}\\logging_cfg.yaml:/app/logging_cfg.yaml \
-							-v ${CURRENT_DIR}\\settings.io_aero.toml:/app/settings.io_aero.toml
-		rmdir /s /q "${CURRENT_DIR}\app"
-		mkdir "${CURRENT_DIR}\app"
-		mkdir "${CURRENT_DIR}\app\data"
-		move "dist\${MODULE}-darwin-amd64" "${CURRENT_DIR}\app\"
-		move "dist\${MODULE}-darwin-arm64" "${CURRENT_DIR}\app\"
-		move "dist\${MODULE}-linux-amd64" "${CURRENT_DIR}\app\"
-		move "dist\${MODULE}-windows-amd64" "${CURRENT_DIR}\app\${MODULE}-windows-amd64.exe"
-		copy "logging_cfg.yaml" "${CURRENT_DIR}\app\"
-		copy "run_iotemplateapp.*" "${CURRENT_DIR}\app\"
-		copy "settings.io_aero.toml" "${CURRENT_DIR}\app\"
+		dist\${DOCKER2EXE} --name ${MODULE} \
+						   --image ${MODULE}:latest \
+						   --embed \
+						   -t windows/amd64 \
+						   -v ${CURRENT_DIR}\\data:/app/data \
+						   -v ${CURRENT_DIR}\\logging_cfg.yaml:/app/logging_cfg.yaml \
+						   -v ${CURRENT_DIR}\\settings.io_aero.toml:/app/settings.io_aero.toml
+		rmdir /s /q "${CURRENT_DIR}\app-windows-amd64"
+		mkdir "${CURRENT_DIR}\app-windows-amd64"
+		mkdir "${CURRENT_DIR}\app-windows-amd64\data"
+		move "dist\${MODULE}-windows-amd64" "${CURRENT_DIR}\app-windows-amd64\${MODULE}-windows-amd64.exe"
+		copy "logging_cfg.yaml" "${CURRENT_DIR}\app-windows-amd64\"
+		copy "run_iotemplateapp.bat" "${CURRENT_DIR}\app-windows-amd64\"
+		copy "settings.io_aero.toml" "${CURRENT_DIR}\app-windows-amd64\"
 else
-		./dist/docker2exe --name ${MODULE} \
-						  --image ${MODULE}:latest \
-						  --embed \
-						  -v ${CURRENT_DIR}/data:/app/data \
-						  -v ${CURRENT_DIR}/logging_cfg.yaml:/app/logging_cfg.yaml \
-						  -v ${CURRENT_DIR}/settings.io_aero.toml:/app/settings.io_aero.toml
-		rm -rf ${CURRENT_DIR}/app
-		mkdir -p ${CURRENT_DIR}/app
-		mkdir -p ${CURRENT_DIR}/app/data
-		mv dist/${MODULE}-darwin-amd64 ${CURRENT_DIR}/app/
-		mv dist/${MODULE}-darwin-arm64 ${CURRENT_DIR}/app/
-		mv dist/${MODULE}-linux-amd64 ${CURRENT_DIR}/app/
-		mv dist/${MODULE}-windows-amd64 ${CURRENT_DIR}/app/${MODULE}-windows-amd64.exe
+ifeq (${OS},Linux)
+		./dist/${DOCKER2EXE} --name ${MODULE} \
+							 --image ${MODULE}:latest \
+							 --embed \
+							 -t darwin/amd64 \
+							 -v ${CURRENT_DIR}/data:/app/data \
+							 -v ${CURRENT_DIR}/logging_cfg.yaml:/app/logging_cfg.yaml \
+							 -v ${CURRENT_DIR}/settings.io_aero.toml:/app/settings.io_aero.toml
+		./dist/${DOCKER2EXE} --name ${MODULE} \
+							 --image ${MODULE}:latest \
+							 --embed \
+							 -t linux/amd64 \
+							 -v ${CURRENT_DIR}/data:/app/data \
+							 -v ${CURRENT_DIR}/logging_cfg.yaml:/app/logging_cfg.yaml \
+							 -v ${CURRENT_DIR}/settings.io_aero.toml:/app/settings.io_aero.toml
+		rm -rf ${CURRENT_DIR}/app-darwin-linux-amd64
+		mkdir -p ${CURRENT_DIR}/app-darwin-linux-amd64
+		mkdir -p ${CURRENT_DIR}/app-darwin-linux-amd64/data
+		mv dist/${MODULE}-darwin-amd64 ${CURRENT_DIR}/app-darwin-linux-amd64/
+		mv dist/${MODULE}-linux-amd64 ${CURRENT_DIR}/app-darwin-linux-amd64/
 		chmod +x ${CURRENT_DIR}/app/${MODULE}-darwin-* ${CURRENT_DIR}/app/${MODULE}-linux-*
-		cp logging_cfg.yaml ${CURRENT_DIR}/app/
-		cp run_iotemplateapp.* ${CURRENT_DIR}/app/
-		cp settings.io_aero.toml ${CURRENT_DIR}/app/
-		chmod +x ${CURRENT_DIR}/app/*.sh ${CURRENT_DIR}/app/*.zsh
+		cp logging_cfg.yaml ${CURRENT_DIR}/app-darwin-linux-amd64/
+		cp run_iotemplateapp.sh ${CURRENT_DIR}/app-darwin-linux-amd64/
+		cp run_iotemplateapp.zsh ${CURRENT_DIR}/app-darwin-linux-amd64/
+		cp settings.io_aero.toml ${CURRENT_DIR}/app-darwin-linux-amd64/
+		chmod +x ${CURRENT_DIR}/app-darwin-linux-amd64/*.*sh
+else
+		./dist/${DOCKER2EXE} --name ${MODULE} \
+							 --image ${MODULE}:latest \
+							 --embed \
+							 -t darwin/arm64 \
+							 -v ${CURRENT_DIR}/data:/app/data \
+							 -v ${CURRENT_DIR}/logging_cfg.yaml:/app/logging_cfg.yaml \
+							 -v ${CURRENT_DIR}/settings.io_aero.toml:/app/settings.io_aero.toml
+		rm -rf ${CURRENT_DIR}/app-darwin-arm64
+		mkdir -p ${CURRENT_DIR}/app-darwin-arm64
+		mkdir -p ${CURRENT_DIR}/app-darwin-arm64/data
+		mv dist/${MODULE}-darwin-arm64 ${CURRENT_DIR}/app-darwin-arm64/
+		chmod +x ${CURRENT_DIR}/app-darwin-arm64/${MODULE}-darwin-arm64
+		cp logging_cfg.yaml ${CURRENT_DIR}/app-darwin-arm64/
+		cp run_iotemplateapp.zsh ${CURRENT_DIR}/app-darwin-arm64/
+		cp settings.io_aero.toml ${CURRENT_DIR}/app-darwin-arm64/
+		chmod +x ${CURRENT_DIR}/app-darwin-arm64/*.zsh
 endif
-#else
-#	@echo "FATAL ******** !!! This task is not supported with ${OS} !!! *********"
-#endif
+endif
 	@echo "Info **********  End:   Docker ***************************************"
 
 # Mypy: Static Typing for Python
