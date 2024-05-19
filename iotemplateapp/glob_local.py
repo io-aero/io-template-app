@@ -44,7 +44,6 @@ INFO_00_006 = "INFO.00.006 End Launcher"
 INFO_00_007 = "INFO.00.007 Section: '{section}' - Parameter: '{name}'='{value}'"
 """str: Information message indicating the value of a specific configuration parameter."""
 
-
 INFORMATION_NOT_YET_AVAILABLE = "n/a"
 """str: Placeholder indicating that information is not yet available."""
 

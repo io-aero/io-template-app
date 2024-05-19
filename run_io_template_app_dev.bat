@@ -2,13 +2,13 @@
 
 rem ----------------------------------------------------------------------------
 rem
-rem run_io_template_app_pytest.bat: Process IO-TEMPLATE-APP tasks.
+rem run_io_template_app_dev.bat: Process IO-TEMPLATE-APP tasks.
 rem
 rem ----------------------------------------------------------------------------
 
 setlocal EnableDelayedExpansion
 
-set ENV_FOR_DYNACONF=test
+set ENV_FOR_DYNACONF=dev
 
 set ERRORLEVEL=
 set IO_AERO_TASK=
@@ -33,7 +33,7 @@ echo.
 echo Script %0 is now running
 echo.
 
-set IO_AERO_TEMPLATE_APP_LOG=run_io_template_app_pytest_%IO_AERO_TASK%.log
+set IO_AERO_TEMPLATE_APP_LOG=run_io_template_app_dev_%IO_AERO_TASK%.log
 
 echo You can find the run log in the file %IO_AERO_TEMPLATE_APP_LOG%
 echo.
@@ -71,7 +71,7 @@ if exist %IO_AERO_TEMPLATE_APP_LOG% (
     if /I ["%IO_AERO_TASK%"] EQU ["version"] (
         python scripts\launcher.py -t "%IO_AERO_TASK%"
         if ERRORLEVEL 1 (
-            echo Processing of the script run_io_template_app_pytest was aborted
+            echo Processing of the script run_io_template_app_dev was aborted
             exit 1
         )
 
@@ -83,7 +83,7 @@ rem ----------------------------------------------------------------------------
 rem Program abort due to wrong input.
 rem ----------------------------------------------------------------------------
 
-echo Processing of the script run_io_template_app_pytest is aborted: unknown task='%IO_AERO_TASK%'
+echo Processing of the script run_io_template_app_dev is aborted: unknown task='%IO_AERO_TASK%'
 exit 1
 
 :END_OF_SCRIPT

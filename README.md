@@ -42,28 +42,33 @@ Further IO-Aero software documentation can be found under the following links.
 
 ### 2. Files
 
-| File                            | Functionality                                                           |
-|---------------------------------|-------------------------------------------------------------------------|
-| .act_secrets_template           | Template file for the configuration of ``make action``.                 |
-| .dockerignore                   | Configuration of files and folders to be ignored.                       |
-| .gitattributes                  | Handling of the os-specific file properties.                            |
-| .gitignore                      | Configuration of files and folders to be ignored.                       |
-| .pylintrc                       | pylint configuration file.                                              |
-| .settings.io_aero_template.toml | Template file for the secret configuration data.                        |
-| Dockerfile                      | Configuration file to create a Docker image.                            |
-| environment.yaml                | Definition of the Python package requirements - productive version.     |
-| environment_dev.yaml            | Definition of the Python package requirements - development version.    |
-| LICENSE.md                      | Text of the licence terms.                                              |
-| logging_cfg.yaml                | Configuration of the Logger functionality.                              |
-| Makefile                        | Tasks to be executed with the make command.                             |
-| pyproject.toml                  | Optional configuration data for the software quality tools.             |
-| README.md                       | This file.                                                              |
-| run_io_template_app             | Main script for using the functionality based on a Nuitka executable.   |
-| run_io_template_app_prod        | Main script for using the functionality in the development environment. |
-| run_io_template_app_pytest      | Main script for using the functionality in the test environment.        |
-| run_iotemplateapp               | Main script for using the functionality based on a Docker executable.   |
-| settings.io_aero.toml           | Configuration data.                                                     |
-| setup.cfg                       | Configuration data.                                                     |
+| File                            | Functionality                                                         |
+|---------------------------------|-----------------------------------------------------------------------|
+| .act_secrets_template           | Template file for the configuration of ``make action``.               |
+| .dockerignore                   | Configuration of files and folders to be ignored.                     |
+| .gitattributes                  | Handling of the os-specific file properties.                          |
+| .gitignore                      | Configuration of files and folders to be ignored.                     |
+| .pylintrc                       | pylint configuration file.                                            |
+| .settings.io_aero_template.toml | Template file for the secret configuration data.                      |
+| Dockerfile                      | Configuration file to create a Docker image.                          |
+| environment.yaml                | Definition of the Python package requirements - productive version.   |
+| environment_dev.yaml            | Definition of the Python package requirements - development version.  |
+| LICENSE.md                      | Text of the licence terms.                                            |
+| logging_cfg.yaml                | Configuration of the Logger functionality.                            |
+| Makefile                        | Tasks to be executed with the make command.                           |
+| pyproject.toml                  | Optional configuration data for the software quality tools.           |
+| README.md                       | This file.                                                            |
+| run_io_template_app             | Main script for using the functionality based on a Nuitka executable. |
+| run_io_template_app_dev         | Main script for using the functionality in a development environment. |
+| run_io_template_app_prod        | Main script for using the functionality in a productive environment.  |
+| run_io_template_app_pytest      | Main script for using the functionality in a test environment.        |
+| run_iotemplateapp               | Main script for using the functionality based on a Docker executable. |
+| settings.io_aero.toml           | Configuration data.                                                   |
+| setup.cfg                       | Configuration data.                                                   |
+
+## Converting the application into an executable file
+
+### 1. Convert a Docker image
 
     ./iotemplateapp
 
@@ -78,4 +83,6 @@ Further IO-Aero software documentation can be found under the following links.
 
 
 docker run -d --name iotemplateapp -v %cd%\data:/app/data -v %cd%\logging_cfg.yaml:/app/logging_cfg.yaml -v %cd%\settings.io_aero.toml:/app/settings.io_aero.toml iotemplateapp
+
+### 2. Nuitka the Python compiler
 

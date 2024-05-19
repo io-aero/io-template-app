@@ -2,6 +2,7 @@
 # source code is governed by the IO-Aero License, that can
 # be found in the LICENSE.md file.
 """IO-TEMPLATE-APP interface."""
+
 from __future__ import annotations
 
 import argparse
@@ -112,7 +113,7 @@ def progress_msg(msg: str) -> None:
 
     Args:
     ----
-        msg (str): Progress message
+        msg (str): Progress message.
 
     """
     if io_settings.settings.is_verbose:
@@ -142,7 +143,7 @@ def terminate_fatal(error_msg: str) -> None:
 
     Args:
     ----
-        error_msg (str): Error message
+        error_msg (str): Error message.
 
     """
     io_utils.terminate_fatal(error_msg)
@@ -156,7 +157,7 @@ def version() -> str:
 
     Returns
     -------
-        str: The version number of the IO-XPA-DATA application
+        str: The version number of the IO-XPA-DATA application.
 
     """
     return glob_local.IO_TEMPLATE_APP_VERSION

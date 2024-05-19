@@ -1,24 +1,32 @@
 .DEFAULT_GOAL := help
 
-MODULE=iotemplateapp
+MODULE:=iotemplateapp
+
+ARCH:=$(shell uname -m)
+OS:=$(shell uname -s)
 
 ifeq (${OS},Windows_NT)
     COPY_MYPY_STUBGEN=xcopy /y out\\${MODULE}\\*.* .\\${MODULE}\\
     DELETE_MYPY_STUBGEN=if exist out rd /s /q out
+    DOCKER2EXE_CHMOD=echo no operation with
+    DOCKER2EXE_COPY=copy
+    DOCKER2EXE_CURR=%%CD%%
     DOCKER2EXE_DIR=windows-amd64
+    DOCKER2EXE_EXEC=dist\docker2exe-${DOCKER2EXE_DIR}.exe
+    DOCKER2EXE_EXT=.exe
+    DOCKER2EXE_MOVE=move
+    DOCKER2EXE_RMDIR=if exist app-${DOCKER2EXE_DIR} rmdir /s /q app-${DOCKER2EXE_DIR}
     DOCKER2EXE_SCRIPT=bat
     DOCKER2EXE_TARGET=windows/amd64
     NUITKA_OPTION=--msvc=latest
     NUITKA_OS=windows
+    PATH_SEP=\\
     PIP=pip
     PYTHON=python
-    SPHINX_BUILDDIR=docs\\build
-    SPHINX_SOURCEDIR=docs\\source
     DELETE_SPHINX=del /f /q ${SPHINX_BUILDDIR}\\*
     REMOVE_DOCKER_CONTAINER=@docker ps -a | findstr /r /c:"${MODULE}" && docker rm --force ${MODULE}         || echo "No existing container to remove."
     REMOVE_DOCKER_IMAGE=@docker image ls  | findstr /r /c:"${MODULE}" && docker rmi --force ${MODULE}:latest || echo "No existing image to remove."
 else
-    OS := ${shell uname -s}
     COPY_MYPY_STUBGEN=cp -f out/${MODULE}/* ./${MODULE}/
     DELETE_MYPY_STUBGEN=rm -rf out
     ifeq (${OS},Linux)
@@ -35,23 +43,32 @@ else
 	        DOCKER2EXE_TARGET=darwin/amd64
     	endif
     endif
+    DOCKER2EXE_CHMOD=chmod +x
+    DOCKER2EXE_COPY=cp
+    DOCKER2EXE_CURR=$$PWD
+    DOCKER2EXE_EXEC=./dist/docker2exe-${DOCKER2EXE_DIR}
+    DOCKER2EXE_EXT=
+    DOCKER2EXE_MOVE=mv
+    DOCKER2EXE_RMDIR=rm -rf app-${DOCKER2EXE_DIR}
     NUITKA_OPTION=--disable-ccache
     ifeq (${OS},Linux)
         NUITKA_OS=linux
     else
         NUITKA_OS=macos
     endif
+    PATH_SEP=/
     PIP=pip3
     PYTHON=python3
-    SPHINX_BUILDDIR=docs/build
-    SPHINX_SOURCEDIR=docs/source
     DELETE_SPHINX=rm -rf ${SPHINX_BUILDDIR}/*
     REMOVE_DOCKER_CONTAINER=@sh -c 'docker ps -a | grep -q "${MODULE}" && docker rm --force ${MODULE} || echo "No existing container to remove."'
     REMOVE_DOCKER_IMAGE=@sh -c 'docker image ls | grep -q "${MODULE}" && docker rmi --force ${MODULE}:latest || echo "No existing image to remove."'
 endif
 
 COVERALLS_REPO_TOKEN=<see coveralls.io>
+DOCKER2EXE_CURR=.
 PYTHONPATH=${MODULE} docs scripts tests
+SPHINX_BUILDDIR=docs${PATH_SEP}build
+SPHINX_SOURCEDIR=docs${PATH_SEP}source
 
 export ENV_FOR_DYNACONF=test
 export LANG=en_US.UTF-8
@@ -204,6 +221,19 @@ docformatter:       ## Format the docstrings with docformatter.
 # Configuration files: .dockerignore & Dockerfile
 docker:             ## Create a docker image.
 	@echo "Info **********  Start: Docker ***************************************"
+	@echo "OS               =${OS}"
+	@echo "ARCH             =${ARCH}"
+	@echo "----------------------------------------------------------------------"
+	@echo "DOCKER2EXE_CHMOD =${DOCKER2EXE_CHMOD}"
+	@echo "DOCKER2EXE_COPY  =${DOCKER2EXE_COPY}"
+	@echo "DOCKER2EXE_CURR  =${DOCKER2EXE_CURR}"
+	@echo "DOCKER2EXE_DIR   =${DOCKER2EXE_DIR}"
+	@echo "DOCKER2EXE_EXEC  =${DOCKER2EXE_EXEC}"
+	@echo "DOCKER2EXE_MOVE  =${DOCKER2EXE_MOVE}"
+	@echo "DOCKER2EXE_RMDIR =${DOCKER2EXE_RMDIR}"
+	@echo "DOCKER2EXE_SCRIPT=${DOCKER2EXE_SCRIPT}"
+	@echo "DOCKER2EXE_TARGET=${DOCKER2EXE_TARGET}"
+	@echo "----------------------------------------------------------------------"
 	docker ps -a
 	@echo "----------------------------------------------------------------------"
 	${REMOVE_DOCKER_CONTAINER}
@@ -211,40 +241,23 @@ docker:             ## Create a docker image.
 	docker system prune -a -f
 	docker build --build-arg PYPI_PAT=${PYPI_PAT} -t ${MODULE} .
 	@echo "----------------------------------------------------------------------"
-ifeq (${OS},Windows_NT)
-		if exist app-${DOCKER2EXE_DIR} rmdir /s /q app-${DOCKER2EXE_DIR}
-		mkdir app-${DOCKER2EXE_DIR}
-		dist\docker2exe-${DOCKER2EXE_DIR}.exe --name ${MODULE} \
-											  --image ${MODULE}:latest \
-											  --embed \
-											  -t ${DOCKER2EXE_TARGET} \
-											  -v %CD%\data:/app/data \
-											  -v %CD%\logging_cfg.yaml:/app/logging_cfg.yaml \
-											  -v %CD%\settings.io_aero.toml:/app/settings.io_aero.toml
-		mkdir app-${DOCKER2EXE_DIR}\data
-		move dist\${MODULE}-${DOCKER2EXE_DIR}       app-${DOCKER2EXE_DIR}\${MODULE}.exe
-		copy logging_cfg.yaml                       app-${DOCKER2EXE_DIR}\
-		copy run_iotemplateapp.${DOCKER2EXE_SCRIPT} app-${DOCKER2EXE_DIR}\
-		copy settings.io_aero.toml                  app-${DOCKER2EXE_DIR}\
-else
-		rm -rf app-${DOCKER2EXE_DIR}
-		mkdir -p app-${DOCKER2EXE_DIR}
-		chmod +x dist/docker2exe-${DOCKER2EXE_DIR}
-		./dist/docker2exe-${DOCKER2EXE_DIR} --name ${MODULE} \
-											--image ${MODULE}:latest \
-											--embed \
-											-t ${DOCKER2EXE_TARGET} \
-											-v ${PWD}/data:/app/data \
-											-v ${PWD}/logging_cfg.yaml:/app/logging_cfg.yaml \
-											-v ${PWD}/settings.io_aero.toml:/app/settings.io_aero.toml
-		mkdir -p app-${DOCKER2EXE_DIR}/data
-		mv dist/${MODULE}-${DOCKER2EXE_DIR}       app-${DOCKER2EXE_DIR}/${MODULE}
-		chmod +x app-${DOCKER2EXE_DIR}/${MODULE}
-		cp logging_cfg.yaml                       app-${DOCKER2EXE_DIR}/
-		cp run_iotemplateapp.${DOCKER2EXE_SCRIPT} app-${DOCKER2EXE_DIR}/
-		chmod +x app-${DOCKER2EXE_DIR}/*.${DOCKER2EXE_SCRIPT}
-		cp settings.io_aero.toml                  app-${DOCKER2EXE_DIR}/
-endif
+	${DOCKER2EXE_RMDIR}
+	mkdir app-${DOCKER2EXE_DIR}
+	${DOCKER2EXE_CHMOD} dist${PATH_SEP}docker2exe-${DOCKER2EXE_DIR}
+	${DOCKER2EXE_EXEC} --name ${MODULE} \
+					   --image ${MODULE}:latest \
+					   --embed \
+					   -t ${DOCKER2EXE_TARGET} \
+					   -v ${DOCKER2EXE_CURR}${PATH_SEP}data:/app/data \
+					   -v ${DOCKER2EXE_CURR}${PATH_SEP}logging_cfg.yaml:/app/logging_cfg.yaml \
+					   -v ${DOCKER2EXE_CURR}${PATH_SEP}settings.io_aero.toml:/app/settings.io_aero.toml
+	mkdir app-${DOCKER2EXE_DIR}${PATH_SEP}data
+	${DOCKER2EXE_MOVE} dist${PATH_SEP}${MODULE}-${DOCKER2EXE_DIR} app-${DOCKER2EXE_DIR}${PATH_SEP}${MODULE}${DOCKER2EXE_EXT}
+	${DOCKER2EXE_CHMOD}  app-${DOCKER2EXE_DIR}${PATH_SEP}${MODULE}
+	${DOCKER2EXE_COPY} logging_cfg.yaml                           app-${DOCKER2EXE_DIR}${PATH_SEP}
+	${DOCKER2EXE_COPY} run_iotemplateapp.${DOCKER2EXE_SCRIPT}     app-${DOCKER2EXE_DIR}${PATH_SEP}
+	${DOCKER2EXE_CHMOD} app-${DOCKER2EXE_DIR}${PATH_SEP}*.${DOCKER2EXE_SCRIPT}
+	${DOCKER2EXE_COPY} settings.io_aero.toml                      app-${DOCKER2EXE_DIR}${PATH_SEP}
 	@echo "Info **********  End:   Docker ***************************************"
 
 # Mypy: Static Typing for Python

@@ -8,9 +8,7 @@ set -e
 #
 # ------------------------------------------------------------------------------
 
-if [[ -z "${ENV_FOR_DYNACONF}" ]]; then
-    export ENV_FOR_DYNACONF=test
-fi
+export ENV_FOR_DYNACONF=test
 
 export IO_AERO_TASK=
 export IO_AERO_TASK_DEFAULT=version

@@ -8,12 +8,9 @@ rem ----------------------------------------------------------------------------
 
 setlocal EnableDelayedExpansion
 
+set ENV_FOR_DYNACONF=prod
+
 set ERRORLEVEL=
-
-if ["!ENV_FOR_DYNACONF!"] EQU [""] (
-    set ENV_FOR_DYNACONF=prod
-)
-
 set IO_AERO_TASK=
 set IO_AERO_TASK_DEFAULT=version
 

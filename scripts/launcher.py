@@ -5,6 +5,7 @@
 
 This is the entry point to the application IO-TEMPLATE-APP.
 """
+
 import locale
 import logging
 import sys
@@ -32,8 +33,8 @@ _LOCALE = "en_US.UTF-8"
 def _print_dynaconf_settings() -> None:
     """Print all settings managed by Dynaconf in a specific format.
 
-    This function initializes a Dynaconf instance (assuming default settings or you can customize
-    this part as needed) and prints each configuration parameter using a specific message format.
+    This function initializes a Dynaconf instance with specified settings files and prints each
+    configuration parameter using a specific message format.
 
     """
     # Initialize Dynaconf instance with your config settings
@@ -60,7 +61,7 @@ def _print_project_version() -> None:
     """Print the version number from pyproject.toml."""
     # Open the pyproject.toml file in read mode
     with Path("pyproject.toml").open("rb") as toml_file:
-        # Use toml.load() to parse the file and store the data in a dictionary
+        # Use tomli.load() to parse the file and store the data in a dictionary
         pyproject = tomli.load(toml_file)
 
     # Extract the version information

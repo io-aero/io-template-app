@@ -8,16 +8,13 @@ rem ----------------------------------------------------------------------------
 
 setlocal EnableDelayedExpansion
 
+set ENV_FOR_DYNACONF=prod
+
 set ERRORLEVEL=
+set IO_AERO_TASK=
+set IO_AERO_TASK_DEFAULT=version
 
-if "%ENV_FOR_DYNACONF%"=="" (
-    set "ENV_FOR_DYNACONF=prod"
-)
-
-set "IO_AERO_TASK="
-set "IO_AERO_TASK_DEFAULT=version"
-
-set "PYTHONPATH=."
+set PYTHONPATH=.
 
 if "%1"=="" (
     echo =======================================================================

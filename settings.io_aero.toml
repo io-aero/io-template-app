@@ -13,6 +13,10 @@ postgres_user_admin = "postgres"
 postgres_user_guest = "guest"
 postgres_version = "16.1"
 
+[dev]
+
+[prod]
+
 [test]
 check_value = "test"
 postgres_connection_port = 5433

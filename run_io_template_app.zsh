@@ -8,14 +8,11 @@ set -e
 #
 # ------------------------------------------------------------------------------
 
-# Ensure ENV_FOR_DYNACONF is set to 'prod' if not already set
-if [[ -z "${ENV_FOR_DYNACONF}" ]]; then
-    export ENV_FOR_DYNACONF=prod
-fi
+export ENV_FOR_DYNACONF=prod
 
-# Set default values for environment variables
 export IO_AERO_TASK=
 export IO_AERO_TASK_DEFAULT=version
+
 export PYTHONPATH=.
 
 # Prompt the user for a task if none is provided
