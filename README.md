@@ -51,7 +51,6 @@ Further IO-Aero software documentation can be found under the following links.
 | .pylintrc                       | pylint configuration file.                                              |
 | .settings.io_aero_template.toml | Template file for the secret configuration data.                        |
 | Dockerfile                      | Configuration file to create a Docker image.                            |
-| entrypoint.sh                   | Helper script to activate the Conda environment.                        |
 | environment.yaml                | Definition of the Python package requirements - productive version.     |
 | environment_dev.yaml            | Definition of the Python package requirements - development version.    |
 | LICENSE.md                      | Text of the licence terms.                                              |

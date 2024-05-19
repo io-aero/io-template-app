@@ -5,7 +5,9 @@ MODULE=iotemplateapp
 ifeq (${OS},Windows_NT)
     COPY_MYPY_STUBGEN=xcopy /y out\\${MODULE}\\*.* .\\${MODULE}\\
     DELETE_MYPY_STUBGEN=if exist out rd /s /q out
-    DOCKER2EXE_TARGET=windows-amd64
+    DOCKER2EXE_DIR=windows-amd64
+    DOCKER2EXE_SCRIPT=bat
+    DOCKER2EXE_TARGET=windows/amd64
     NUITKA_OPTION=--msvc=latest
     NUITKA_OS=windows
     PIP=pip
@@ -20,9 +22,18 @@ else
     COPY_MYPY_STUBGEN=cp -f out/${MODULE}/* ./${MODULE}/
     DELETE_MYPY_STUBGEN=rm -rf out
     ifeq (${OS},Linux)
-        DOCKER2EXE_TARGET=linux-amd64
-    else
-        DOCKER2EXE_TARGET=darwin-arm64
+        DOCKER2EXE_DIR=linux-amd64
+	    DOCKER2EXE_SCRIPT=sh
+        DOCKER2EXE_TARGET=linux/amd64
+    else ifeq (${OS},Darwin)
+        DOCKER2EXE_SCRIPT=zsh
+        ifeq ($(ARCH),arm64)
+	        DOCKER2EXE_DIR=darwin-arm64
+	        DOCKER2EXE_TARGET=darwin/arm64
+    	else ifeq ($(ARCH),x86_64)
+	        DOCKER2EXE_DIR=darwin-amd64
+	        DOCKER2EXE_TARGET=darwin/amd64
+    	endif
     endif
     NUITKA_OPTION=--disable-ccache
     ifeq (${OS},Linux)
@@ -201,56 +212,38 @@ docker:             ## Create a docker image.
 	docker build --build-arg PYPI_PAT=${PYPI_PAT} -t ${MODULE} .
 	@echo "----------------------------------------------------------------------"
 ifeq (${OS},Windows_NT)
-		if exist app-${DOCKER2EXE_TARGET} rmdir /s /q app-${DOCKER2EXE_TARGET}
-		mkdir app-${DOCKER2EXE_TARGET}
-		dist\docker2exe-${DOCKER2EXE_TARGET}.exe --name ${MODULE} \
-												 --image ${MODULE}:latest \
-												 --embed \
-												 -t windows/amd64 \
-												 -v %CD%\data:/app/data \
-												 -v %CD%\logging_cfg.yaml:/app/logging_cfg.yaml \
-												 -v %CD%\settings.io_aero.toml:/app/settings.io_aero.toml
-		mkdir app-${DOCKER2EXE_TARGET}\data
-		move dist\${MODULE}-${DOCKER2EXE_TARGET} app-${DOCKER2EXE_TARGET}\${MODULE}.exe
-		copy logging_cfg.yaml                    app-${DOCKER2EXE_TARGET}\
-		copy run_iotemplateapp.bat               app-${DOCKER2EXE_TARGET}\
-		copy settings.io_aero.toml               app-${DOCKER2EXE_TARGET}\
-else ifeq (${OS},Linux)
-		rm -rf app-${DOCKER2EXE_TARGET}
-		mkdir -p app-${DOCKER2EXE_TARGET}
-		chmod +x dist/$docker2exe-${DOCKER2EXE_TARGET}
-		./dist/docker2exe-${DOCKER2EXE_TARGET} --name ${MODULE} \
-											   --image ${MODULE}:latest \
-											   --embed \
-											   -t linux/amd64 \
-											   -v ${PWD}/data:/app/data \
-											   -v ${PWD}/logging_cfg.yaml:/app/logging_cfg.yaml \
-											   -v ${PWD}/settings.io_aero.toml:/app/settings.io_aero.toml
-		mkdir -p app-${DOCKER2EXE_TARGET}/data
-		mv dist/${MODULE}-${DOCKER2EXE_TARGET} app-${DOCKER2EXE_TARGET}/${MODULE}
-		chmod +x app-${DOCKER2EXE_TARGET}/${MODULE}
-		cp logging_cfg.yaml                    app-${DOCKER2EXE_TARGET}/
-		cp run_iotemplateapp.sh                app-${DOCKER2EXE_TARGET}/
-		chmod +x app-${DOCKER2EXE_TARGET}/*.*sh
-		cp settings.io_aero.toml               app-${DOCKER2EXE_TARGET}/
+		if exist app-${DOCKER2EXE_DIR} rmdir /s /q app-${DOCKER2EXE_DIR}
+		mkdir app-${DOCKER2EXE_DIR}
+		dist\docker2exe-${DOCKER2EXE_DIR}.exe --name ${MODULE} \
+											  --image ${MODULE}:latest \
+											  --embed \
+											  -t ${DOCKER2EXE_TARGET} \
+											  -v %CD%\data:/app/data \
+											  -v %CD%\logging_cfg.yaml:/app/logging_cfg.yaml \
+											  -v %CD%\settings.io_aero.toml:/app/settings.io_aero.toml
+		mkdir app-${DOCKER2EXE_DIR}\data
+		move dist\${MODULE}-${DOCKER2EXE_DIR}       app-${DOCKER2EXE_DIR}\${MODULE}.exe
+		copy logging_cfg.yaml                       app-${DOCKER2EXE_DIR}\
+		copy run_iotemplateapp.${DOCKER2EXE_SCRIPT} app-${DOCKER2EXE_DIR}\
+		copy settings.io_aero.toml                  app-${DOCKER2EXE_DIR}\
 else
-		rm -rf app-${DOCKER2EXE_TARGET}
-		mkdir -p app-${DOCKER2EXE_TARGET}
-		chmod +x dist/docker2exe-${DOCKER2EXE_TARGET}
-		./dist/docker2exe-${DOCKER2EXE_TARGET} --name ${MODULE} \
-											   --image ${MODULE}:latest \
-											   --embed \
-											   -t darwin/arm64 \
-											   -v ${PWD}/data:/app/data \
-											   -v ${PWD}/logging_cfg.yaml:/app/logging_cfg.yaml \
-											   -v ${PWD}/settings.io_aero.toml:/app/settings.io_aero.toml
-		mkdir -p app-${DOCKER2EXE_TARGET}/data
-		mv dist/${MODULE}-${DOCKER2EXE_TARGET} app-${DOCKER2EXE_TARGET}/${MODULE}
-		chmod +x app-${DOCKER2EXE_TARGET}/${MODULE}
-		cp logging_cfg.yaml                    app-${DOCKER2EXE_TARGET}/
-		cp run_iotemplateapp.zsh               app-${DOCKER2EXE_TARGET}/
-		chmod +x app-${DOCKER2EXE_TARGET}/*.zsh
-		cp settings.io_aero.toml               app-${DOCKER2EXE_TARGET}/
+		rm -rf app-${DOCKER2EXE_DIR}
+		mkdir -p app-${DOCKER2EXE_DIR}
+		chmod +x dist/docker2exe-${DOCKER2EXE_DIR}
+		./dist/docker2exe-${DOCKER2EXE_DIR} --name ${MODULE} \
+											--image ${MODULE}:latest \
+											--embed \
+											-t ${DOCKER2EXE_TARGET} \
+											-v ${PWD}/data:/app/data \
+											-v ${PWD}/logging_cfg.yaml:/app/logging_cfg.yaml \
+											-v ${PWD}/settings.io_aero.toml:/app/settings.io_aero.toml
+		mkdir -p app-${DOCKER2EXE_DIR}/data
+		mv dist/${MODULE}-${DOCKER2EXE_DIR}       app-${DOCKER2EXE_DIR}/${MODULE}
+		chmod +x app-${DOCKER2EXE_DIR}/${MODULE}
+		cp logging_cfg.yaml                       app-${DOCKER2EXE_DIR}/
+		cp run_iotemplateapp.${DOCKER2EXE_SCRIPT} app-${DOCKER2EXE_DIR}/
+		chmod +x app-${DOCKER2EXE_DIR}/*.${DOCKER2EXE_SCRIPT}
+		cp settings.io_aero.toml                  app-${DOCKER2EXE_DIR}/
 endif
 	@echo "Info **********  End:   Docker ***************************************"
 
