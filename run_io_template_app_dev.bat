@@ -8,12 +8,9 @@ rem ----------------------------------------------------------------------------
 
 setlocal EnableDelayedExpansion
 
+set ENV_FOR_DYNACONF=dev
+
 set ERRORLEVEL=
-
-if ["!ENV_FOR_DYNACONF!"] EQU [""] (
-    set ENV_FOR_DYNACONF=prod
-)
-
 set IO_AERO_TASK=
 set IO_AERO_TASK_DEFAULT=version
 
@@ -35,6 +32,7 @@ if ["%1"] EQU [""] (
 echo.
 echo Script %0 is now running
 echo.
+
 set IO_AERO_TEMPLATE_APP_LOG=run_io_template_app_dev_%IO_AERO_TASK%.log
 
 echo You can find the run log in the file %IO_AERO_TEMPLATE_APP_LOG%

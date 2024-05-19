@@ -1,7 +1,6 @@
 # Copyright (c) 2022-2024 IO-Aero. All rights reserved. Use of this
 # source code is governed by the IO-Aero License, that can
 # be found in the LICENSE.md file.
-
 """Global constants and variables."""
 
 from iocommon import io_logger, io_settings
@@ -41,6 +40,9 @@ INFO_00_005 = "INFO.00.005 Argument '{task}'='{value_task}'"
 
 INFO_00_006 = "INFO.00.006 End Launcher"
 """str: Information message indicating the end of the launcher."""
+
+INFO_00_007 = "INFO.00.007 Section: '{section}' - Parameter: '{name}'='{value}'"
+"""str: Information message indicating the value of a specific configuration parameter."""
 
 INFORMATION_NOT_YET_AVAILABLE = "n/a"
 """str: Placeholder indicating that information is not yet available."""

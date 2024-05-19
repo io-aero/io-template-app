@@ -50,15 +50,19 @@ Applied Software
      - Remark
      - Status
    * - DBeaver - optional
-     - 23.3.1
+     - 24.0.4
      -
      -
    * - Docker Desktop
-     - 4.26.1
+     - 4.30.0
+     -
+     -
+   * - Go
+     - go1.22.3
      -
      -
    * - Miniconda
-     - 23.3.1
+     - 24.3.0
      -
      -
    * - Python
@@ -83,3 +87,12 @@ Windows-specific Software
      - 3.81
      -
      -
+   * - Visual Studio Community 2022
+     - 2022
+     -
+     -
+
+Minimal Requirements Visual Studio Community 2022
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: img/Visual_Studio_Requirements.png
