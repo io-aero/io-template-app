@@ -2,9 +2,6 @@
 
 MODULE:=iotemplateapp
 
-ARCH:=$(shell uname -m)
-OS:=$(shell uname -s)
-
 ifeq (${OS},Windows_NT)
     COPY_MYPY_STUBGEN=xcopy /y out\\${MODULE}\\*.* .\\${MODULE}\\
     DELETE_MYPY_STUBGEN=if exist out rd /s /q out
@@ -27,6 +24,8 @@ ifeq (${OS},Windows_NT)
     REMOVE_DOCKER_CONTAINER=@docker ps -a | findstr /r /c:"${MODULE}" && docker rm --force ${MODULE}         || echo "No existing container to remove."
     REMOVE_DOCKER_IMAGE=@docker image ls  | findstr /r /c:"${MODULE}" && docker rmi --force ${MODULE}:latest || echo "No existing image to remove."
 else
+	ARCH:=$(shell uname -m)
+	OS:=$(shell uname -s)
     COPY_MYPY_STUBGEN=cp -f out/${MODULE}/* ./${MODULE}/
     DELETE_MYPY_STUBGEN=rm -rf out
     ifeq (${OS},Linux)
