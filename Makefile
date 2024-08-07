@@ -93,7 +93,7 @@ everything: dev docs nuitka
 ## final:              Format, lint and test the code and create the documentation.
 final: format lint docs tests
 ## format:             Format the code with Black and docformatter.
-format: black docformatter
+format: isort black docformatter
 ## lint:               Lint the code with ruff, Bandit, vulture, Pylint and Mypy.
 lint: ruff bandit vulture pylint mypy
 ## pre-push:           Preparatory work for the pushing process.
@@ -171,7 +171,7 @@ conda-dev:          ## Create a new environment for development.
 	@echo "Info **********  Start: Miniconda create development environment *****"
 	conda config --set always_yes true
 	conda --version
-	#echo "PYPI_PAT=${PYPI_PAT}"
+	echo "PYPI_PAT=${PYPI_PAT}"
 	@echo "----------------------------------------------------------------------"
 	conda env remove -n ${MODULE}
 	conda env create -f environment_dev.yml
@@ -258,6 +258,18 @@ docker:             ## Create a docker image.
 	${DOCKER2EXE_CHMOD} app-${DOCKER2EXE_DIR}${PATH_SEP}*.${DOCKER2EXE_SCRIPT}
 	${DOCKER2EXE_COPY} settings.io_aero.toml                      app-${DOCKER2EXE_DIR}${PATH_SEP}
 	@echo "Info **********  End:   Docker ***************************************"
+
+# isort your imports, so you don't have to.
+# https://github.com/PyCQA/isort
+# Configuration file: pyproject.toml
+isort:              ## Edit and sort the imports with isort.
+	@echo "Info **********  Start: isort ****************************************"
+	@echo "PYTHONPATH=${PYTHONPATH}"
+	@echo "----------------------------------------------------------------------"
+	isort --version
+	@echo "----------------------------------------------------------------------"
+	isort ${PYTHONPATH}
+	@echo "Info **********  End:   isort ****************************************"
 
 # Mypy: Static Typing for Python
 # https://github.com/python/mypy

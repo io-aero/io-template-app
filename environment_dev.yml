@@ -2,14 +2,12 @@ name: iotemplateapp
 channels:
   - conda-forge
 dependencies:
-  - python=3.11
+  - python=3.12
+  - pip
   - nuitka
   - pyyaml
-  - scons
-  - tomli
   - tomli-w
   - virtualenv
-  - pip
   - pip:
     - git+https://IoAeroMachineUser:${PYPI_PAT}@github.com/io-aero/io-common.git
     - git+https://@github.com/io-aero/io-template-lib.git
