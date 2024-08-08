@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-MODULE:=iotemplateapp
+MODULE=iotemplateapp
 
 ifeq (${OS},Windows_NT)
     COPY_MYPY_STUBGEN=xcopy /y out\\${MODULE}\\*.* .\\${MODULE}\\
@@ -370,10 +370,20 @@ pytest-first-issue: ## Run all tests with pytest until the first issue occurs.
 	@echo "----------------------------------------------------------------------"
 	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -rP -v -x tests
 	@echo "Info **********  End:   pytest ***************************************"
-pytest-issue:       ## Run only the tests with pytest which are marked with 'issue'.
+pytest-ignore-mark: ## Run all tests without marker with pytest."
 	@echo "Info **********  Start: pytest ***************************************"
 	@echo "CONDA     =${CONDA_PREFIX}"
 	@echo "PYTHONPATH=${PYTHONPATH}"
+	@echo "----------------------------------------------------------------------"
+	pytest --version
+	@echo "----------------------------------------------------------------------"
+	pytest --dead-fixtures -m "not no_ci" tests
+	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered --cov-report=lcov -m "not no_ci" -v tests
+	@echo Info **********  End:   pytest ***************************************
+pytest-issue:       ## Run only the tests with pytest which are marked with 'issue'.
+	@echo Info **********  Start: pytest ***************************************
+	@echo CONDA     =${CONDA_PREFIX}
+	@echo PYTHONPATH=${PYTHONPATH}
 	@echo "----------------------------------------------------------------------"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
