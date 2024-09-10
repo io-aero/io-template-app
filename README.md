@@ -11,6 +11,7 @@ Further IO-Aero software documentation can be found under the following links.
 
 - [IO-AIRPLANE-SIM - Airplane Simulator](https://io-aero.github.io/io-airplane-sim/)
 - [IO-AVSTATS - Aviation Event Statistics](https://io-aero.github.io/io-avstats/) 
+- [IO-AX4-DI - Flight Data Interface](https://github.com/IO-Aero-Projects-2024/io-ax4-di/) 
 - [IO-COMMON - Common Elements](https://io-aero.github.io/io-common/) 
 - [IO-DATA-SOURCES - Data Source Documentation](https://io-aero.github.io/io-data-sources/) 
 - [IO-EVAA-MAP-CREATOR - A tool to create EVAA elevation maps](https://io-aero.github.io/io-evaa-map-creator/) 
@@ -19,10 +20,12 @@ Further IO-Aero software documentation can be found under the following links.
 - [IO-LIDAR-DATA - Lidar Data Management](https://io-aero.github.io/io-lidar-data/)
 - [IO-MAP-APPS - IO Map Applications](https://io-aero.github.io/io-map-apps/) 
 - [IO-RASTER - Raster Map Processing](https://io-aero.github.io/io-raster/) 
+- [IO-RESOURCES - All relevant books, articles, etc](https://github.com/io-aero/io-resources/) 
+- [IO-TEMPLATE-APP - Template for Application Repositories](https://io-aero.github.io/io-template-app/)
 - [IO-TEMPLATE-LIB - Template for Library Repositories](https://io-aero.github.io/io-template-lib/)
 - [IO-VECTOR - Vector Map Processing](https://io-aero.github.io/io-vector/) 
 - [IO-XPA-CORE - IO-XPA Data Processing](https://io-aero.github.io/io-xpa-core/)
-<!-- - [IO-TEMPLATE-APP - Template for Application Repositories](https://io-aero.github.io/io-template-app/) -->
+- [IO-XPI - X-Plane Interface](https://github.com/IO-Aero-Projects-2024/io-xpi/)
 
 ## Directory and File Structure of this Repository
 
@@ -60,7 +63,6 @@ Further IO-Aero software documentation can be found under the following links.
 | Makefile                        | Tasks to be executed with the make command.                           |
 | pyproject.toml                  | Optional configuration data for the software quality tools.           |
 | README.md                       | This file.                                                            |
-| run_io_template_app             | Main script for using the functionality based on a Nuitka executable. |
 | run_io_template_app_dev         | Main script for using the functionality in a development environment. |
 | run_io_template_app_prod        | Main script for using the functionality in a productive environment.  |
 | run_io_template_app_pytest      | Main script for using the functionality in a test environment.        |
@@ -72,7 +74,7 @@ Further IO-Aero software documentation can be found under the following links.
 
 ### 1. Common Characteristics
 
-This section details the shared characteristics of both `docker2exe` and `Nuitka` when used to convert the `io-template-app` into an executable file. These features are crucial for understanding the overall approach and platform-specific considerations necessary for the conversion process.
+This section details characteristics of `docker2exe` when used to convert the `io-template-app` into an executable file. These features are crucial for understanding the overall approach and platform-specific considerations necessary for the conversion process.
 
 - **Target Platforms**:
 The tools support creating executables specifically for macOS, Ubuntu, or Windows. This allows for precise targeting based on deployment needs.
@@ -81,7 +83,7 @@ The tools support creating executables specifically for macOS, Ubuntu, or Window
 The process of creating an executable is required to be conducted on the operating system for which the executable is intended. This means building a Windows executable on a Windows machine, a macOS executable on a macOS machine, and so on.
 
 - **Use of Makefile**:
-Both `docker2exe` and `Nuitka` utilize the Makefile of `iotemplateapp` to facilitate the construction of executables. 
+`docker2exe` utilize the Makefile of `iotemplateapp` to facilitate the construction of executables. 
 
 ### 2. Using docker2exe
 
@@ -112,26 +114,3 @@ The executable files for `docker2exe` are downloaded from the [GitHub Releases p
     - **settings.io-aero.toml**: Configuration data for the `iotemplateapp`.
 
 - The converted application requires Docker to be installed in order to run, ensuring that the application's environment is appropriately replicated.
-
-### 3. Using Nuitka
-
-Nuitka is a Python compiler that translates Python code into C++ and then compiles it into an executable file. This section explains the steps involved in using Nuitka to convert the `io-template-app` into a standalone executable file.
-
-**a. The prerequisites are:**
-
-- **C++ Compiler**: Nuitka requires a C++ compiler as it converts Python code into C++. For macOS and Ubuntu, the system's native C++ compiler is sufficient. Windows users must install the Community version of Visual Studio 2022 to obtain the necessary C++ build tools.
-  - Detailed installation instructions for Visual Studio 2022 are available on the [Visual Studio Release page](https://visualstudio.microsoft.com/vs/).
-  - It is crucial to follow the installation instructions provided on the release page of `io-template-app` to ensure all required components are installed.
-
-
-**b. Creating the Executable File**
-
-1. **Creating the Executable**:
-   - To create the executable file for the `iotemplateapp`, the command `make nuitka` is utilized. This command invokes Nuitka to compile the Python script into an executable.
-
-2. **Output Directory**:
-   - The executable file is placed in the `dist` directory within the project structure once compilation is complete.
-
-**c. Running the Application**
-
-- **Execution Script**: To execute the application, use the provided shell script named `run_io_template_app_prod.[bat|sh|zsh]`, which simplifies the launch process. This script is tailored to ensure that the application executes in a production environment, utilizing the newly compiled executable.
