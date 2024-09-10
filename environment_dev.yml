@@ -4,13 +4,12 @@ channels:
 dependencies:
   - python=3.12
   - pip
-  - nuitka
   - pyyaml
+  - tomli
   - tomli-w
   - virtualenv
   - pip:
     - git+https://IoAeroMachineUser:${PYPI_PAT}@github.com/io-aero/io-common.git
-    - git+https://@github.com/io-aero/io-template-lib.git
     # Development dependencies
     - bandit
     - black
