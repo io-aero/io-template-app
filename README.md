@@ -36,6 +36,7 @@ Further IO-Aero software documentation can be found under the following links.
 |-------------------|------------------------------------------------------|
 | .github/workflows | GitHub Action workflows.                             |
 | .vscode           | Visual Studio Code configuration files.              |
+| config            | Configuration files.                                 |
 | data              | Application data related files.                      |
 | dist              | Dynamic link library version of **IO-TEMPLATE-APP**. |
 | docs              | Documentation files.                                 |
@@ -115,3 +116,19 @@ The executable files for `docker2exe` are downloaded from the [GitHub Releases p
     - **settings.io-aero.toml**: Configuration data for the `iotemplateapp`.
 
 - The converted application requires Docker to be installed in order to run, ensuring that the application's environment is appropriately replicated.
+
+
+
+=====
+sudo locale-gen en_US.UTF-8
+sudo update-locale LANG=en_US.UTF-8
+
+export LC_ALL=C.UTF-8
+export LANG=C.UTF-8
+
+export PYPI_PAT=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
+
+export LANG=C.UTF-8
+export LC_ALL=C.UTF-8
+
+

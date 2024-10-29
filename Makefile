@@ -165,8 +165,8 @@ conda-dev:          ## Create a new environment for development.
 	conda --version
 	echo "PYPI_PAT=${PYPI_PAT}"
 	@echo "----------------------------------------------------------------------"
-	conda env remove -n ${MODULE}
-	conda env create -f environment_dev.yml
+	conda env remove -n ${MODULE} 2>/dev/null || echo "Environment '${MODULE}' does not exist."
+	conda env create -f config/environment_dev.yml
 	@echo "----------------------------------------------------------------------"
 	conda info --envs
 	conda list
@@ -176,8 +176,8 @@ conda-prod:         ## Create a new environment for production.
 	conda config --set always_yes true
 	conda --version
 	@echo "----------------------------------------------------------------------"
-	conda env remove -n ${MODULE}
-	conda env create -f environment.yml
+	conda env remove -n ${MODULE} 2>/dev/null || echo "Environment '${MODULE}' does not exist."
+	conda env create -f config/environment.yml
 	@echo "----------------------------------------------------------------------"
 	conda info --envs
 	conda list

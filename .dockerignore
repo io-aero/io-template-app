@@ -7,14 +7,14 @@ examples
 libs
 tests
 
-.act_secrets_template
 .dockerignore
 .gitattributes
 .gitignore
 .pylintrc
-.settings.io_aero_template.toml
+config/.act_secrets_template
+config/.settings.io_aero_template.toml
+config/environment_dev.yml
 Dockerfile
-environment_dev.yml
 LICENSE.md
 Makefile
 README.md
