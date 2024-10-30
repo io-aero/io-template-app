@@ -27,25 +27,39 @@ Detailed instructions can be found in the [documentation](https://io-aero.github
 1. Install Docker Desktop
 1. Clone this repository:
 
-    `git clone https://github.com/io-aero/io-template-app`
+```
+    git clone https://github.com/io-aero/io-template-app
+```
 
 1. Create the virtual environment:
 
-    `make conda-dev`
+```
+    make conda-dev
+```
 
 1. Switch to the created virtual environment:
 
-    `conda activate iotemplateapp`
+```
+    conda activate iotemplateapp
+```
 
 1. Create a file named `.settings.io_aero.toml` which contains the database access data
 
 1. Test the whole functionality:
 
-    `make final`
+```
+    make final
+```
 
 1. All Makefile commands can be found by running:
 
-    `make` or `make help`
+```
+    make 
+```
+ or 
+```
+    make help
+```
 
 ```
 =============================================================================
