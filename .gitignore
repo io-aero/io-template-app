@@ -1,4 +1,5 @@
 *.bak
+*.log
 .coverage
 .history/
 .idea/
@@ -7,16 +8,12 @@
 .settings.io_aero.toml
 /.act_secrets
 /.temp/
-/__MACOSX/
 /app-*
 /build/
 /data/*_postgres.zip
 /data/postgres/
 /data/postgres_test/
-/dist/iotemplateapp.exe
-/dist/linux/
-/dist/macos/
-/dist/windows/
+/dist/
 /docs/build/doctrees/
 /docs/build/pdf/.doctrees
 /docs/build/pdf/manual.rtc
@@ -26,6 +23,3 @@ Pipfile.lock
 __pycache__
 coverage.lcov
 iotemplateapp.egg-info/
-logging_*.log
-resources/Gammadyne/timer.txt
-run_*.log

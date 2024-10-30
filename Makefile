@@ -1,65 +1,25 @@
 .DEFAULT_GOAL := help
 
 MODULE=iotemplateapp
-
-ifeq (${OS},Windows_NT)
-    COPY_MYPY_STUBGEN=xcopy /y out\\${MODULE}\\*.* .\\${MODULE}\\
-    DELETE_MYPY_STUBGEN=if exist out rd /s /q out
-    DOCKER2EXE_CHMOD=echo no operation with
-    DOCKER2EXE_COPY=copy
-    DOCKER2EXE_CURR=%%CD%%
-    DOCKER2EXE_DIR=windows-amd64
-    DOCKER2EXE_EXEC=dist\docker2exe-${DOCKER2EXE_DIR}.exe
-    DOCKER2EXE_EXT=.exe
-    DOCKER2EXE_MOVE=move
-    DOCKER2EXE_RMDIR=if exist app-${DOCKER2EXE_DIR} rmdir /s /q app-${DOCKER2EXE_DIR}
-    DOCKER2EXE_SCRIPT=bat
-    DOCKER2EXE_TARGET=windows/amd64
-    PATH_SEP=\\
-    PIP=pip
-    PYTHON=python
-    DELETE_SPHINX=del /f /q ${SPHINX_BUILDDIR}\\*
-    REMOVE_DOCKER_CONTAINER=@docker ps -a | findstr /r /c:"${MODULE}" && docker rm --force ${MODULE}         || echo "No existing container to remove."
-    REMOVE_DOCKER_IMAGE=@docker image ls  | findstr /r /c:"${MODULE}" && docker rmi --force ${MODULE}:latest || echo "No existing image to remove."
-else
-	ARCH:=$(shell uname -m)
-	OS:=$(shell uname -s)
-    COPY_MYPY_STUBGEN=cp -f out/${MODULE}/* ./${MODULE}/
-    DELETE_MYPY_STUBGEN=rm -rf out
-    ifeq (${OS},Linux)
-        DOCKER2EXE_DIR=linux-amd64
-	    DOCKER2EXE_SCRIPT=sh
-        DOCKER2EXE_TARGET=linux/amd64
-    else ifeq (${OS},Darwin)
-        DOCKER2EXE_SCRIPT=zsh
-        ifeq ($(ARCH),arm64)
-	        DOCKER2EXE_DIR=darwin-arm64
-	        DOCKER2EXE_TARGET=darwin/arm64
-    	else ifeq ($(ARCH),x86_64)
-	        DOCKER2EXE_DIR=darwin-amd64
-	        DOCKER2EXE_TARGET=darwin/amd64
-    	endif
-    endif
-    DOCKER2EXE_CHMOD=chmod +x
-    DOCKER2EXE_COPY=cp
-    DOCKER2EXE_CURR=$$PWD
-    DOCKER2EXE_EXEC=./dist/docker2exe-${DOCKER2EXE_DIR}
-    DOCKER2EXE_EXT=
-    DOCKER2EXE_MOVE=mv
-    DOCKER2EXE_RMDIR=rm -rf app-${DOCKER2EXE_DIR}
-    PATH_SEP=/
-    PIP=pip3
-    PYTHON=python3
-    DELETE_SPHINX=rm -rf ${SPHINX_BUILDDIR}/*
-    REMOVE_DOCKER_CONTAINER=@sh -c 'docker ps -a | grep -q "${MODULE}" && docker rm --force ${MODULE} || echo "No existing container to remove."'
-    REMOVE_DOCKER_IMAGE=@sh -c 'docker image ls | grep -q "${MODULE}" && docker rmi --force ${MODULE}:latest || echo "No existing image to remove."'
-endif
-
-COVERALLS_REPO_TOKEN=<see coveralls.io>
-DOCKER2EXE_CURR=.
 PYTHONPATH=${MODULE} docs scripts tests
-SPHINX_BUILDDIR=docs${PATH_SEP}build
-SPHINX_SOURCEDIR=docs${PATH_SEP}source
+
+ARCH:=$(shell uname -m)
+OS:=$(shell uname -s)
+
+ifeq (${OS},Linux)
+	DOCKER2EXE_DIR=linux-amd64
+	DOCKER2EXE_SCRIPT=sh
+	DOCKER2EXE_TARGET=linux/amd64
+else ifeq (${OS},Darwin)
+	DOCKER2EXE_SCRIPT=zsh
+	ifeq ($(ARCH),arm64)
+		DOCKER2EXE_DIR=darwin-arm64
+		DOCKER2EXE_TARGET=darwin/arm64
+	else ifeq ($(ARCH),x86_64)
+		DOCKER2EXE_DIR=darwin-amd64
+		DOCKER2EXE_TARGET=darwin/amd64
+	endif
+endif
 
 export ENV_FOR_DYNACONF=test
 export LANG=en_US.UTF-8
@@ -149,11 +109,9 @@ black:              ## Format the code with Black.
 # Configuration file: none
 compileall:         ## Byte-compile the Python libraries.
 	@echo "Info **********  Start: Compile All Python Scripts *******************"
-	@echo "PYTHON=${PYTHON}"
+	python3 --version
 	@echo "----------------------------------------------------------------------"
-	${PYTHON} --version
-	@echo "----------------------------------------------------------------------"
-	${PYTHON} -m compileall
+	python3 -m compileall
 	@echo "Info **********  End:   Compile All Python Scripts *******************"
 
 # Miniconda - Minimal installer for conda.
@@ -214,41 +172,34 @@ docker:             ## Create a docker image.
 	@echo "Info **********  Start: Docker ***************************************"
 	@echo "OS               =${OS}"
 	@echo "ARCH             =${ARCH}"
-	@echo "----------------------------------------------------------------------"
-	@echo "DOCKER2EXE_CHMOD =${DOCKER2EXE_CHMOD}"
-	@echo "DOCKER2EXE_COPY  =${DOCKER2EXE_COPY}"
-	@echo "DOCKER2EXE_CURR  =${DOCKER2EXE_CURR}"
 	@echo "DOCKER2EXE_DIR   =${DOCKER2EXE_DIR}"
-	@echo "DOCKER2EXE_EXEC  =${DOCKER2EXE_EXEC}"
-	@echo "DOCKER2EXE_MOVE  =${DOCKER2EXE_MOVE}"
-	@echo "DOCKER2EXE_RMDIR =${DOCKER2EXE_RMDIR}"
 	@echo "DOCKER2EXE_SCRIPT=${DOCKER2EXE_SCRIPT}"
 	@echo "DOCKER2EXE_TARGET=${DOCKER2EXE_TARGET}"
 	@echo "----------------------------------------------------------------------"
 	docker ps -a
 	@echo "----------------------------------------------------------------------"
-	${REMOVE_DOCKER_CONTAINER}
-	${REMOVE_DOCKER_IMAGE}
+	@sh -c 'docker ps -a | grep -q "${MODULE}" && docker rm --force ${MODULE} || echo "No existing container to remove."'
+	@sh -c 'docker image ls | grep -q "${MODULE}" && docker rmi --force ${MODULE}:latest || echo "No existing image to remove."'
 	docker system prune -a -f
 	docker build --build-arg PYPI_PAT=${PYPI_PAT} -t ${MODULE} .
 	@echo "----------------------------------------------------------------------"
-	${DOCKER2EXE_RMDIR}
+	rm -rf app-${DOCKER2EXE_DIR}
 	mkdir app-${DOCKER2EXE_DIR}
-	${DOCKER2EXE_CHMOD} dist${PATH_SEP}docker2exe-${DOCKER2EXE_DIR}
-	${DOCKER2EXE_EXEC} --name ${MODULE} \
-					   --image ${MODULE}:latest \
-					   --embed \
-					   -t ${DOCKER2EXE_TARGET} \
-					   -v ${DOCKER2EXE_CURR}${PATH_SEP}data:/app/data \
-					   -v ${DOCKER2EXE_CURR}${PATH_SEP}logging_cfg.yaml:/app/logging_cfg.yaml \
-					   -v ${DOCKER2EXE_CURR}${PATH_SEP}settings.io_aero.toml:/app/settings.io_aero.toml
-	mkdir app-${DOCKER2EXE_DIR}${PATH_SEP}data
-	${DOCKER2EXE_MOVE} dist${PATH_SEP}${MODULE}-${DOCKER2EXE_DIR} app-${DOCKER2EXE_DIR}${PATH_SEP}${MODULE}${DOCKER2EXE_EXT}
-	${DOCKER2EXE_CHMOD}  app-${DOCKER2EXE_DIR}${PATH_SEP}${MODULE}
-	${DOCKER2EXE_COPY} logging_cfg.yaml                           app-${DOCKER2EXE_DIR}${PATH_SEP}
-	${DOCKER2EXE_COPY} run_iotemplateapp.${DOCKER2EXE_SCRIPT}     app-${DOCKER2EXE_DIR}${PATH_SEP}
-	${DOCKER2EXE_CHMOD} app-${DOCKER2EXE_DIR}${PATH_SEP}*.${DOCKER2EXE_SCRIPT}
-	${DOCKER2EXE_COPY} settings.io_aero.toml                      app-${DOCKER2EXE_DIR}${PATH_SEP}
+	chmod +x dist/docker2exe-${DOCKER2EXE_DIR}
+	./dist/docker2exe-${DOCKER2EXE_DIR} --name ${MODULE} \
+									    --image ${MODULE}:latest \
+									    --embed \
+									    -t ${DOCKER2EXE_TARGET} \
+									    -v ./data:/app/data \
+									    -v ./logging_cfg.yaml:/app/logging_cfg.yaml \
+									    -v ./settings.io_aero.toml:/app/settings.io_aero.toml
+	mkdir app-${DOCKER2EXE_DIR}/data
+	mv dist/${MODULE}-${DOCKER2EXE_DIR} app-${DOCKER2EXE_DIR}/${MODULE}
+	chmod +x app-${DOCKER2EXE_DIR}/${MODULE}
+	cp logging_cfg.yaml                           app-${DOCKER2EXE_DIR}/
+	cp run_iotemplateapp.${DOCKER2EXE_SCRIPT}     app-${DOCKER2EXE_DIR}/
+	chmod +x app-${DOCKER2EXE_DIR}/*.${DOCKER2EXE_SCRIPT}
+	cp settings.io_aero.toml                      app-${DOCKER2EXE_DIR}/
 	@echo "Info **********  End:   Docker ***************************************"
 
 # isort your imports, so you don't have to.
@@ -277,22 +228,19 @@ mypy:               ## Find typing issues with Mypy.
 
 mypy-stubgen:       ## Autogenerate stub files.
 	@echo "Info **********  Start: Mypy *****************************************"
-	@echo "COPY_MYPY_STUBGEN  =${COPY_MYPY_STUBGEN}"
-	@echo "DELETE_MYPY_STUBGEN=${DELETE_MYPY_STUBGEN}"
-	@echo "MODULE             =${MODULE}"
+	@echo "MODULE=${MODULE}"
 	@echo "----------------------------------------------------------------------"
-	${DELETE_MYPY_STUBGEN}
+	rm -rf out
 	stubgen --package ${MODULE}
-	${COPY_MYPY_STUBGEN}
-	${DELETE_MYPY_STUBGEN}
+	cp -f out/${MODULE}/* ./${MODULE}/
+	rm -rf out
 	@echo "Info **********  End:   Mypy *****************************************"
 
 next-version:       ## Increment the version number.
 	@echo "Info **********  Start: next_version *********************************"
-	@echo "PYTHON    =${PYTHON}"
 	@echo "PYTHONPATH=${PYTHONPATH}"
 	@echo "----------------------------------------------------------------------"
-	${PYTHON} scripts/next_version.py
+	python3 scripts/next_version.py
 	@echo "Info **********  End:   next version *********************************"
 
 # Pylint is a tool that checks for errors in Python code.
@@ -323,10 +271,9 @@ pytest:             ## Run all tests with pytest.
 pytest-ci:          ## Run all tests with pytest after test tool installation.
 	@echo "Info **********  Start: pytest ***************************************"
 	@echo "CONDA     =${CONDA_PREFIX}"
-	@echo "PIP       =${PIP}"
 	@echo "PYTHONPATH=${PYTHONPATH}"
 	@echo "----------------------------------------------------------------------"
-	${PIP} install pytest pytest-cov pytest-deadfixtures pytest-helpers-namespace pytest-random-order
+	pip3 install pytest pytest-cov pytest-deadfixtures pytest-helpers-namespace pytest-random-order
 	@echo "----------------------------------------------------------------------"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
@@ -384,25 +331,17 @@ ruff:               ## An extremely fast Python linter and code formatter.
 
 sphinx:             ## Create the user documentation with Sphinx.
 	@echo "Info **********  Start: sphinx ***************************************"
-	@echo "DELETE_SPHINX   =${DELETE_SPHINX}"
-	@echo "PIP             =${PIP}"
-	@echo "SPHINX_BUILDDIR =${SPHINX_BUILDDIR}"
-	@echo "SPHINX_SOURCEDIR=${SPHINX_SOURCEDIR}"
-	@echo "----------------------------------------------------------------------"
-	${PIP} install --no-deps -e .
-	@echo "----------------------------------------------------------------------"
-	${DELETE_SPHINX}
-	sphinx-apidoc -o ${SPHINX_SOURCEDIR} ${MODULE}
-	sphinx-build -M html ${SPHINX_SOURCEDIR} ${SPHINX_BUILDDIR}
-	sphinx-build -b rinoh ${SPHINX_SOURCEDIR} ${SPHINX_BUILDDIR}/pdf
+	sudo rm -rf docs/build/*
+	sphinx-apidoc -o docs/source ${MODULE}
+	sphinx-build -M html docs/source docs/build
+	sphinx-build -b rinoh docs/source docs/build/pdf
 	@echo "Info **********  End:   sphinx ***************************************"
 
 version:            ## Show the installed software versions.
 	@echo "Info **********  Start: version **************************************"
-	@echo "PIP   =${PIP}"
-	@echo "PYTHON=${PYTHON}"
 	@echo "----------------------------------------------------------------------"
-	${PIP} --version
+	python3 --version
+	pip3 --version
 	@echo "Info **********  End:   version **************************************"
 
 # Find dead Python code

@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Advanced Usage" href="advanced_usage.html" /><link rel="prev" title="Configuration Logging" href="configuration_logging.html" />
 
     <link rel="shortcut icon" href="_static/IO-Aero_1_Favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>First Steps - IO-TEMPLATE-APP 1-4-8 documentation</title>
+        <title>First Steps - IO-TEMPLATE-APP unknown documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
@@ -166,7 +166,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">IO-TEMPLATE-APP 1-4-8 documentation</div></a>
+      <a href="index.html"><div class="brand">IO-TEMPLATE-APP unknown documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -269,175 +269,63 @@ Detailed instructions for each of these steps are provided below.</p>
 </section>
 <section id="install-foundational-software">
 <h2>Install Foundational Software<a class="headerlink" href="#install-foundational-software" title="Link to this heading">¶</a></h2>
-<p>Once you have successfully cloned the repository, navigate to the cloned directory.
-Within the <cite>scripts</cite> folder, you will find scripts tailored for various operating systems.
-Proceed with the subsection that corresponds to your operating system for further instructions.</p>
-<section id="macos">
-<h3>macOS<a class="headerlink" href="#macos" title="Link to this heading">¶</a></h3>
-<p>To set up the project on a macOS system, the following steps should be performed in a terminal window within the repository directory:</p>
+<p>Once you have successfully cloned the repository, navigate to the cloned directory.</p>
+<section id="ubuntu">
+<h3>Ubuntu<a class="headerlink" href="#ubuntu" title="Link to this heading">¶</a></h3>
+<p>To set up the project on an Ubuntu system, the following steps should be performed in a terminal window within the repository directory:</p>
 <section id="a-grant-execute-permission-to-installation-scripts">
 <h4>a. Grant Execute Permission to Installation Scripts<a class="headerlink" href="#a-grant-execute-permission-to-installation-scripts" title="Link to this heading">¶</a></h4>
 <p>Provide execute permissions to the installation scripts:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>chmod<span class="w"> </span>+x<span class="w"> </span>scripts/*.zsh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod<span class="w"> </span>+x<span class="w"> </span>scripts/*.sh
 </pre></div>
 </div>
 </section>
 <section id="b-install-python-and-pip">
 <h4>b. Install Python and pip<a class="headerlink" href="#b-install-python-and-pip" title="Link to this heading">¶</a></h4>
 <p>Run the script to install Python and pip:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_python.zsh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_python.sh
 </pre></div>
 </div>
 </section>
 <section id="c-install-aws-command-line-interface">
 <h4>c. Install AWS Command Line Interface<a class="headerlink" href="#c-install-aws-command-line-interface" title="Link to this heading">¶</a></h4>
 <p>Execute the script to install the AWS CLI:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_aws_cli.zsh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_aws_cli.sh
 </pre></div>
 </div>
 </section>
 <section id="d-install-miniconda-and-the-correct-python-version">
 <h4>d. Install Miniconda and the Correct Python Version<a class="headerlink" href="#d-install-miniconda-and-the-correct-python-version" title="Link to this heading">¶</a></h4>
 <p>Use the following script to install Miniconda and set the right Python version:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_miniconda.zsh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_miniconda.sh
 </pre></div>
 </div>
 </section>
 <section id="e-install-docker-desktop">
 <h4>e. Install Docker Desktop<a class="headerlink" href="#e-install-docker-desktop" title="Link to this heading">¶</a></h4>
-<p>To install Docker Desktop, run:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_docker.zsh
-</pre></div>
-</div>
-</section>
-<section id="f-install-terraform">
-<h4>f. Install Terraform<a class="headerlink" href="#f-install-terraform" title="Link to this heading">¶</a></h4>
-<p>To install Docker Desktop, run:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_terraform.zsh
-</pre></div>
-</div>
-</section>
-<section id="g-optionally-install-dbeaver">
-<h4>g. Optionally Install DBeaver<a class="headerlink" href="#g-optionally-install-dbeaver" title="Link to this heading">¶</a></h4>
-<p>If needed, install DBeaver using the following script:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_dbeaver.zsh
-</pre></div>
-</div>
-</section>
-<section id="h-close-the-terminal-window">
-<h4>h. Close the Terminal Window<a class="headerlink" href="#h-close-the-terminal-window" title="Link to this heading">¶</a></h4>
-<p>Once all installations are complete, close the terminal window.</p>
-</section>
-</section>
-<section id="ubuntu">
-<h3>Ubuntu<a class="headerlink" href="#ubuntu" title="Link to this heading">¶</a></h3>
-<p>To set up the project on an Ubuntu system, the following steps should be performed in a terminal window within the repository directory:</p>
-<section id="id1">
-<h4>a. Grant Execute Permission to Installation Scripts<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
-<p>Provide execute permissions to the installation scripts:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod<span class="w"> </span>+x<span class="w"> </span>scripts/*.sh
-</pre></div>
-</div>
-</section>
-<section id="id2">
-<h4>b. Install Python and pip<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
-<p>Run the script to install Python and pip:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_python.sh
-</pre></div>
-</div>
-</section>
-<section id="id3">
-<h4>c. Install AWS Command Line Interface<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h4>
-<p>Execute the script to install the AWS CLI:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_aws_cli.sh
-</pre></div>
-</div>
-</section>
-<section id="id4">
-<h4>d. Install Miniconda and the Correct Python Version<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h4>
-<p>Use the following script to install Miniconda and set the right Python version:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_miniconda.sh
-</pre></div>
-</div>
-</section>
-<section id="id5">
-<h4>e. Install Docker Desktop<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h4>
 <p>This step is not required for WSL (Windows Subsystem for Linux) if Decker Desktop is installed in Windows and this is configured for WSL 2 based engine.</p>
 <p>To install Docker Desktop, run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_docker.sh
 </pre></div>
 </div>
 </section>
-<section id="id6">
-<h4>f. Install Terraform<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h4>
+<section id="f-install-terraform">
+<h4>f. Install Terraform<a class="headerlink" href="#f-install-terraform" title="Link to this heading">¶</a></h4>
 <p>To install Docker Desktop, run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_terraform.sh
 </pre></div>
 </div>
 </section>
-<section id="id7">
-<h4>g. Optionally Install DBeaver<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h4>
+<section id="g-optionally-install-dbeaver">
+<h4>g. Optionally Install DBeaver<a class="headerlink" href="#g-optionally-install-dbeaver" title="Link to this heading">¶</a></h4>
 <p>If needed, install DBeaver using the following script:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/run_install_dbeaver.sh
 </pre></div>
 </div>
 </section>
-<section id="id8">
-<h4>h. Close the Terminal Window<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h4>
+<section id="h-close-the-terminal-window">
+<h4>h. Close the Terminal Window<a class="headerlink" href="#h-close-the-terminal-window" title="Link to this heading">¶</a></h4>
 <p>Once all installations are complete, close the terminal window.</p>
-</section>
-</section>
-<section id="windows-10-11">
-<h3>Windows 10/11<a class="headerlink" href="#windows-10-11" title="Link to this heading">¶</a></h3>
-<p>To set up the project on a Windows 10/11 system, the following steps should be performed in a command prompt (cmd) within the repository directory:</p>
-<section id="a-install-python-and-pip">
-<h4>a. Install Python and pip<a class="headerlink" href="#a-install-python-and-pip" title="Link to this heading">¶</a></h4>
-<p>Run the script to install Python and pip:</p>
-<div class="highlight-bat notranslate"><div class="highlight"><pre><span></span>scripts/run_install_python.bat
-</pre></div>
-</div>
-</section>
-<section id="b-install-aws-command-line-interface">
-<h4>b. Install AWS Command Line Interface<a class="headerlink" href="#b-install-aws-command-line-interface" title="Link to this heading">¶</a></h4>
-<p>Execute the script to install the AWS CLI:</p>
-<div class="highlight-bat notranslate"><div class="highlight"><pre><span></span>scripts/run_install_aws_cli.bat
-</pre></div>
-</div>
-</section>
-<section id="c-install-miniconda-and-the-correct-python-version">
-<h4>c. Install Miniconda and the Correct Python Version<a class="headerlink" href="#c-install-miniconda-and-the-correct-python-version" title="Link to this heading">¶</a></h4>
-<p>Use the following script to install Miniconda and set the right Python version:</p>
-<div class="highlight-bat notranslate"><div class="highlight"><pre><span></span>scripts/run_install_miniconda.bat
-</pre></div>
-</div>
-</section>
-<section id="d-close-the-command-prompt">
-<h4>d. Close the Command Prompt<a class="headerlink" href="#d-close-the-command-prompt" title="Link to this heading">¶</a></h4>
-<p>Once all installations are complete, close the command prompt.</p>
-</section>
-<section id="id9">
-<h4>e. Install Docker Desktop<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h4>
-<p>To install Docker Desktop, download the software from here:</p>
-<blockquote>
-<div><p><a class="reference external" href="https://www.docker.com/products/docker-desktop/">https://www.docker.com/products/docker-desktop/</a></p>
-</div></blockquote>
-<p>and follow the installation instructions.</p>
-</section>
-<section id="id10">
-<h4>f. Install Terraform<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h4>
-<p>To install Terraform, download the software from here:</p>
-<blockquote>
-<div><p><a class="reference external" href="https://developer.hashicorp.com/terraform/install?product_intent=terraform">https://developer.hashicorp.com/terraform/install?product_intent=terraform</a></p>
-</div></blockquote>
-<p>and follow the installation instructions.</p>
-</section>
-<section id="id11">
-<h4>g. Optionally Install DBeaver<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h4>
-<p>If needed, install DBeaver, download the software from here:</p>
-<blockquote>
-<div><p><a class="reference external" href="https://dbeaver.io/">https://dbeaver.io/</a></p>
-</div></blockquote>
-<p>and follow the installation instructions.</p>
 </section>
 </section>
 </section>
@@ -468,31 +356,10 @@ The virtual environment is automatically activated by the Makefile, so you don�
 <section id="minor-adjustments-for-gdal">
 <h3>Minor Adjustments for GDAL<a class="headerlink" href="#minor-adjustments-for-gdal" title="Link to this heading">¶</a></h3>
 <p>The installation of the GDAL library requires the following minor operating system-specific adjustments:</p>
-<section id="a-macos">
-<h4>a. macOS<a class="headerlink" href="#a-macos" title="Link to this heading">¶</a></h4>
-<p>In macOS, the GDAL library must be installed as follows:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>gdal
-</pre></div>
-</div>
-</section>
-<section id="b-ubuntu">
-<h4>b. Ubuntu<a class="headerlink" href="#b-ubuntu" title="Link to this heading">¶</a></h4>
 <p>In Ubuntu, the GDAL library must be installed as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>gdal-bin<span class="w"> </span>libgdal-dev
 </pre></div>
 </div>
-</section>
-<section id="c-windows-10-11">
-<h4>c. Windows 10/11<a class="headerlink" href="#c-windows-10-11" title="Link to this heading">¶</a></h4>
-<p>Assuming that Miniconda is installed in the following file directory</p>
-<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\ProgramData\miniconda3</span>
-</pre></div>
-</div>
-<p>then the following entry must then be added to the path variable:;</p>
-<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\ProgramData\miniconda3\envs\iotemplateapp\Library\bin</span>
-</pre></div>
-</div>
-</section>
 </section>
 <section id="system-testing-with-unit-tests">
 <h3>System Testing with Unit Tests<a class="headerlink" href="#system-testing-with-unit-tests" title="Link to this heading">¶</a></h3>
@@ -546,25 +413,10 @@ After completing these steps, the database files should reside in the <cite>data
 <h3>Creating the Docker Container with PostgreSQL DB<a class="headerlink" href="#creating-the-docker-container-with-postgresql-db" title="Link to this heading">¶</a></h3>
 <p>To create the Docker container with PostgreSQL database software, you can use the provided <cite>run_io_template_app</cite> script.
 Depending on your operating system, follow the relevant instructions below:</p>
-<section id="a-macos-zsh">
-<h4>a. macOS (zsh):<a class="headerlink" href="#a-macos-zsh" title="Link to this heading">¶</a></h4>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>./scripts/run_io_template_app.zsh<span class="w"> </span>s_d_c
-</pre></div>
-</div>
-</section>
-<section id="b-ubuntu-sh">
-<h4>b. Ubuntu (sh):<a class="headerlink" href="#b-ubuntu-sh" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/run_io_template_app.sh<span class="w"> </span>s_d_c
 </pre></div>
 </div>
-</section>
-<section id="c-windows-10-11-cmd">
-<h4>c. Windows 10/11 (cmd):<a class="headerlink" href="#c-windows-10-11-cmd" title="Link to this heading">¶</a></h4>
-<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span>scripts\run_io_template_app.cmd s_d_c
-</pre></div>
-</div>
-<p>These commands will initiate the process of creating the Docker container with PostgreSQL database software.</p>
-</section>
+<p>This command will initiate the process of creating the Docker container with PostgreSQL database software.</p>
 </section>
 </section>
 </section>
@@ -627,7 +479,7 @@ Depending on your operating system, follow the relevant instructions below:</p>
 <li><a class="reference internal" href="#">First Steps</a><ul>
 <li><a class="reference internal" href="#cloning-the-repository">Cloning the Repository</a></li>
 <li><a class="reference internal" href="#install-foundational-software">Install Foundational Software</a><ul>
-<li><a class="reference internal" href="#macos">macOS</a><ul>
+<li><a class="reference internal" href="#ubuntu">Ubuntu</a><ul>
 <li><a class="reference internal" href="#a-grant-execute-permission-to-installation-scripts">a. Grant Execute Permission to Installation Scripts</a></li>
 <li><a class="reference internal" href="#b-install-python-and-pip">b. Install Python and pip</a></li>
 <li><a class="reference internal" href="#c-install-aws-command-line-interface">c. Install AWS Command Line Interface</a></li>
@@ -638,27 +490,6 @@ Depending on your operating system, follow the relevant instructions below:</p>
 <li><a class="reference internal" href="#h-close-the-terminal-window">h. Close the Terminal Window</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#ubuntu">Ubuntu</a><ul>
-<li><a class="reference internal" href="#id1">a. Grant Execute Permission to Installation Scripts</a></li>
-<li><a class="reference internal" href="#id2">b. Install Python and pip</a></li>
-<li><a class="reference internal" href="#id3">c. Install AWS Command Line Interface</a></li>
-<li><a class="reference internal" href="#id4">d. Install Miniconda and the Correct Python Version</a></li>
-<li><a class="reference internal" href="#id5">e. Install Docker Desktop</a></li>
-<li><a class="reference internal" href="#id6">f. Install Terraform</a></li>
-<li><a class="reference internal" href="#id7">g. Optionally Install DBeaver</a></li>
-<li><a class="reference internal" href="#id8">h. Close the Terminal Window</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#windows-10-11">Windows 10/11</a><ul>
-<li><a class="reference internal" href="#a-install-python-and-pip">a. Install Python and pip</a></li>
-<li><a class="reference internal" href="#b-install-aws-command-line-interface">b. Install AWS Command Line Interface</a></li>
-<li><a class="reference internal" href="#c-install-miniconda-and-the-correct-python-version">c. Install Miniconda and the Correct Python Version</a></li>
-<li><a class="reference internal" href="#d-close-the-command-prompt">d. Close the Command Prompt</a></li>
-<li><a class="reference internal" href="#id9">e. Install Docker Desktop</a></li>
-<li><a class="reference internal" href="#id10">f. Install Terraform</a></li>
-<li><a class="reference internal" href="#id11">g. Optionally Install DBeaver</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#repository-specific-installation">Repository-Specific Installation</a><ul>
@@ -667,12 +498,7 @@ Depending on your operating system, follow the relevant instructions below:</p>
 <li><a class="reference internal" href="#b-for-software-development-use-the-following-command">b. For <strong>software development</strong>, use the following command:</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#minor-adjustments-for-gdal">Minor Adjustments for GDAL</a><ul>
-<li><a class="reference internal" href="#a-macos">a. macOS</a></li>
-<li><a class="reference internal" href="#b-ubuntu">b. Ubuntu</a></li>
-<li><a class="reference internal" href="#c-windows-10-11">c. Windows 10/11</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#minor-adjustments-for-gdal">Minor Adjustments for GDAL</a></li>
 <li><a class="reference internal" href="#system-testing-with-unit-tests">System Testing with Unit Tests</a><ul>
 <li><a class="reference internal" href="#a-run-the-system-test">a. Run the System Test:</a></li>
 <li><a class="reference internal" href="#b-review-the-test-results">b. Review the Test Results:</a></li>
@@ -685,12 +511,7 @@ Depending on your operating system, follow the relevant instructions below:</p>
 <li><a class="reference internal" href="#d-extract-database-files">d. Extract Database Files:</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#creating-the-docker-container-with-postgresql-db">Creating the Docker Container with PostgreSQL DB</a><ul>
-<li><a class="reference internal" href="#a-macos-zsh">a. macOS (zsh):</a></li>
-<li><a class="reference internal" href="#b-ubuntu-sh">b. Ubuntu (sh):</a></li>
-<li><a class="reference internal" href="#c-windows-10-11-cmd">c. Windows 10/11 (cmd):</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#creating-the-docker-container-with-postgresql-db">Creating the Docker Container with PostgreSQL DB</a></li>
 </ul>
 </li>
 </ul>
@@ -704,7 +525,7 @@ Depending on your operating system, follow the relevant instructions below:</p>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=28fb1ff0"></script>
+</div><script src="_static/documentation_options.js?v=3f1b9271"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>

@@ -6,7 +6,7 @@ In the following instructions, we assume that the new repository should be named
 
 ## I. Requirements
 
-Regarding operating system, Ubuntu version 20.04 and above and Windows version 10 and above are supported. An existing Python 3 installation is required.
+Regarding operating system, Ubuntu versions 20.04 and above are supported. An existing Python 3 installation is required.
 Furthermore, the use of an IDE or a text editor that can replace texts across files is useful.
 
 ## II. Repository creation
@@ -28,7 +28,7 @@ As described [here](https://docs.github.com/en/repositories/creating-and-managin
 
 | Old name                  | New name         |
 |:--------------------------|:-----------------|
-| `iotemplateapp`           | `myapp`        |
+| `iotemplateapp`           | `myapp`          |
 | `run_io_template_app.bat` | `run_my_app.bat` |
 | `run_io_template_app.sh`  | `run_my_app.sh`  |
 
@@ -38,11 +38,11 @@ It is absolutely necessary to respect the capitalization!
 
 | Old text           | New text   |
 |:-------------------|:-----------|
-| `IO-TEMPLATE-APP`  | `MY-APP`  |
-| `IO_TEMPLATE_APP`  | `MY_APP`  |
-| `io-template-app`  | `my-app`  |
-| `io_template_app`  | `my_app`  |
-| `iotemplateapp`    | `myapp`   |
+| `IO-TEMPLATE-APP`  | `MY-APP`   |
+| `IO_TEMPLATE_APP`  | `MY_APP`   |
+| `io-template-app`  | `my-app`   |
+| `io_template_app`  | `my_app`   |
+| `iotemplateapp`    | `myapp`    |
 
 ### 6. Test the current state of the new application
 
