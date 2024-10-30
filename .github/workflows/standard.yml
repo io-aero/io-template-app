@@ -19,8 +19,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [macos-latest, ubuntu-latest]
-        python-version: ["3.11"]
+        os: [ubuntu-latest]
+        python-version: ["3.13"]
 
     steps:
       - name: Log the Operating System
