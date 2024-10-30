@@ -16,7 +16,7 @@ Detailed instructions can be found in the [documentation](https://io-aero.github
 
     `export LANG=C.UTF-8`
     `export LC_ALL=C.UTF-8`
-    `export PYPI_PAT=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`
+    `export PYPI_PAT=<tbd>
 
 1. Install Python 3.13
 1. Install Conda or Miniconda
