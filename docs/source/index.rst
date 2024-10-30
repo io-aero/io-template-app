@@ -17,6 +17,17 @@ This section contains the core documentation for setting up and starting with IO
    first_steps
    advanced_usage
 
+Development
+-----------
+
+.. toctree::
+   :maxdepth: 2
+
+
+   Makefile
+   Ruff_vs_Pylint
+   python_packagemanager
+
 API Documentation
 -----------------
 
