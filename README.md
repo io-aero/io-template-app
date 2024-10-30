@@ -9,14 +9,18 @@ Detailed instructions can be found in the [documentation](https://io-aero.github
 
 1. Run the following commands:
 
-    `sudo locale-gen en_US.UTF-8`
-    `sudo update-locale LANG=en_US.UTF-8`
+```
+    sudo locale-gen en_US.UTF-8
+    sudo update-locale LANG=en_US.UTF-8
+```
 
 1. Add the following entries to your `~/.bashrc` file:
 
-    `export LANG=C.UTF-8`
-    `export LC_ALL=C.UTF-8`
-    `export PYPI_PAT=<tbd>
+```
+    export LANG=C.UTF-8
+    export LC_ALL=C.UTF-8
+    export PYPI_PAT=<tbd>
+```
 
 1. Install Python 3.13
 1. Install Conda or Miniconda
