@@ -14,7 +14,7 @@ Detailed instructions can be found in the [documentation](https://io-aero.github
     sudo update-locale LANG=en_US.UTF-8
 ```
 
-1. Add the following entries to your `~/.bashrc` file:
+2. Add the following entries to your `~/.bashrc` file:
 
 ```
     export LANG=C.UTF-8
@@ -22,36 +22,36 @@ Detailed instructions can be found in the [documentation](https://io-aero.github
     export PYPI_PAT=<tbd>
 ```
 
-1. Install Python 3.13
-1. Install Conda or Miniconda
-1. Install Docker Desktop
-1. Clone this repository:
+3. Install Python 3.13
+4. Install Conda or Miniconda
+5. Install Docker Desktop
+6. Clone this repository:
 
 ```
     git clone https://github.com/io-aero/io-template-app
 ```
 
-1. Create the virtual environment:
+7. Create the virtual environment:
 
 ```
     make conda-dev
 ```
 
-1. Switch to the created virtual environment:
+8. Switch to the created virtual environment:
 
 ```
     conda activate iotemplateapp
 ```
 
-1. Create a file named `.settings.io_aero.toml` which contains the database access data
+9. Create a file named `.settings.io_aero.toml` which contains the database access data
 
-1. Test the whole functionality:
+10. Test the whole functionality:
 
 ```
     make final
 ```
 
-1. All Makefile commands can be found by running:
+11. All Makefile commands can be found by running:
 
 ```
     make 
