@@ -20,9 +20,6 @@ Install Foundational Software
 
 Once you have successfully cloned the repository, navigate to the cloned directory.
 
-Ubuntu
-.........
-
 To set up the project on an Ubuntu system, the following steps should be performed in a terminal window within the repository directory:
 
 a. Grant Execute Permission to Installation Scripts
