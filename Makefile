@@ -240,6 +240,8 @@ next-version:       ## Increment the version number.
 	@echo "Info **********  Start: next_version *********************************"
 	@echo "PYTHONPATH=${PYTHONPATH}"
 	@echo "----------------------------------------------------------------------"
+	python3 --version
+	@echo "----------------------------------------------------------------------"
 	python3 scripts/next_version.py
 	@echo "Info **********  End:   next version *********************************"
 
@@ -331,6 +333,9 @@ ruff:               ## An extremely fast Python linter and code formatter.
 
 sphinx:             ## Create the user documentation with Sphinx.
 	@echo "Info **********  Start: sphinx ***************************************"
+	sphinx-apidoc --version
+	sphinx-build --version
+	@echo "----------------------------------------------------------------------"
 	sudo rm -rf docs/build/*
 	sphinx-apidoc -o docs/source ${MODULE}
 	sphinx-build -M html docs/source docs/build
@@ -339,7 +344,6 @@ sphinx:             ## Create the user documentation with Sphinx.
 
 version:            ## Show the installed software versions.
 	@echo "Info **********  Start: version **************************************"
-	@echo "----------------------------------------------------------------------"
 	python3 --version
 	pip3 --version
 	@echo "Info **********  End:   version **************************************"

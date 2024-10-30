@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Release Notes" href="release_notes.html" /><link rel="prev" title="iotemplateapp" href="modules.html" />
 
     <link rel="shortcut icon" href="_static/IO-Aero_1_Favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>iotemplateapp package - IO-TEMPLATE-APP unknown documentation</title>
+        <title>iotemplateapp package - IO-TEMPLATE-APP 1-4-8 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
@@ -166,7 +166,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">IO-TEMPLATE-APP unknown documentation</div></a>
+      <a href="index.html"><div class="brand">IO-TEMPLATE-APP 1-4-8 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -259,14 +259,229 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 </section>
-<section id="iotemplateapp-glob-local-module">
-<h2>iotemplateapp.glob_local module<a class="headerlink" href="#iotemplateapp-glob-local-module" title="Link to this heading">¶</a></h2>
+<section id="module-iotemplateapp.glob_local">
+<span id="iotemplateapp-glob-local-module"></span><h2>iotemplateapp.glob_local module<a class="headerlink" href="#module-iotemplateapp.glob_local" title="Link to this heading">¶</a></h2>
+<p>Global constants and variables.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.glob_local.ARG_TASK">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.glob_local.</span></span><span class="sig-name descname"><span class="pre">ARG_TASK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'task'</span></em><a class="headerlink" href="#iotemplateapp.glob_local.ARG_TASK" title="Link to this definition">¶</a></dt>
+<dd><p>A constant key used to reference the ‘task’ argument in function calls and command line arguments throughout the software.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.glob_local.ARG_TASK_CHOICE">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.glob_local.</span></span><span class="sig-name descname"><span class="pre">ARG_TASK_CHOICE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#iotemplateapp.glob_local.ARG_TASK_CHOICE" title="Link to this definition">¶</a></dt>
+<dd><p>Initially set to an empty string, this variable is intended to hold the user’s choice of task once determined at runtime.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.glob_local.ARG_TASK_VERSION">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.glob_local.</span></span><span class="sig-name descname"><span class="pre">ARG_TASK_VERSION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'version'</span></em><a class="headerlink" href="#iotemplateapp.glob_local.ARG_TASK_VERSION" title="Link to this definition">¶</a></dt>
+<dd><p>A constant key used to reference the ‘version’ argument for tasks, indicating the version of the task being used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.glob_local.CHECK_VALUE_TEST">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.glob_local.</span></span><span class="sig-name descname"><span class="pre">CHECK_VALUE_TEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#iotemplateapp.glob_local.CHECK_VALUE_TEST" title="Link to this definition">¶</a></dt>
+<dd><p>A boolean indicating whether the check value from io_settings is ‘test’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.glob_local.FATAL_00_926">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.glob_local.</span></span><span class="sig-name descname"><span class="pre">FATAL_00_926</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;FATAL.00.926</span> <span class="pre">The</span> <span class="pre">task</span> <span class="pre">'{task}'</span> <span class="pre">is</span> <span class="pre">invalid&quot;</span></em><a class="headerlink" href="#iotemplateapp.glob_local.FATAL_00_926" title="Link to this definition">¶</a></dt>
+<dd><p>Error message template indicating that the specified task is invalid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.glob_local.INFO_00_004">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.glob_local.</span></span><span class="sig-name descname"><span class="pre">INFO_00_004</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'INFO.00.004</span> <span class="pre">Start</span> <span class="pre">Launcher'</span></em><a class="headerlink" href="#iotemplateapp.glob_local.INFO_00_004" title="Link to this definition">¶</a></dt>
+<dd><p>Information message indicating the start of the launcher.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.glob_local.INFO_00_005">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.glob_local.</span></span><span class="sig-name descname"><span class="pre">INFO_00_005</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;INFO.00.005</span> <span class="pre">Argument</span> <span class="pre">'{task}'='{value_task}'&quot;</span></em><a class="headerlink" href="#iotemplateapp.glob_local.INFO_00_005" title="Link to this definition">¶</a></dt>
+<dd><p>Information message indicating the value of a specific argument in the launcher.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.glob_local.INFO_00_006">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.glob_local.</span></span><span class="sig-name descname"><span class="pre">INFO_00_006</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'INFO.00.006</span> <span class="pre">End</span> <span class="pre">Launcher'</span></em><a class="headerlink" href="#iotemplateapp.glob_local.INFO_00_006" title="Link to this definition">¶</a></dt>
+<dd><p>Information message indicating the end of the launcher.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.glob_local.INFO_00_007">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.glob_local.</span></span><span class="sig-name descname"><span class="pre">INFO_00_007</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;INFO.00.007</span> <span class="pre">Section:</span> <span class="pre">'{section}'</span> <span class="pre">-</span> <span class="pre">Parameter:</span> <span class="pre">'{name}'='{value}'&quot;</span></em><a class="headerlink" href="#iotemplateapp.glob_local.INFO_00_007" title="Link to this definition">¶</a></dt>
+<dd><p>Information message indicating the value of a specific configuration parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.glob_local.INFORMATION_NOT_YET_AVAILABLE">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.glob_local.</span></span><span class="sig-name descname"><span class="pre">INFORMATION_NOT_YET_AVAILABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'n/a'</span></em><a class="headerlink" href="#iotemplateapp.glob_local.INFORMATION_NOT_YET_AVAILABLE" title="Link to this definition">¶</a></dt>
+<dd><p>Placeholder indicating that information is not yet available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.glob_local.IO_TEMPLATE_APP_VERSION">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.glob_local.</span></span><span class="sig-name descname"><span class="pre">IO_TEMPLATE_APP_VERSION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'9.9.9'</span></em><a class="headerlink" href="#iotemplateapp.glob_local.IO_TEMPLATE_APP_VERSION" title="Link to this definition">¶</a></dt>
+<dd><p>The current version number of the IO-Aero template application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.glob_local.LOCALE">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.glob_local.</span></span><span class="sig-name descname"><span class="pre">LOCALE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'en_US.UTF-8'</span></em><a class="headerlink" href="#iotemplateapp.glob_local.LOCALE" title="Link to this definition">¶</a></dt>
+<dd><p>Default locale setting for the system to ‘en_US.UTF-8’, ensuring consistent language and regional format settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="iotemplateapp-templateapp-module">
-<h2>iotemplateapp.templateapp module<a class="headerlink" href="#iotemplateapp-templateapp-module" title="Link to this heading">¶</a></h2>
+<section id="module-iotemplateapp.templateapp">
+<span id="iotemplateapp-templateapp-module"></span><h2>iotemplateapp.templateapp module<a class="headerlink" href="#module-iotemplateapp.templateapp" title="Link to this heading">¶</a></h2>
+<p>IO-TEMPLATE-APP interface.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.ARG_TASK">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">ARG_TASK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#iotemplateapp.templateapp.ARG_TASK" title="Link to this definition">¶</a></dt>
+<dd><p>Placeholder for the command line argument ‘task’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.check_arg_task">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">check_arg_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Namespace</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.check_arg_task" title="Link to this definition">¶</a></dt>
+<dd><p>Check the command line argument: -t / –task.</p>
+<section id="args">
+<h3>Args:<a class="headerlink" href="#args" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><p>args (argparse.Namespace): Command line arguments.</p>
+</div></blockquote>
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.get_args">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">get_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.get_args" title="Link to this definition">¶</a></dt>
+<dd><p>Load the command line arguments into the memory.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.progress_msg">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">progress_msg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.progress_msg" title="Link to this definition">¶</a></dt>
+<dd><p>Create a progress message.</p>
+<section id="id1">
+<h3>Args:<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><p>msg (str): Progress message.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.progress_msg_time_elapsed">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">progress_msg_time_elapsed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.progress_msg_time_elapsed" title="Link to this definition">¶</a></dt>
+<dd><p>Create a time elapsed message.</p>
+<section id="id2">
+<h3>Args:<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><p>duration (int): Time elapsed in ns.
+event (str): Event description.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.terminate_fatal">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">terminate_fatal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.terminate_fatal" title="Link to this definition">¶</a></dt>
+<dd><p>Terminate the application immediately.</p>
+<section id="id3">
+<h3>Args:<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><p>error_msg (str): Error message.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="iotemplateapp.templateapp.version">
+<span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.version" title="Link to this definition">¶</a></dt>
+<dd><p>Return the version number of the IO-XPA-DATA application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>str</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>The version number of the IO-XPA-DATA application.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-iotemplateapp">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-iotemplateapp" title="Link to this heading">¶</a></h2>
+<p>IO-TEMPLATE-APP.</p>
 </section>
 </section>
 
@@ -327,9 +542,32 @@
             <ul>
 <li><a class="reference internal" href="#">iotemplateapp package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#iotemplateapp-glob-local-module">iotemplateapp.glob_local module</a></li>
-<li><a class="reference internal" href="#iotemplateapp-templateapp-module">iotemplateapp.templateapp module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-iotemplateapp.glob_local">iotemplateapp.glob_local module</a><ul>
+<li><a class="reference internal" href="#iotemplateapp.glob_local.ARG_TASK"><code class="docutils literal notranslate"><span class="pre">ARG_TASK</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.glob_local.ARG_TASK_CHOICE"><code class="docutils literal notranslate"><span class="pre">ARG_TASK_CHOICE</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.glob_local.ARG_TASK_VERSION"><code class="docutils literal notranslate"><span class="pre">ARG_TASK_VERSION</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.glob_local.CHECK_VALUE_TEST"><code class="docutils literal notranslate"><span class="pre">CHECK_VALUE_TEST</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.glob_local.FATAL_00_926"><code class="docutils literal notranslate"><span class="pre">FATAL_00_926</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.glob_local.INFO_00_004"><code class="docutils literal notranslate"><span class="pre">INFO_00_004</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.glob_local.INFO_00_005"><code class="docutils literal notranslate"><span class="pre">INFO_00_005</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.glob_local.INFO_00_006"><code class="docutils literal notranslate"><span class="pre">INFO_00_006</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.glob_local.INFO_00_007"><code class="docutils literal notranslate"><span class="pre">INFO_00_007</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.glob_local.INFORMATION_NOT_YET_AVAILABLE"><code class="docutils literal notranslate"><span class="pre">INFORMATION_NOT_YET_AVAILABLE</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.glob_local.IO_TEMPLATE_APP_VERSION"><code class="docutils literal notranslate"><span class="pre">IO_TEMPLATE_APP_VERSION</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.glob_local.LOCALE"><code class="docutils literal notranslate"><span class="pre">LOCALE</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-iotemplateapp.templateapp">iotemplateapp.templateapp module</a><ul>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.ARG_TASK"><code class="docutils literal notranslate"><span class="pre">ARG_TASK</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.check_arg_task"><code class="docutils literal notranslate"><span class="pre">check_arg_task()</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.get_args"><code class="docutils literal notranslate"><span class="pre">get_args()</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.progress_msg"><code class="docutils literal notranslate"><span class="pre">progress_msg()</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.progress_msg_time_elapsed"><code class="docutils literal notranslate"><span class="pre">progress_msg_time_elapsed()</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.terminate_fatal"><code class="docutils literal notranslate"><span class="pre">terminate_fatal()</span></code></a></li>
+<li><a class="reference internal" href="#iotemplateapp.templateapp.version"><code class="docutils literal notranslate"><span class="pre">version()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-iotemplateapp">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -341,7 +579,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=3f1b9271"></script>
+</div><script src="_static/documentation_options.js?v=28fb1ff0"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>

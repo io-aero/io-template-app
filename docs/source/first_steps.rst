@@ -61,7 +61,7 @@ Use the following script to install Miniconda and set the right Python version:
 e. Install Docker Desktop
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This step is not required for WSL (Windows Subsystem for Linux) if Decker Desktop is installed in Windows and this is configured for WSL 2 based engine.
+This step is not required for WSL (Windows Subsystem for Linux) if Docker Desktop is installed in Windows and is configured for WSL 2 based engine.
 
 To install Docker Desktop, run:
 
@@ -72,7 +72,7 @@ To install Docker Desktop, run:
 f. Install Terraform
 ~~~~~~~~~~~~~~~~~~~~
 
-To install Docker Desktop, run:
+To install Terraform, run:
 
 .. code-block:: bash
 
@@ -97,10 +97,10 @@ Repository-Specific Installation
 
 After installing the basic software, you need to perform installation steps specific to the `io-template-app` repository.
 This involves setting up project-specific dependencies and environment configurations.
-To perform the repository-specific installation, the following steps should be performed in a command prompt or a terminal window (depending on the operating system) the repository directory.
+To perform the repository-specific installation, the following steps should be performed in a command prompt or a terminal window (depending on the operating system) in the repository directory.
 
 Setting Up the Python Environment
-.................................
+---------------------------------
 
 To begin, you'll need to set up the Python environment using Miniconda, which is already pre-installed.
 You can use the provided Makefile for managing the environment.
@@ -123,7 +123,7 @@ These commands will create and configure a virtual environment for your Python p
 The virtual environment is automatically activated by the Makefile, so you don't need to activate it manually.
 
 Minor Adjustments for GDAL
-..........................
+--------------------------
 
 The installation of the GDAL library requires the following minor operating system-specific adjustments:
 
@@ -134,7 +134,7 @@ In Ubuntu, the GDAL library must be installed as follows:
    sudo apt-get install gdal-bin libgdal-dev
 
 System Testing with Unit Tests
-..............................
+------------------------------
 
 If you have previously executed `make conda-dev`, you can now perform a system test to verify the installation using `make test`.
 Follow these steps:
@@ -142,26 +142,23 @@ Follow these steps:
 a. Run the System Test:
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-   Execute the system test using the following command:
+Execute the system test using the following command:
 
-   .. code-block:: bash
+.. code-block:: bash
 
-      make tests
+   make tests
 
-   This command will initiate the system tests using the previously installed components to verify the correctness of your installation.
+This command will initiate the system tests using the previously installed components to verify the correctness of your installation.
 
 b. Review the Test Results:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   After the tests are completed, review the test results in the terminal. Ensure that all tests pass without errors.
+After the tests are completed, review the test results in the terminal. Ensure that all tests pass without errors.
 
-   If any tests fail, review the error messages to identify and resolve any issues with your installation.
-
-Running system tests using `make tests` is a valuable step to ensure that your installation is working correctly, and your environment is properly configured for your project.
-It helps identify and address any potential problems early in the development process.
+If any tests fail, review the error messages to identify and resolve any issues with your installation.
 
 Downloading Database Files (Optional)
-.....................................
+-------------------------------------
 
 Database files can be downloaded from the IO-Aero Google Drive directory
 `io_aero_data/TO DO/database/TO DO` to your local repository directory `data`.
@@ -191,7 +188,7 @@ The downloaded database files are in an archive format (ZIP) and should be extra
 After completing these steps, the database files should reside in the `data` directory of your local repository and will be ready for use.
 
 Creating the Docker Container with PostgreSQL DB
-.................................................
+------------------------------------------------
 
 To create the Docker container with PostgreSQL database software, you can use the provided `run_io_template_app` script.
 Depending on your operating system, follow the relevant instructions below:

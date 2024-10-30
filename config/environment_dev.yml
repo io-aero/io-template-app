@@ -17,6 +17,7 @@ dependencies:
     - coveralls
     - docformatter
     - furo
+    - isort
     - mypy
     - myst-parser
     - ordered-set
@@ -29,7 +30,7 @@ dependencies:
     - rinohtype
     - ruff
     - sphinx
-    - sphinx-autodoc-typehints
+    - sphinx-autoapi
     - types-pyyaml
     - types-toml
     - vulture

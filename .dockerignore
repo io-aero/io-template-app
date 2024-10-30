@@ -19,6 +19,6 @@ LICENSE.md
 Makefile
 README.md
 run_io_template_app_prod.*
-run_io_template_app_pytest.*
+run_io_template_app_test.sh
 setup.cfg
 user_guide.*
