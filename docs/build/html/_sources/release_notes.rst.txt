@@ -16,7 +16,7 @@ Release Notes
    Detailed Open Issues
    ~~~~~~~~~~~~~~~~~~~~
 
-Version 1.0.0
+Version 2.0.0
 -------------
 
 Release Date: dd.mm.2024

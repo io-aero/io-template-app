@@ -64,7 +64,7 @@ def test_launcher_version() -> None:
     assert settings.check_value == "test", "Settings check_value is not 'test'"
 
     commands = {
-        "Linux": ["./run_io_template_app_pytest.sh", "version"],
+        "Linux": ["./run_io_template_app_test.sh", "version"],
     }
     command = commands.get(platform.system())
     if not command:
