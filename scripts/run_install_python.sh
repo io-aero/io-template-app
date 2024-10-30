@@ -8,8 +8,16 @@ set -e
 #
 # ------------------------------------------------------------------------------
 
+echo "=========================================================================="
+echo "Some general requirements."
+echo "--------------------------------------------------------------------------"
+sudo apt update
+sudo locale-gen en_US.UTF-8
+sudo update-locale LANG=en_US.UTF-8
+sudo apt install unzip
+
 # Set the Python version
-PYTHON_VERSION="3.1"
+PYTHON_VERSION="3.13"
 
 echo "=========================================================================="
 echo "Adding PPA for Python and updating package lists."

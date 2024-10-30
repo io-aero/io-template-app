@@ -9,7 +9,7 @@ set -e
 # ------------------------------------------------------------------------------
 
 # Set the Python version
-PYTHON_VERSION="3.11"
+PYTHON_VERSION="3.13"
 
 echo "=========================================================================="
 echo "Downloading Miniconda installer."
