@@ -5,7 +5,7 @@ on:
     branches: [ 'main' ]
 
 env:
-  IO_CONDA: 'true'
+  IO_CONDA: 'false'
   MODULE: 'iotemplateapp'
   PYPI_PAT: ${{ secrets.PYPI_PAT }}
 
@@ -86,7 +86,8 @@ jobs:
       - name: Run docs - Conda - dev
         if: ${{ env.IO_CONDA == 'true' }}
         run: |
-          source $CONDA_PREFIX/etc/profile.d/conda.sh
+          conda init --all
+          source ~/.bashrc
           conda activate $MODULE
           make black docs
 
