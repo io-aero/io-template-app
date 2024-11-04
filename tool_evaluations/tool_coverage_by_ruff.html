@@ -1,0 +1,950 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Release Notes" href="../release_notes.html" /><link rel="prev" title="Ruff vs. Pylint: A Comparison" href="ruff_vs_pylint.html" />
+
+    <link rel="shortcut icon" href="../_static/IO-Aero_1_Favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>Tool Coverage by Ruff - IO-TEMPLATE-APP 2-0-3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">IO-TEMPLATE-APP 2-0-3 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/IO-Aero_1_Logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration_io_template_app.html">Configuration IO-TEMPLATE-APP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration_logging.html">Configuration Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps.html">First Steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_usage.html">Advanced Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Makefile.html">Makefile Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../modules.html">iotemplateapp</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of iotemplateapp</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../iotemplateapp.html">iotemplateapp package</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tool Evaluations</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Tool Evaluations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="python_packagemanager.html">Python Package Manager Alternatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ruff_vs_pylint.html">Ruff vs. Pylint: A Comparison</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Tool Coverage by Ruff</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">End-User License Agreement</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="tool-coverage-by-ruff">
+<h1>Tool Coverage by Ruff<a class="headerlink" href="#tool-coverage-by-ruff" title="Link to this heading">¶</a></h1>
+<section id="understanding-ruff">
+<h2><strong>Understanding Ruff</strong><a class="headerlink" href="#understanding-ruff" title="Link to this heading">¶</a></h2>
+<p><strong>Ruff</strong> is a fast and efficient Python linter written in Rust. It aims to provide comprehensive linting capabilities by integrating multiple linting functionalities into a single tool. Ruff can handle many tasks traditionally managed by separate tools, offering both speed and versatility.</p>
+<section id="key-features-of-ruff">
+<h3><strong>Key Features of Ruff:</strong><a class="headerlink" href="#key-features-of-ruff" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Linting:</strong> Detects syntax errors, code smells, and stylistic issues.</p></li>
+<li><p><strong>Import Sorting:</strong> Manages and sorts imports, effectively replacing tools like <code class="docutils literal notranslate"><span class="pre">isort</span></code>.</p></li>
+<li><p><strong>Fixes:</strong> Automatically fixes certain linting issues.</p></li>
+<li><p><strong>Performance:</strong> Extremely fast, making it suitable for large codebases.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="tools-you-can-remove-when-using-ruff">
+<h2><strong>Tools You Can Remove When Using Ruff</strong><a class="headerlink" href="#tools-you-can-remove-when-using-ruff" title="Link to this heading">¶</a></h2>
+<section id="isort">
+<h3><strong>1. <code class="docutils literal notranslate"><span class="pre">isort</span></code></strong><a class="headerlink" href="#isort" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p><strong>Purpose of <code class="docutils literal notranslate"><span class="pre">isort</span></code>:</strong> Specifically sorts and organizes import statements in Python files.</p></li>
+<li><p><strong>Ruff’s Replacement Capability:</strong> Ruff includes built-in support for import sorting, effectively handling the tasks performed by <code class="docutils literal notranslate"><span class="pre">isort</span></code>.</p></li>
+<li><p><strong>Action:</strong> <strong>Remove <code class="docutils literal notranslate"><span class="pre">isort</span></code></strong> from your Makefile.</p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="c">## format:             Format the code with Black and docformatter.</span>
+<span class="nf">format</span><span class="o">:</span><span class="w"> </span><span class="n">black</span> <span class="n">docformatter</span>
+</pre></div>
+</div>
+<p><em>(Removed <code class="docutils literal notranslate"><span class="pre">isort</span></code> from the <code class="docutils literal notranslate"><span class="pre">format</span></code> target)</em></p>
+</li>
+</ul>
+</section>
+<section id="pylint-optional">
+<h3><strong>2. <code class="docutils literal notranslate"><span class="pre">pylint</span></code> (Optional)</strong><a class="headerlink" href="#pylint-optional" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p><strong>Purpose of <code class="docutils literal notranslate"><span class="pre">pylint</span></code>:</strong> A comprehensive linter that checks for errors, enforces a coding standard, and looks for code smells.</p></li>
+<li><p><strong>Ruff’s Replacement Capability:</strong> Ruff covers a substantial portion of <code class="docutils literal notranslate"><span class="pre">pylint</span></code>’s functionality with improved performance. However, <code class="docutils literal notranslate"><span class="pre">pylint</span></code> offers some advanced checks and reporting that Ruff may not cover entirely.</p></li>
+<li><p><strong>Decision:</strong></p>
+<ul class="simple">
+<li><p><strong>If Ruff Meets Your Needs:</strong> <strong>Remove <code class="docutils literal notranslate"><span class="pre">pylint</span></code></strong> for a simpler setup.</p></li>
+<li><p><strong>If You Require Advanced Checks:</strong> <strong>Keep <code class="docutils literal notranslate"><span class="pre">pylint</span></code></strong> alongside Ruff.</p></li>
+</ul>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="c">## lint:               Lint the code with ruff, Bandit, vulture, Pylint and Mypy.</span>
+<span class="nf">lint</span><span class="o">:</span><span class="w"> </span><span class="n">ruff</span> <span class="n">bandit</span> <span class="n">vulture</span> <span class="n">mypy</span>
+</pre></div>
+</div>
+<p><em>(Optionally remove <code class="docutils literal notranslate"><span class="pre">pylint</span></code> if not needed)</em></p>
+</li>
+</ul>
+</section>
+<section id="docformatter">
+<h3><strong>3. <code class="docutils literal notranslate"><span class="pre">docformatter</span></code></strong><a class="headerlink" href="#docformatter" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Purpose of <code class="docutils literal notranslate"><span class="pre">docformatter</span></code>:</strong> Formats docstrings to follow PEP 257 standards.</p></li>
+<li><p><strong>Ruff’s Replacement Capability:</strong> Ruff does <strong>not</strong> handle docstring formatting.</p></li>
+<li><p><strong>Action:</strong> <strong>Keep <code class="docutils literal notranslate"><span class="pre">docformatter</span></code></strong> in your Makefile.</p></li>
+</ul>
+</section>
+<section id="isort-replacement-confirmed">
+<h3><strong>4. <code class="docutils literal notranslate"><span class="pre">isort</span></code> Replacement Confirmed</strong><a class="headerlink" href="#isort-replacement-confirmed" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>As mentioned, Ruff replaces <code class="docutils literal notranslate"><span class="pre">isort</span></code>. No additional action needed beyond removal.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="tools-to-retain-when-using-ruff">
+<h2><strong>Tools to Retain When Using Ruff</strong><a class="headerlink" href="#tools-to-retain-when-using-ruff" title="Link to this heading">¶</a></h2>
+<section id="bandit">
+<h3><strong>1. <code class="docutils literal notranslate"><span class="pre">bandit</span></code></strong><a class="headerlink" href="#bandit" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Identifies common security issues in Python code.</p></li>
+<li><p><strong>Ruff’s Capability:</strong> Ruff does <strong>not</strong> focus on security analysis.</p></li>
+<li><p><strong>Action:</strong> <strong>Keep <code class="docutils literal notranslate"><span class="pre">bandit</span></code></strong> for security linting.</p></li>
+</ul>
+</section>
+<section id="vulture">
+<h3><strong>2. <code class="docutils literal notranslate"><span class="pre">vulture</span></code></strong><a class="headerlink" href="#vulture" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Detects dead code in Python projects.</p></li>
+<li><p><strong>Ruff’s Capability:</strong> Ruff does <strong>not</strong> specialize in dead code detection.</p></li>
+<li><p><strong>Action:</strong> <strong>Keep <code class="docutils literal notranslate"><span class="pre">vulture</span></code></strong> for identifying unused code.</p></li>
+</ul>
+</section>
+<section id="black">
+<h3><strong>3. <code class="docutils literal notranslate"><span class="pre">black</span></code></strong><a class="headerlink" href="#black" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> A code formatter that enforces a consistent coding style.</p></li>
+<li><p><strong>Ruff’s Capability:</strong> While Ruff can fix some formatting issues, it does <strong>not</strong> fully replace <code class="docutils literal notranslate"><span class="pre">black</span></code>.</p></li>
+<li><p><strong>Action:</strong> <strong>Keep <code class="docutils literal notranslate"><span class="pre">black</span></code></strong> for comprehensive code formatting.</p></li>
+</ul>
+</section>
+<section id="mypy">
+<h3><strong>4. <code class="docutils literal notranslate"><span class="pre">mypy</span></code></strong><a class="headerlink" href="#mypy" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Performs static type checking in Python.</p></li>
+<li><p><strong>Ruff’s Capability:</strong> Ruff does <strong>not</strong> perform type checking.</p></li>
+<li><p><strong>Action:</strong> <strong>Keep <code class="docutils literal notranslate"><span class="pre">mypy</span></code></strong> for type safety and static analysis.</p></li>
+</ul>
+</section>
+<section id="coveralls">
+<h3><strong>5. <code class="docutils literal notranslate"><span class="pre">coveralls</span></code></strong><a class="headerlink" href="#coveralls" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Uploads coverage data to Coveralls.io for test coverage reporting.</p></li>
+<li><p><strong>Ruff’s Capability:</strong> Ruff does <strong>not</strong> handle test coverage.</p></li>
+<li><p><strong>Action:</strong> <strong>Keep <code class="docutils literal notranslate"><span class="pre">coveralls</span></code></strong> for coverage reporting.</p></li>
+</ul>
+</section>
+<section id="sphinx">
+<h3><strong>6. <code class="docutils literal notranslate"><span class="pre">sphinx</span></code></strong><a class="headerlink" href="#sphinx" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Generates documentation from source code.</p></li>
+<li><p><strong>Ruff’s Capability:</strong> Ruff does <strong>not</strong> handle documentation generation.</p></li>
+<li><p><strong>Action:</strong> <strong>Keep <code class="docutils literal notranslate"><span class="pre">sphinx</span></code></strong> for creating and managing documentation.</p></li>
+</ul>
+</section>
+<section id="conda-environments">
+<h3><strong>7. <code class="docutils literal notranslate"><span class="pre">conda</span></code> Environments</strong><a class="headerlink" href="#conda-environments" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Manages project dependencies and environments.</p></li>
+<li><p><strong>Ruff’s Capability:</strong> Ruff does <strong>not</strong> manage environments.</p></li>
+<li><p><strong>Action:</strong> <strong>Keep <code class="docutils literal notranslate"><span class="pre">conda</span></code></strong> for environment management.</p></li>
+</ul>
+</section>
+<section id="docker-compileall-next-version-etc">
+<h3><strong>8. <code class="docutils literal notranslate"><span class="pre">docker</span></code>, <code class="docutils literal notranslate"><span class="pre">compileall</span></code>, <code class="docutils literal notranslate"><span class="pre">next-version</span></code>, etc.</strong><a class="headerlink" href="#docker-compileall-next-version-etc" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Various tasks like building Docker images, compiling Python scripts, and version management.</p></li>
+<li><p><strong>Ruff’s Capability:</strong> Ruff does <strong>not</strong> handle these tasks.</p></li>
+<li><p><strong>Action:</strong> <strong>Keep these tools</strong> as needed for your project workflow.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="revised-makefile-example">
+<h2><strong>Revised Makefile Example</strong><a class="headerlink" href="#revised-makefile-example" title="Link to this heading">¶</a></h2>
+<p>Based on the above analysis, here’s how you can adjust your Makefile to remove unnecessary tools when using Ruff:</p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="nv">.DEFAULT_GOAL</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">help</span>
+
+<span class="nv">MODULE</span><span class="o">=</span>iotemplateapp
+<span class="nv">PYTHONPATH</span><span class="o">=</span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="w"> </span>docs<span class="w"> </span>scripts<span class="w"> </span>tests
+
+<span class="nv">ARCH</span><span class="o">:=</span><span class="k">$(</span>shell<span class="w"> </span>uname<span class="w"> </span>-m<span class="k">)</span>
+<span class="nv">OS</span><span class="o">:=</span><span class="k">$(</span>shell<span class="w"> </span>uname<span class="w"> </span>-s<span class="k">)</span>
+
+<span class="cp">ifeq (${OS},Linux)</span>
+<span class="w">	</span><span class="nv">DOCKER2EXE_DIR</span><span class="o">=</span>linux-amd64
+<span class="w">	</span><span class="nv">DOCKER2EXE_SCRIPT</span><span class="o">=</span>sh
+<span class="w">	</span><span class="nv">DOCKER2EXE_TARGET</span><span class="o">=</span>linux/amd64
+<span class="cp">else ifeq (${OS},Darwin)</span>
+<span class="w">	</span><span class="nv">DOCKER2EXE_SCRIPT</span><span class="o">=</span>zsh
+<span class="cp">	ifeq ($(ARCH),arm64)</span>
+<span class="w">		</span><span class="nv">DOCKER2EXE_DIR</span><span class="o">=</span>darwin-arm64
+<span class="w">		</span><span class="nv">DOCKER2EXE_TARGET</span><span class="o">=</span>darwin/arm64
+<span class="cp">	else ifeq ($(ARCH),x86_64)</span>
+<span class="w">		</span><span class="nv">DOCKER2EXE_DIR</span><span class="o">=</span>darwin-amd64
+<span class="w">		</span><span class="nv">DOCKER2EXE_TARGET</span><span class="o">=</span>darwin/amd64
+<span class="cp">	endif</span>
+<span class="cp">endif</span>
+
+<span class="k">export </span><span class="nv">ENV_FOR_DYNACONF</span><span class="o">=</span><span class="nb">test</span>
+<span class="k">export </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+
+<span class="c">## =============================================================================</span>
+<span class="c">## make Script       The purpose of this Makefile is to support the whole</span>
+<span class="c">##                   software development process for an application. It</span>
+<span class="c">##                   contains also the necessary tools for the CI activities.</span>
+<span class="c">##                   -----------------------------------------------------------</span>
+<span class="c">##                   The available make commands are:</span>
+<span class="c">## -----------------------------------------------------------------------------</span>
+<span class="c">## help:               Show this help.</span>
+<span class="c">## -----------------------------------------------------------------------------</span>
+<span class="c">## action:             Run the GitHub Actions locally.</span>
+<span class="nf">action</span><span class="o">:</span><span class="w"> </span><span class="n">action</span>-<span class="n">std</span>
+<span class="c">## dev:                Format, lint and test the code.</span>
+<span class="nf">dev</span><span class="o">:</span><span class="w"> </span><span class="n">format</span> <span class="n">lint</span> <span class="n">tests</span>
+<span class="c">## docs:               Check the API documentation, create and upload the user documentation.</span>
+<span class="nf">docs</span><span class="o">:</span><span class="w"> </span><span class="n">sphinx</span>
+<span class="c">## everything:         Do everything precheckin</span>
+<span class="nf">everything</span><span class="o">:</span><span class="w"> </span><span class="n">dev</span> <span class="n">docs</span>
+<span class="c">## final:              Format, lint and test the code and create the documentation.</span>
+<span class="nf">final</span><span class="o">:</span><span class="w"> </span><span class="n">format</span> <span class="n">lint</span> <span class="n">docs</span> <span class="n">tests</span>
+<span class="c">## format:             Format the code with Black.</span>
+<span class="nf">format</span><span class="o">:</span><span class="w"> </span><span class="n">black</span> <span class="n">docformatter</span>
+<span class="c">## lint:               Lint the code with ruff, Bandit, vulture, and Mypy.</span>
+<span class="nf">lint</span><span class="o">:</span><span class="w"> </span><span class="n">ruff</span> <span class="n">bandit</span> <span class="n">vulture</span> <span class="n">mypy</span>
+<span class="c">## pre-push:           Preparatory work for the pushing process.</span>
+<span class="nf">pre-push</span><span class="o">:</span><span class="w"> </span><span class="n">format</span> <span class="n">lint</span> <span class="n">tests</span> <span class="n">next</span>-<span class="n">version</span> <span class="n">docs</span>
+<span class="c">## tests:              Run all tests with pytest.</span>
+<span class="nf">tests</span><span class="o">:</span><span class="w"> </span><span class="n">pytest</span>
+<span class="c">## -----------------------------------------------------------------------------</span>
+
+<span class="nf">help</span><span class="o">:</span>
+<span class="w">	</span>@sed<span class="w"> </span>-ne<span class="w"> </span><span class="s1">&#39;/@sed/!s/## //p&#39;</span><span class="w"> </span><span class="si">${</span><span class="nv">MAKEFILE_LIST</span><span class="si">}</span>
+
+<span class="c"># Run the GitHub Actions locally.</span>
+<span class="c"># https://github.com/nektos/act</span>
+<span class="c"># Configuration files: .act_secrets &amp; .act_vars</span>
+<span class="nf">action-std</span><span class="o">:</span><span class="w">         </span><span class="c">## Run the GitHub Actions locally: standard.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: action ***************************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Copy your .aws/credentials to .aws_secrets&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>act<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>act<span class="w"> </span>--quiet<span class="w"> </span><span class="se">\</span>
+<span class="w">		</span>--secret-file<span class="w"> </span>.act_secrets<span class="w"> </span><span class="se">\</span>
+<span class="w">		</span>--var<span class="w"> </span><span class="nv">IO_LOCAL</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">		</span>--verbose<span class="w"> </span><span class="se">\</span>
+<span class="w">		</span>-P<span class="w"> </span>ubuntu-latest<span class="o">=</span>catthehacker/ubuntu:act-latest<span class="w"> </span><span class="se">\</span>
+<span class="w">		</span>-W<span class="w"> </span>.github/workflows/github_pages.yml
+<span class="w">	</span>act<span class="w"> </span>--quiet<span class="w"> </span><span class="se">\</span>
+<span class="w">		</span>--secret-file<span class="w"> </span>.act_secrets<span class="w"> </span><span class="se">\</span>
+<span class="w">		</span>--var<span class="w"> </span><span class="nv">IO_LOCAL</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">		</span>--verbose<span class="w"> </span><span class="se">\</span>
+<span class="w">		</span>-P<span class="w"> </span>ubuntu-latest<span class="o">=</span>catthehacker/ubuntu:act-latest<span class="w"> </span><span class="se">\</span>
+<span class="w">		</span>-W<span class="w"> </span>.github/workflows/standard.yml
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   action ***************************************&quot;</span>
+
+<span class="c"># Bandit is a tool designed to find common security issues in Python code.</span>
+<span class="c"># https://github.com/PyCQA/bandit</span>
+<span class="c"># Configuration file: none</span>
+<span class="nf">bandit</span><span class="o">:</span><span class="w">             </span><span class="c">## Find common security issues with Bandit.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: Bandit ***************************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;PYTHONPATH=</span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>bandit<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>bandit<span class="w"> </span>-c<span class="w"> </span>pyproject.toml<span class="w"> </span>-r<span class="w"> </span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   Bandit ***************************************&quot;</span>
+
+<span class="c"># The Uncompromising Code Formatter</span>
+<span class="c"># https://github.com/psf/black</span>
+<span class="c"># Configuration file: pyproject.toml</span>
+<span class="nf">black</span><span class="o">:</span><span class="w">              </span><span class="c">## Format the code with Black.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: black ****************************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;PYTHONPATH=</span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>black<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>black<span class="w"> </span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   black ****************************************&quot;</span>
+
+<span class="c"># Byte-compile Python libraries</span>
+<span class="c"># https://docs.python.org/3/library/compileall.html</span>
+<span class="c"># Configuration file: none</span>
+<span class="nf">compileall</span><span class="o">:</span><span class="w">         </span><span class="c">## Byte-compile the Python libraries.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: Compile All Python Scripts *******************&quot;</span>
+<span class="w">	</span>python3<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>python3<span class="w"> </span>-m<span class="w"> </span>compileall
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   Compile All Python Scripts *******************&quot;</span>
+
+<span class="c"># Miniconda - Minimal installer for conda.</span>
+<span class="c"># https://docs.conda.io/en/latest/miniconda.html</span>
+<span class="c"># Configuration file: none</span>
+<span class="nf">conda-dev</span><span class="o">:</span><span class="w">          </span><span class="c">## Create a new environment for development.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: Miniconda create development environment *****&quot;</span>
+<span class="w">	</span>conda<span class="w"> </span>config<span class="w"> </span>--set<span class="w"> </span>always_yes<span class="w"> </span><span class="nb">true</span>
+<span class="w">	</span>conda<span class="w"> </span>--version
+<span class="w">	</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;PYPI_PAT=</span><span class="si">${</span><span class="nv">PYPI_PAT</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>conda<span class="w"> </span>env<span class="w"> </span>remove<span class="w"> </span>-n<span class="w"> </span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Environment &#39;</span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="s2">&#39; does not exist.&quot;</span>
+<span class="w">	</span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>config/environment_dev.yml
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>conda<span class="w"> </span>info<span class="w"> </span>--envs
+<span class="w">	</span>conda<span class="w"> </span>list
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   Miniconda create development environment *****&quot;</span>
+
+<span class="nf">conda-prod</span><span class="o">:</span><span class="w">         </span><span class="c">## Create a new environment for production.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: Miniconda create production environment ******&quot;</span>
+<span class="w">	</span>conda<span class="w"> </span>config<span class="w"> </span>--set<span class="w"> </span>always_yes<span class="w"> </span><span class="nb">true</span>
+<span class="w">	</span>conda<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>conda<span class="w"> </span>env<span class="w"> </span>remove<span class="w"> </span>-n<span class="w"> </span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Environment &#39;</span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="s2">&#39; does not exist.&quot;</span>
+<span class="w">	</span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>config/environment.yml
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>conda<span class="w"> </span>info<span class="w"> </span>--envs
+<span class="w">	</span>conda<span class="w"> </span>list
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   Miniconda create production environment ******&quot;</span>
+
+<span class="c"># Requires a public repository !!!</span>
+<span class="c"># Python interface to coveralls.io API</span>
+<span class="c"># https://github.com/TheKevJames/coveralls-python</span>
+<span class="c"># Configuration file: none</span>
+<span class="nf">coveralls</span><span class="o">:</span><span class="w">          </span><span class="c">## Run all the tests and upload the coverage data to coveralls.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: coveralls ************************************&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--cov<span class="o">=</span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="w"> </span>--cov-report<span class="o">=</span>xml<span class="w"> </span>--random-order<span class="w"> </span>tests
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>coveralls<span class="w"> </span>--service<span class="o">=</span>github
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   coveralls ************************************&quot;</span>
+
+<span class="c"># Formats docstrings to follow PEP 257</span>
+<span class="c"># https://github.com/PyCQA/docformatter</span>
+<span class="c"># Configuration file: pyproject.toml</span>
+<span class="nf">docformatter</span><span class="o">:</span><span class="w">       </span><span class="c">## Format the docstrings with docformatter.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: docformatter *********************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;PYTHONPATH=</span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>docformatter<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>docformatter<span class="w"> </span>--in-place<span class="w"> </span>-r<span class="w"> </span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span>
+<span class="c">#	docformatter -r ${PYTHONPATH}</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   docformatter *********************************&quot;</span>
+
+<span class="c"># Creates Docker executables</span>
+<span class="c"># https://github.com/rzane/docker2exe</span>
+<span class="c"># Configuration files: .dockerignore &amp; Dockerfile</span>
+<span class="nf">docker</span><span class="o">:</span><span class="w">             </span><span class="c">## Create a docker image.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: Docker ***************************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;OS               =</span><span class="si">${</span><span class="nv">OS</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;ARCH             =</span><span class="si">${</span><span class="nv">ARCH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;DOCKER2EXE_DIR   =</span><span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;DOCKER2EXE_SCRIPT=</span><span class="si">${</span><span class="nv">DOCKER2EXE_SCRIPT</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;DOCKER2EXE_TARGET=</span><span class="si">${</span><span class="nv">DOCKER2EXE_TARGET</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>docker<span class="w"> </span>ps<span class="w"> </span>-a
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>@sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;docker ps -a | grep -q &quot;${MODULE}&quot; &amp;&amp; docker rm --force ${MODULE} || echo &quot;No existing container to remove.&quot;&#39;</span>
+<span class="w">	</span>@sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;docker image ls | grep -q &quot;${MODULE}&quot; &amp;&amp; docker rmi --force ${MODULE}:latest || echo &quot;No existing image to remove.&quot;&#39;</span>
+<span class="w">	</span>docker<span class="w"> </span>system<span class="w"> </span>prune<span class="w"> </span>-a<span class="w"> </span>-f
+<span class="w">	</span>docker<span class="w"> </span>build<span class="w"> </span>--build-arg<span class="w"> </span><span class="nv">PYPI_PAT</span><span class="o">=</span><span class="si">${</span><span class="nv">PYPI_PAT</span><span class="si">}</span><span class="w"> </span>-t<span class="w"> </span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="w"> </span>.
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>rm<span class="w"> </span>-rf<span class="w"> </span>app-<span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span>
+<span class="w">	</span>mkdir<span class="w"> </span>app-<span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span>
+<span class="w">	</span>chmod<span class="w"> </span>+x<span class="w"> </span>dist/docker2exe-<span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span>
+<span class="w">	</span>./dist/docker2exe-<span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span><span class="w"> </span>--name<span class="w"> </span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">									    </span>--image<span class="w"> </span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span>:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">									    </span>--embed<span class="w"> </span><span class="se">\</span>
+<span class="w">									    </span>-t<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER2EXE_TARGET</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">									    </span>-v<span class="w"> </span>./data:/app/data<span class="w"> </span><span class="se">\</span>
+<span class="w">									    </span>-v<span class="w"> </span>./logging_cfg.yaml:/app/logging_cfg.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">									    </span>-v<span class="w"> </span>./settings.io_aero.toml:/app/settings.io_aero.toml
+<span class="w">	</span>mkdir<span class="w"> </span>app-<span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span>/data
+<span class="w">	</span>mv<span class="w"> </span>dist/<span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span>-<span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span><span class="w"> </span>app-<span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span>
+<span class="w">	</span>chmod<span class="w"> </span>+x<span class="w"> </span>app-<span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span>
+<span class="w">	</span>cp<span class="w"> </span>logging_cfg.yaml<span class="w">                           </span>app-<span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span>/
+<span class="w">	</span>cp<span class="w"> </span>run_iotemplateapp.<span class="si">${</span><span class="nv">DOCKER2EXE_SCRIPT</span><span class="si">}</span><span class="w">     </span>app-<span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span>/
+<span class="w">	</span>chmod<span class="w"> </span>+x<span class="w"> </span>app-<span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span>/*.<span class="si">${</span><span class="nv">DOCKER2EXE_SCRIPT</span><span class="si">}</span>
+<span class="w">	</span>cp<span class="w"> </span>settings.io_aero.toml<span class="w">                      </span>app-<span class="si">${</span><span class="nv">DOCKER2EXE_DIR</span><span class="si">}</span>/
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   Docker ***************************************&quot;</span>
+
+<span class="c"># isort your imports, so you don&#39;t have to.</span>
+<span class="c"># https://github.com/PyCQA/isort</span>
+<span class="c"># Configuration file: pyproject.toml</span>
+<span class="c"># Removed `isort` as Ruff handles import sorting.</span>
+
+<span class="c"># Mypy: Static Typing for Python</span>
+<span class="c"># https://github.com/python/mypy</span>
+<span class="c"># Configuration file: pyproject.toml</span>
+<span class="nf">mypy</span><span class="o">:</span><span class="w">               </span><span class="c">## Find typing issues with Mypy.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: Mypy *****************************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;PYTHONPATH=</span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>mypy<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>mypy<span class="w"> </span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   Mypy *****************************************&quot;</span>
+
+<span class="nf">mypy-stubgen</span><span class="o">:</span><span class="w">       </span><span class="c">## Autogenerate stub files.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: Mypy *****************************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;MODULE=</span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>rm<span class="w"> </span>-rf<span class="w"> </span>out
+<span class="w">	</span>stubgen<span class="w"> </span>--package<span class="w"> </span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span>
+<span class="w">	</span>cp<span class="w"> </span>-f<span class="w"> </span>out/<span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span>/*<span class="w"> </span>./<span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span>/
+<span class="w">	</span>rm<span class="w"> </span>-rf<span class="w"> </span>out
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   Mypy *****************************************&quot;</span>
+
+<span class="nf">next-version</span><span class="o">:</span><span class="w">       </span><span class="c">## Increment the version number.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: next_version *********************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;PYTHONPATH=</span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>python3<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>python3<span class="w"> </span>scripts/next_version.py
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   next version *********************************&quot;</span>
+
+<span class="c"># Pylint is a tool that checks for errors in Python code.</span>
+<span class="c"># https://github.com/PyCQA/pylint/</span>
+<span class="c"># Configuration file: .pylintrc</span>
+<span class="c"># Removed `pylint` if not needed; otherwise keep it.</span>
+
+<span class="c"># pytest: helps you write better programs.</span>
+<span class="c"># https://github.com/pytest-dev/pytest/</span>
+<span class="c"># Configuration file: pyproject.toml</span>
+<span class="nf">pytest</span><span class="o">:</span><span class="w">             </span><span class="c">## Run all tests with pytest.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: pytest ***************************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;CONDA     =</span><span class="si">${</span><span class="nv">CONDA_PREFIX</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;PYTHONPATH=</span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--dead-fixtures<span class="w"> </span>tests
+<span class="w">	</span>pytest<span class="w"> </span>--cache-clear<span class="w"> </span>--cov<span class="o">=</span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="w"> </span>--cov-report<span class="w"> </span>term-missing:skip-covered<span class="w"> </span>--cov-report<span class="o">=</span>lcov<span class="w"> </span>-v<span class="w"> </span>tests
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   pytest ***************************************&quot;</span>
+
+<span class="nf">pytest-ci</span><span class="o">:</span><span class="w">          </span><span class="c">## Run all tests with pytest after test tool installation.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: pytest ***************************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;CONDA     =</span><span class="si">${</span><span class="nv">CONDA_PREFIX</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;PYTHONPATH=</span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pip3<span class="w"> </span>install<span class="w"> </span>pytest<span class="w"> </span>pytest-cov<span class="w"> </span>pytest-deadfixtures<span class="w"> </span>pytest-helpers-namespace<span class="w"> </span>pytest-random-order
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--dead-fixtures<span class="w"> </span>tests
+<span class="w">	</span>pytest<span class="w"> </span>--cache-clear<span class="w"> </span>--cov<span class="o">=</span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="w"> </span>--cov-report<span class="w"> </span>term-missing:skip-covered<span class="w"> </span>-v<span class="w"> </span>tests
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   pytest ***************************************&quot;</span>
+
+<span class="nf">pytest-first-issue</span><span class="o">:</span><span class="w"> </span><span class="c">## Run all tests with pytest until the first issue occurs.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: pytest ***************************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;CONDA     =</span><span class="si">${</span><span class="nv">CONDA_PREFIX</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;PYTHONPATH=</span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--cache-clear<span class="w"> </span>--cov<span class="o">=</span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="w"> </span>--cov-report<span class="w"> </span>term-missing:skip-covered<span class="w"> </span>-rP<span class="w"> </span>-v<span class="w"> </span>-x<span class="w"> </span>tests
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   pytest ***************************************&quot;</span>
+
+<span class="nf">pytest-ignore-mark</span><span class="o">:</span><span class="w"> </span><span class="c">## Run all tests without marker with pytest.&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: pytest ***************************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;CONDA     =</span><span class="si">${</span><span class="nv">CONDA_PREFIX</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;PYTHONPATH=</span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--dead-fixtures<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;not no_ci&quot;</span><span class="w"> </span>tests
+<span class="w">	</span>pytest<span class="w"> </span>--cache-clear<span class="w"> </span>--cov<span class="o">=</span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="w"> </span>--cov-report<span class="w"> </span>term-missing:skip-covered<span class="w"> </span>--cov-report<span class="o">=</span>lcov<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;not no_ci&quot;</span><span class="w"> </span>-v<span class="w"> </span>tests
+<span class="w">	</span>@echo<span class="w"> </span>Info<span class="w"> </span>**********<span class="w">  </span>End:<span class="w">   </span>pytest<span class="w"> </span>***************************************
+
+<span class="nf">pytest-issue</span><span class="o">:</span><span class="w">       </span><span class="c">## Run only the tests with pytest which are marked with &#39;issue&#39;.</span>
+<span class="w">	</span>@echo<span class="w"> </span>Info<span class="w"> </span>**********<span class="w">  </span>Start:<span class="w"> </span>pytest<span class="w"> </span>***************************************
+<span class="w">	</span>@echo<span class="w"> </span><span class="nv">CONDA</span><span class="w">     </span><span class="o">=</span><span class="si">${</span><span class="nv">CONDA_PREFIX</span><span class="si">}</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--dead-fixtures<span class="w"> </span>tests
+<span class="w">	</span>pytest<span class="w"> </span>--cache-clear<span class="w"> </span>--capture<span class="o">=</span>no<span class="w"> </span>--cov<span class="o">=</span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="w"> </span>--cov-report<span class="w"> </span>term-missing:skip-covered<span class="w"> </span>-m<span class="w"> </span>issue<span class="w"> </span>-rP<span class="w"> </span>-v<span class="w"> </span>-x<span class="w"> </span>tests
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   pytest ***************************************&quot;</span>
+
+<span class="nf">pytest-module</span><span class="o">:</span><span class="w">      </span><span class="c">## Run test of a specific module with pytest.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: pytest ***************************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;CONDA     =</span><span class="si">${</span><span class="nv">CONDA_PREFIX</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;PYTHONPATH=</span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;TESTMODULE=tests/</span><span class="si">${</span><span class="nv">TEST</span><span class="p">-MODULE</span><span class="si">}</span><span class="s2">.py&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>pytest<span class="w"> </span>--cache-clear<span class="w"> </span>--cov<span class="o">=</span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span><span class="w"> </span>--cov-report<span class="w"> </span>term-missing:skip-covered<span class="w"> </span>-v<span class="w"> </span>tests/<span class="si">${</span><span class="nv">TEST</span><span class="p">-MODULE</span><span class="si">}</span>.py
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   pytest ***************************************&quot;</span>
+
+<span class="c"># https://github.com/astral-sh/ruff</span>
+<span class="c"># Configuration file: pyproject.toml</span>
+<span class="nf">ruff</span><span class="o">:</span><span class="w">               </span><span class="c">## An extremely fast Python linter and code formatter.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: ruff *****************************************&quot;</span>
+<span class="w">	</span>ruff<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>ruff<span class="w"> </span>check<span class="w"> </span>--fix
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   ruff *****************************************&quot;</span>
+
+<span class="nf">sphinx</span><span class="o">:</span><span class="w">             </span><span class="c">## Create the user documentation with Sphinx.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: sphinx ***************************************&quot;</span>
+<span class="w">	</span>sphinx-apidoc<span class="w"> </span>--version
+<span class="w">	</span>sphinx-build<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>docs/build/*
+<span class="w">	</span>sphinx-apidoc<span class="w"> </span>-o<span class="w"> </span>docs/source<span class="w"> </span><span class="si">${</span><span class="nv">MODULE</span><span class="si">}</span>
+<span class="w">	</span>sphinx-build<span class="w"> </span>-M<span class="w"> </span>html<span class="w"> </span>docs/source<span class="w"> </span>docs/build
+<span class="w">	</span>sphinx-build<span class="w"> </span>-b<span class="w"> </span>rinoh<span class="w"> </span>docs/source<span class="w"> </span>docs/build/pdf
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   sphinx ***************************************&quot;</span>
+
+<span class="nf">version</span><span class="o">:</span><span class="w">            </span><span class="c">## Show the installed software versions.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: version **************************************&quot;</span>
+<span class="w">	</span>python3<span class="w"> </span>--version
+<span class="w">	</span>pip3<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   version **************************************&quot;</span>
+
+<span class="c"># Find dead Python code</span>
+<span class="c"># https://github.com/jendrikseipp/vulture</span>
+<span class="c"># Configuration file: pyproject.toml</span>
+<span class="nf">vulture</span><span class="o">:</span><span class="w">            </span><span class="c">## Find dead Python code.</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  Start: vulture **************************************&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;PYTHONPATH=</span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>vulture<span class="w"> </span>--version
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;----------------------------------------------------------------------&quot;</span>
+<span class="w">	</span>vulture<span class="w"> </span><span class="si">${</span><span class="nv">PYTHONPATH</span><span class="si">}</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;Info **********  End:   vulture **************************************&quot;</span>
+
+<span class="c">## =============================================================================</span>
+</pre></div>
+</div>
+<section id="key-changes">
+<h3><strong>Key Changes:</strong><a class="headerlink" href="#key-changes" title="Link to this heading">¶</a></h3>
+<ol class="arabic">
+<li><p><strong>Removed <code class="docutils literal notranslate"><span class="pre">isort</span></code>:</strong></p>
+<ul>
+<li><p><strong>Before:</strong></p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="c">## format:             Format the code with Black and docformatter.</span>
+<span class="nf">format</span><span class="o">:</span><span class="w"> </span><span class="n">isort</span> <span class="n">black</span> <span class="n">docformatter</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>After:</strong></p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="c">## format:             Format the code with Black.</span>
+<span class="nf">format</span><span class="o">:</span><span class="w"> </span><span class="n">black</span> <span class="n">docformatter</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Reason:</strong> Ruff handles import sorting, making <code class="docutils literal notranslate"><span class="pre">isort</span></code> redundant.</p></li>
+</ul>
+</li>
+<li><p><strong>Optional Removal of <code class="docutils literal notranslate"><span class="pre">pylint</span></code>:</strong></p>
+<ul>
+<li><p><strong>Before:</strong></p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="nf">lint</span><span class="o">:</span><span class="w"> </span><span class="n">ruff</span> <span class="n">bandit</span> <span class="n">vulture</span> <span class="n">pylint</span> <span class="n">mypy</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>After (if removing <code class="docutils literal notranslate"><span class="pre">pylint</span></code>):</strong></p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="nf">lint</span><span class="o">:</span><span class="w"> </span><span class="n">ruff</span> <span class="n">bandit</span> <span class="n">vulture</span> <span class="n">mypy</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Reason:</strong> Ruff covers many linting tasks previously handled by <code class="docutils literal notranslate"><span class="pre">pylint</span></code>. However, evaluate if Ruff’s linting suffices for your project’s needs before removing <code class="docutils literal notranslate"><span class="pre">pylint</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Adjusted <code class="docutils literal notranslate"><span class="pre">format</span></code> Target:</strong></p>
+<ul class="simple">
+<li><p><strong>Removed <code class="docutils literal notranslate"><span class="pre">isort</span></code> from the <code class="docutils literal notranslate"><span class="pre">format</span></code> target as Ruff handles import sorting.</strong></p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="other-considerations">
+<h3><strong>Other Considerations:</strong><a class="headerlink" href="#other-considerations" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">docformatter</span></code> is retained</strong> because Ruff does not handle docstring formatting.</p></li>
+<li><p><strong>Security (<code class="docutils literal notranslate"><span class="pre">bandit</span></code>), dead code detection (<code class="docutils literal notranslate"><span class="pre">vulture</span></code>), type checking (<code class="docutils literal notranslate"><span class="pre">mypy</span></code>), and documentation (<code class="docutils literal notranslate"><span class="pre">sphinx</span></code>)</strong> remain essential and should be kept.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">black</span></code> remains for comprehensive code formatting</strong> that Ruff does not fully replace.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="final-recommendations">
+<h2><strong>Final Recommendations</strong><a class="headerlink" href="#final-recommendations" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Evaluate Ruff’s Coverage:</strong></p>
+<ul class="simple">
+<li><p>Before removing tools like <code class="docutils literal notranslate"><span class="pre">pylint</span></code>, ensure that Ruff’s linting capabilities meet your project’s requirements. Run Ruff extensively to verify that it catches all necessary issues.</p></li>
+</ul>
+</li>
+<li><p><strong>Maintain Essential Tools:</strong></p>
+<ul class="simple">
+<li><p><strong>Security:</strong> Keep <code class="docutils literal notranslate"><span class="pre">bandit</span></code> to ensure your code remains secure.</p></li>
+<li><p><strong>Dead Code Detection:</strong> Retain <code class="docutils literal notranslate"><span class="pre">vulture</span></code> to identify and remove unused code.</p></li>
+<li><p><strong>Type Checking:</strong> Continue using <code class="docutils literal notranslate"><span class="pre">mypy</span></code> for type safety.</p></li>
+<li><p><strong>Documentation:</strong> Keep <code class="docutils literal notranslate"><span class="pre">sphinx</span></code> and <code class="docutils literal notranslate"><span class="pre">docformatter</span></code> for maintaining and formatting documentation.</p></li>
+</ul>
+</li>
+<li><p><strong>Simplify Your Workflow:</strong></p>
+<ul class="simple">
+<li><p>Removing redundant tools like <code class="docutils literal notranslate"><span class="pre">isort</span></code> can streamline your Makefile and reduce maintenance overhead.</p></li>
+<li><p>Ensure that the remaining tools are well-integrated and complement each other to maintain code quality and consistency.</p></li>
+</ul>
+</li>
+<li><p><strong>Continuous Integration (CI):</strong></p>
+<ul class="simple">
+<li><p>Update your CI pipelines to reflect the changes in the Makefile, ensuring that only the necessary tools are invoked during automated checks.</p></li>
+</ul>
+</li>
+<li><p><strong>Documentation and Team Alignment:</strong></p>
+<ul class="simple">
+<li><p>Document the changes to the Makefile and inform your team to ensure everyone is aware of the new setup.</p></li>
+<li><p>Provide guidelines on how to use Ruff alongside the retained tools for optimal code quality.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../release_notes.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Release Notes</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="ruff_vs_pylint.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Ruff vs. Pylint: A Comparison</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022 - 2024, IO-Aero
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Tool Coverage by Ruff</a><ul>
+<li><a class="reference internal" href="#understanding-ruff"><strong>Understanding Ruff</strong></a><ul>
+<li><a class="reference internal" href="#key-features-of-ruff"><strong>Key Features of Ruff:</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tools-you-can-remove-when-using-ruff"><strong>Tools You Can Remove When Using Ruff</strong></a><ul>
+<li><a class="reference internal" href="#isort"><strong>1. <code class="docutils literal notranslate"><span class="pre">isort</span></code></strong></a></li>
+<li><a class="reference internal" href="#pylint-optional"><strong>2. <code class="docutils literal notranslate"><span class="pre">pylint</span></code> (Optional)</strong></a></li>
+<li><a class="reference internal" href="#docformatter"><strong>3. <code class="docutils literal notranslate"><span class="pre">docformatter</span></code></strong></a></li>
+<li><a class="reference internal" href="#isort-replacement-confirmed"><strong>4. <code class="docutils literal notranslate"><span class="pre">isort</span></code> Replacement Confirmed</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tools-to-retain-when-using-ruff"><strong>Tools to Retain When Using Ruff</strong></a><ul>
+<li><a class="reference internal" href="#bandit"><strong>1. <code class="docutils literal notranslate"><span class="pre">bandit</span></code></strong></a></li>
+<li><a class="reference internal" href="#vulture"><strong>2. <code class="docutils literal notranslate"><span class="pre">vulture</span></code></strong></a></li>
+<li><a class="reference internal" href="#black"><strong>3. <code class="docutils literal notranslate"><span class="pre">black</span></code></strong></a></li>
+<li><a class="reference internal" href="#mypy"><strong>4. <code class="docutils literal notranslate"><span class="pre">mypy</span></code></strong></a></li>
+<li><a class="reference internal" href="#coveralls"><strong>5. <code class="docutils literal notranslate"><span class="pre">coveralls</span></code></strong></a></li>
+<li><a class="reference internal" href="#sphinx"><strong>6. <code class="docutils literal notranslate"><span class="pre">sphinx</span></code></strong></a></li>
+<li><a class="reference internal" href="#conda-environments"><strong>7. <code class="docutils literal notranslate"><span class="pre">conda</span></code> Environments</strong></a></li>
+<li><a class="reference internal" href="#docker-compileall-next-version-etc"><strong>8. <code class="docutils literal notranslate"><span class="pre">docker</span></code>, <code class="docutils literal notranslate"><span class="pre">compileall</span></code>, <code class="docutils literal notranslate"><span class="pre">next-version</span></code>, etc.</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#revised-makefile-example"><strong>Revised Makefile Example</strong></a><ul>
+<li><a class="reference internal" href="#key-changes"><strong>Key Changes:</strong></a></li>
+<li><a class="reference internal" href="#other-considerations"><strong>Other Considerations:</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#final-recommendations"><strong>Final Recommendations</strong></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=fc55ce3b"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
+    </body>
+</html>
