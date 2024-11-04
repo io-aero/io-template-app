@@ -22,7 +22,10 @@ jobs:
       - name: Show the environment variables
         run: |
           echo "MODULE      = $MODULE"
-          echo "PYPI_PAT    = ${{ secrets.PYPI_PAT }}"
+          # Removed echoing PYPI_PAT for security
+        # Optional: If you need to verify PYPI_PAT is set without echoing it
+        # run: |
+        #   if [ -z "${{ secrets.PYPI_PAT }}" ]; then echo "PYPI_PAT is not set"; exit 1; fi
 
       - name: Set Timezone
         run: echo "TZ=UTC" >> $GITHUB_ENV
@@ -43,16 +46,22 @@ jobs:
           auto-update-conda: true
           miniconda-version: "latest"
           python-version: ${{ matrix.python-version }}
+          environment-file: config/environment_dev.yml  # Ensure this file exists
+          activate-environment: iotemplateapp
+          cache-conda: true
+          use-only-tar-bz2: true
 
       - name: Install dependencies - Conda - dev
         run: make conda-dev
+        shell: bash -l {0}
 
       - name: Run docs - dev
         run: |
-          conda init --all
-          source ~/.bashrc
-          conda activate $MODULE
+          set -x  # Enable debug mode
+          source /root/miniconda3/etc/profile.d/conda.sh
+          conda activate iotemplateapp
           make black docs
+        shell: bash -l {0}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

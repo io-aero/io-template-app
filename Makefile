@@ -80,9 +80,6 @@ help:
 		printf "  %s%-25s%s %s\n", color, target, ESC "[0m", desc; \
 	}' $(MAKEFILE_LIST)
 
-action: ## action: Run the GitHub Actions locally.
-action: action-std
-
 ## Ensure all required tools are installed.
 check-tools:
 	$(call CHECK_TOOL,ruff)
@@ -112,25 +109,26 @@ clean:
 # Tool Targets
 # =============================================================================
 
+action: ## action: Run the GitHub Actions locally.
+action: action-std
+
 ## Run the GitHub Actions locally: standard.
 action-std:
 	@echo "Info **********  Start: action ***************************************"
 	@echo "Copy your .aws/credentials to .aws_secrets"
 	@echo "----------------------------------------------------------------------"
-	act --version
+	bin/act.exe --version
 	@echo "----------------------------------------------------------------------"
-	act --quiet \
-		--secret-file .act_secrets \
-		--var IO_LOCAL='true' \
-		--verbose \
-		-P ubuntu-latest=catthehacker/ubuntu:act-latest \
-		-W .github/workflows/github_pages.yml
-	act --quiet \
-		--secret-file .act_secrets \
-		--var IO_LOCAL='true' \
-		--verbose \
-		-P ubuntu-latest=catthehacker/ubuntu:act-latest \
-		-W .github/workflows/standard.yml
+	bin/act.exe --quiet \
+				--secret-file .act_secrets \
+				--var IO_LOCAL='true' \
+				-P ubuntu-latest=catthehacker/ubuntu:act-latest \
+				-W .github/workflows/github_pages.yml
+	bin/act.exe --quiet \
+				--secret-file .act_secrets \
+				--var IO_LOCAL='true' \
+				-P ubuntu-latest=catthehacker/ubuntu:act-latest \
+				-W .github/workflows/standard.yml
 	@echo "Info **********  End:   action ***************************************"
 
 ## Find common security issues with Bandit.

@@ -48,9 +48,9 @@ Applied Software
      - Remark
      - Status
    * - DBeaver - optional
-     - 24.2.3
+     - 24.2.4
      -
-     -
+     - upgrade
    * - Docker
      - 27.3.1
      -
@@ -60,6 +60,6 @@ Applied Software
      -
      -
    * - Python
-     - 3.13.0
+     - 3.12.7
      -
      -

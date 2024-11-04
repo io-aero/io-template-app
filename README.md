@@ -22,7 +22,7 @@ Detailed instructions can be found in the [documentation](https://io-aero.github
     export PYPI_PAT=<tbd>
 ```
 
-3. Install Python 3.13
+3. Install Python 3.12
 4. Install Conda or Miniconda
 5. Install Docker Desktop
 6. Clone this repository:
