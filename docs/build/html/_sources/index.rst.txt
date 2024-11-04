@@ -25,8 +25,6 @@ Development
 
 
    Makefile
-   Ruff_vs_Pylint
-   python_packagemanager
 
 API Documentation
 -----------------
@@ -37,6 +35,14 @@ Here, you will find detailed API documentation, which includes information about
    :maxdepth: 2
 
    modules
+
+Tool Evaluations
+----------------
+
+.. toctree::
+   :maxdepth: 2
+
+   tool_evaluations/index
 
 About
 -----
