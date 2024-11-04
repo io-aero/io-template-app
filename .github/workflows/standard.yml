@@ -141,7 +141,7 @@ jobs:
       - name: Compile the Python code - Mamba - prod
         if: ${{ env.IO_CONDA == 'false' }}
         run: |
-          source ~/.bashrc
+          eval "$(${MAMBA_EXE} shell hook --shell bash)"
           $MAMBA_EXE activate $MODULE
           make compileall
 
@@ -155,7 +155,7 @@ jobs:
       - name: Run pytest - Mamba - prod
         if: ${{ env.IO_CONDA == 'false' }}
         run: |
-          source ~/.bashrc
+          eval "$(${MAMBA_EXE} shell hook --shell bash)"
           $MAMBA_EXE activate $MODULE
           make pytest-ci
 
@@ -177,7 +177,7 @@ jobs:
       - name: Run pytest - Mamba - dev
         if: ${{ env.IO_CONDA == 'false' }}
         run: |
-          source ~/.bashrc
+          eval "$(${MAMBA_EXE} shell hook --shell bash)"
           $MAMBA_EXE activate $MODULE
           make black lint docs tests
 
