@@ -129,8 +129,6 @@ jobs:
       - name: Install dependencies - Mamba - prod
         if: ${{ env.IO_CONDA == 'false' }}
         run: |
-          echo $MAMBA_EXE
-          which mamba
           make mamba-prod
 
       - name: Compile the Python code - Conda - prod
