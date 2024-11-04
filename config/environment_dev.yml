@@ -17,7 +17,6 @@ dependencies:
     - coveralls
     - docformatter
     - furo
-    - isort
     - mypy
     - myst-parser
     - ordered-set

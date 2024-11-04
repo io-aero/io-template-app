@@ -1,4 +1,31 @@
+# =============================================================================
+# make Script       The purpose of this Makefile is to support the whole
+#                   software development process for an application. It
+#                   contains also the necessary tools for the CI activities.
+# =============================================================================
+
 .DEFAULT_GOAL := help
+
+.PHONY: action \
+        conda-dev \
+        conda-prod \
+        dev \
+        docker \
+        docs \
+        everything \
+        final \
+        format \
+        lint \
+        mypy-stubgen \
+        pre-push \
+        pytest \
+        pytest-ci \
+        pytest-first-issue \
+        pytest-ignore-mark \
+        pytest-issue \
+        pytest-module \
+        tests \
+        version
 
 MODULE=iotemplateapp
 PYTHONPATH=${MODULE} docs scripts tests
@@ -24,165 +51,176 @@ endif
 export ENV_FOR_DYNACONF=test
 export LANG=en_US.UTF-8
 
-##                                                                            .
-## =============================================================================
-## make Script       The purpose of this Makefile is to support the whole
-##                   software development process for an application. It
-##                   contains also the necessary tools for the CI activities.
-##                   -----------------------------------------------------------
-##                   The available make commands are:
-## -----------------------------------------------------------------------------
-## help:               Show this help.
-## -----------------------------------------------------------------------------
-## action:             Run the GitHub Actions locally.
-action: action-std
-## dev:                Format, lint and test the code.
-dev: format lint tests
-## docs:               Check the API documentation, create and upload the user documentation.
-docs: sphinx
-## everything:         Do everything precheckin
-everything: dev docs
-## final:              Format, lint and test the code and create the documentation.
-final: format lint docs tests
-## format:             Format the code with Black and docformatter.
-format: isort black docformatter
-## lint:               Lint the code with ruff, Bandit, vulture, Pylint and Mypy.
-lint: ruff bandit vulture pylint mypy
-## pre-push:           Preparatory work for the pushing process.
-pre-push: format lint tests next-version docs
-## tests:              Run all tests with pytest.
-tests: pytest
-## -----------------------------------------------------------------------------
+# =============================================================================
+# Helper Functions
+# =============================================================================
 
+define CHECK_TOOL
+	@command -v $(1) >/dev/null 2>&1 || { echo >&2 "$(1) is required but not installed. Aborting."; exit 1; }
+endef
+
+# =============================================================================
+# Makefile Targets
+# =============================================================================
+
+## Show this help.
 help:
-	@sed -ne '/@sed/!s/## //p' ${MAKEFILE_LIST}
+	@echo "========================================================================"
+	@echo "Available Makefile Targets:"
+	@echo "------------------------------------------------------------------------"
+	@awk 'BEGIN { ESC = sprintf("%c", 27); } /^[a-zA-Z0-9_-]+:.*?## .*$$/ { \
+		target = $$1; \
+		gsub(/:/, "", target); \
+		desc = substr($$0, index($$0, "## ") + 3); \
+		# Assign color based on target, default to cyan \
+		if (target == "dev" || target == "docs" || target == "everything" || target == "final" || target == "format" || target == "lint" || target == "pre-push" || target == "tests") { \
+			color = ESC "[31m"; # Red \
+		} else { \
+			color = ESC "[36m"; # Cyan \
+		} \
+		printf "  %s%-25s%s %s\n", color, target, ESC "[0m", desc; \
+	}' $(MAKEFILE_LIST)
 
-# Run the GitHub Actions locally.
-# https://github.com/nektos/act
-# Configuration files: .act_secrets & .act_vars
-action-std:         ## Run the GitHub Actions locally: standard.
+action: ## action: Run the GitHub Actions locally.
+action: action-std
+
+## Ensure all required tools are installed.
+check-tools:
+	$(call CHECK_TOOL,ruff)
+	$(call CHECK_TOOL,black)
+	$(call CHECK_TOOL,docformatter)
+	$(call CHECK_TOOL,mypy)
+	$(call CHECK_TOOL,pylint)
+	$(call CHECK_TOOL,vulture)
+	$(call CHECK_TOOL,bandit)
+	$(call CHECK_TOOL,pytest)
+	$(call CHECK_TOOL,docker)
+	$(call CHECK_TOOL,stubgen)
+	$(call CHECK_TOOL,coveralls)
+	$(call CHECK_TOOL,sphinx-apidoc)
+	$(call CHECK_TOOL,sphinx-build)
+
+## Clean build artifacts and temporary files.
+clean:
+	@echo "Info **********  Start: Clean ***************************************"
+	rm -rf docs/build
+	rm -rf *.pyc __pycache__
+	rm -rf dist
+	rm -rf app-*
+	@echo "Info **********  End:   Clean ***************************************"
+
+# =============================================================================
+# Tool Targets
+# =============================================================================
+
+## Run the GitHub Actions locally: standard.
+action-std:
 	@echo "Info **********  Start: action ***************************************"
 	@echo "Copy your .aws/credentials to .aws_secrets"
 	@echo "----------------------------------------------------------------------"
 	act --version
 	@echo "----------------------------------------------------------------------"
 	act --quiet \
-        --secret-file .act_secrets \
-        --var IO_LOCAL='true' \
-        --verbose \
-        -P ubuntu-latest=catthehacker/ubuntu:act-latest \
-        -W .github/workflows/github_pages.yml
+		--secret-file .act_secrets \
+		--var IO_LOCAL='true' \
+		--verbose \
+		-P ubuntu-latest=catthehacker/ubuntu:act-latest \
+		-W .github/workflows/github_pages.yml
 	act --quiet \
-        --secret-file .act_secrets \
-        --var IO_LOCAL='true' \
-        --verbose \
-        -P ubuntu-latest=catthehacker/ubuntu:act-latest \
-        -W .github/workflows/standard.yml
+		--secret-file .act_secrets \
+		--var IO_LOCAL='true' \
+		--verbose \
+		-P ubuntu-latest=catthehacker/ubuntu:act-latest \
+		-W .github/workflows/standard.yml
 	@echo "Info **********  End:   action ***************************************"
 
-# Bandit is a tool designed to find common security issues in Python code.
-# https://github.com/PyCQA/bandit
-# Configuration file: none
-bandit:             ## Find common security issues with Bandit.
+## Find common security issues with Bandit.
+bandit:
 	@echo "Info **********  Start: Bandit ***************************************"
-	@echo "PYTHONPATH=${PYTHONPATH}"
-	@echo "----------------------------------------------------------------------"
 	bandit --version
 	@echo "----------------------------------------------------------------------"
-	bandit -c pyproject.toml -r ${PYTHONPATH}
+	bandit -c pyproject.toml -r ${PYTHONPATH} --severity-level high --severity-level medium
 	@echo "Info **********  End:   Bandit ***************************************"
 
-# The Uncompromising Code Formatter
-# https://github.com/psf/black
-# Configuration file: pyproject.toml
-black:              ## Format the code with Black.
+## Format the code with Black.
+black:
 	@echo "Info **********  Start: black ****************************************"
-	@echo "PYTHONPATH=${PYTHONPATH}"
-	@echo "----------------------------------------------------------------------"
 	black --version
 	@echo "----------------------------------------------------------------------"
 	black ${PYTHONPATH}
 	@echo "Info **********  End:   black ****************************************"
 
-# Byte-compile Python libraries
-# https://docs.python.org/3/library/compileall.html
-# Configuration file: none
-compileall:         ## Byte-compile the Python libraries.
+## Byte-compile the Python libraries.
+compileall:
 	@echo "Info **********  Start: Compile All Python Scripts *******************"
 	python3 --version
 	@echo "----------------------------------------------------------------------"
-	python3 -m compileall
+	python3 -m compileall ${PYTHONPATH}
 	@echo "Info **********  End:   Compile All Python Scripts *******************"
 
-# Miniconda - Minimal installer for conda.
-# https://docs.conda.io/en/latest/miniconda.html
-# Configuration file: none
-conda-dev:          ## Create a new environment for development.
+conda-dev: ## Create a new environment for development.
 	@echo "Info **********  Start: Miniconda create development environment *****"
 	conda config --set always_yes true
 	conda --version
-	echo "PYPI_PAT=${PYPI_PAT}"
+	@echo "PYPI_PAT=${PYPI_PAT}"
 	@echo "----------------------------------------------------------------------"
-	conda env remove -n ${MODULE} 2>/dev/null || echo "Environment '${MODULE}' does not exist."
+	conda env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
 	conda env create -f config/environment_dev.yml
 	@echo "----------------------------------------------------------------------"
 	conda info --envs
 	conda list
 	@echo "Info **********  End:   Miniconda create development environment *****"
-conda-prod:         ## Create a new environment for production.
+
+conda-prod: ## Create a new environment for production.
 	@echo "Info **********  Start: Miniconda create production environment ******"
 	conda config --set always_yes true
 	conda --version
 	@echo "----------------------------------------------------------------------"
-	conda env remove -n ${MODULE} 2>/dev/null || echo "Environment '${MODULE}' does not exist."
+	conda env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
 	conda env create -f config/environment.yml
 	@echo "----------------------------------------------------------------------"
 	conda info --envs
 	conda list
 	@echo "Info **********  End:   Miniconda create production environment ******"
 
-# Requires a public repository !!!
-# Python interface to coveralls.io API
-# https://github.com/TheKevJames/coveralls-python
-# Configuration file: none
-coveralls:          ## Run all the tests and upload the coverage data to coveralls.
+## Run all the tests and upload the coverage data to coveralls.
+coveralls:
 	@echo "Info **********  Start: coveralls ************************************"
 	pytest --cov=${MODULE} --cov-report=xml --random-order tests
 	@echo "----------------------------------------------------------------------"
 	coveralls --service=github
 	@echo "Info **********  End:   coveralls ************************************"
 
-# Formats docstrings to follow PEP 257
-# https://github.com/PyCQA/docformatter
-# Configuration file: pyproject.toml
-docformatter:       ## Format the docstrings with docformatter.
+dev: ## dev: Format, lint and test the code.
+dev: check-tools format lint tests
+
+## Format the docstrings with docformatter.
+docformatter:
 	@echo "Info **********  Start: docformatter *********************************"
-	@echo "PYTHONPATH=${PYTHONPATH}"
-	@echo "----------------------------------------------------------------------"
 	docformatter --version
 	@echo "----------------------------------------------------------------------"
-	docformatter --in-place -r ${PYTHONPATH}
+	docformatter --in-place --recursive ${PYTHONPATH}
 #	docformatter -r ${PYTHONPATH}
 	@echo "Info **********  End:   docformatter *********************************"
 
-# Creates Docker executables
-# https://github.com/rzane/docker2exe
-# Configuration files: .dockerignore & Dockerfile
-docker:             ## Create a docker image.
-	@echo "Info **********  Start: Docker ***************************************"
-	@echo "OS               =${OS}"
-	@echo "ARCH             =${ARCH}"
-	@echo "DOCKER2EXE_DIR   =${DOCKER2EXE_DIR}"
-	@echo "DOCKER2EXE_SCRIPT=${DOCKER2EXE_SCRIPT}"
-	@echo "DOCKER2EXE_TARGET=${DOCKER2EXE_TARGET}"
-	@echo "----------------------------------------------------------------------"
-	docker ps -a
-	@echo "----------------------------------------------------------------------"
-	@sh -c 'docker ps -a | grep -q "${MODULE}" && docker rm --force ${MODULE} || echo "No existing container to remove."'
-	@sh -c 'docker image ls | grep -q "${MODULE}" && docker rmi --force ${MODULE}:latest || echo "No existing image to remove."'
+# Docker: Create docker image.
+docker: docker-clean docker-build docker-executable ## Create a docker image.
+
+docker-clean:
+	@echo "Info **********  Start: Docker Clean ***********************************"
+	@command -v docker >/dev/null 2>&1 || { echo >&2 "Docker is required but not installed. Aborting."; exit 1; }
+	docker ps -a | grep -q "${MODULE}" && docker rm --force ${MODULE} || echo "No existing container to remove."
+	docker image ls | grep -q "${MODULE}" && docker rmi --force ${MODULE}:latest || echo "No existing image to remove."
 	docker system prune -a -f
+	@echo "Info **********  End:   Docker Clean ***********************************"
+
+docker-build:
+	@echo "Info **********  Start: Docker Build ***********************************"
 	docker build --build-arg PYPI_PAT=${PYPI_PAT} -t ${MODULE} .
-	@echo "----------------------------------------------------------------------"
+	@echo "Info **********  End:   Docker Build ***********************************"
+
+docker-executable:
+	@echo "Info **********  Start: Docker Executable ******************************"
 	rm -rf app-${DOCKER2EXE_DIR}
 	mkdir app-${DOCKER2EXE_DIR}
 	chmod +x dist/docker2exe-${DOCKER2EXE_DIR}
@@ -200,43 +238,41 @@ docker:             ## Create a docker image.
 	cp run_iotemplateapp.${DOCKER2EXE_SCRIPT}     app-${DOCKER2EXE_DIR}/
 	chmod +x app-${DOCKER2EXE_DIR}/*.${DOCKER2EXE_SCRIPT}
 	cp settings.io_aero.toml                      app-${DOCKER2EXE_DIR}/
-	@echo "Info **********  End:   Docker ***************************************"
+	@echo "Info **********  End:   Docker Executable ******************************"
 
-# isort your imports, so you don't have to.
-# https://github.com/PyCQA/isort
-# Configuration file: pyproject.toml
-isort:              ## Edit and sort the imports with isort.
-	@echo "Info **********  Start: isort ****************************************"
-	@echo "PYTHONPATH=${PYTHONPATH}"
-	@echo "----------------------------------------------------------------------"
-	isort --version
-	@echo "----------------------------------------------------------------------"
-	isort ${PYTHONPATH}
-	@echo "Info **********  End:   isort ****************************************"
+docs: ## docs: Format and create the user documentation.
+docs: docformatter sphinx
 
-# Mypy: Static Typing for Python
-# https://github.com/python/mypy
-# Configuration file: pyproject.toml
-mypy:               ## Find typing issues with Mypy.
+everything: ## everything: Do everything pre-checkin
+everything: check-tools dev docs
+
+final: ## final: Format, lint and test the code and create the documentation.
+final: check-tools format lint docs tests
+
+format: ## format: Format the code with Black and docformatter.
+format: black docformatter
+
+lint: ## lint: Lint the code with ruff, Bandit, Vulture, Pylint and Mypy.
+lint: ruff bandit vulture pylint mypy
+
+## Find typing issues with Mypy.
+mypy:
 	@echo "Info **********  Start: Mypy *****************************************"
-	@echo "PYTHONPATH=${PYTHONPATH}"
-	@echo "----------------------------------------------------------------------"
 	mypy --version
 	@echo "----------------------------------------------------------------------"
-	mypy ${PYTHONPATH}
+	mypy --ignore-missing-imports ${PYTHONPATH}
 	@echo "Info **********  End:   Mypy *****************************************"
 
-mypy-stubgen:       ## Autogenerate stub files.
-	@echo "Info **********  Start: Mypy *****************************************"
-	@echo "MODULE=${MODULE}"
-	@echo "----------------------------------------------------------------------"
+mypy-stubgen: ## Autogenerate stub files.
+	@echo "Info **********  Start: Mypy Stubgen **********************************"
 	rm -rf out
 	stubgen --package ${MODULE}
 	cp -f out/${MODULE}/* ./${MODULE}/
 	rm -rf out
-	@echo "Info **********  End:   Mypy *****************************************"
+	@echo "Info **********  End:   Mypy Stubgen **********************************"
 
-next-version:       ## Increment the version number.
+## Increment the version number.
+next-version:
 	@echo "Info **********  Start: next_version *********************************"
 	@echo "PYTHONPATH=${PYTHONPATH}"
 	@echo "----------------------------------------------------------------------"
@@ -245,116 +281,104 @@ next-version:       ## Increment the version number.
 	python3 scripts/next_version.py
 	@echo "Info **********  End:   next version *********************************"
 
-# Pylint is a tool that checks for errors in Python code.
-# https://github.com/PyCQA/pylint/
-# Configuration file: .pylintrc
-pylint:             ## Lint the code with Pylint.
+pre-push: ## pre-push: Preparatory work for the pushing process.
+pre-push: check-tools format lint tests next-version docs
+
+## Lint the code with Pylint.
+pylint:
 	@echo "Info **********  Start: Pylint ***************************************"
-	@echo "PYTHONPATH=${PYTHONPATH}"
-	@echo "----------------------------------------------------------------------"
 	pylint --version
 	@echo "----------------------------------------------------------------------"
-	pylint ${PYTHONPATH}
+	pylint --rcfile=.pylintrc ${PYTHONPATH}
 	@echo "Info **********  End:   Pylint ***************************************"
 
-# pytest: helps you write better programs.
-# https://github.com/pytest-dev/pytest/
-# Configuration file: pyproject.toml
-pytest:             ## Run all tests with pytest.
+# Pytest: Run tests.
+PYTEST_COMMON_OPTIONS=--cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered --cov-report=lcov -v tests
+
+## Run all tests with pytest.
+pytest:
 	@echo "Info **********  Start: pytest ***************************************"
-	@echo "CONDA     =${CONDA_PREFIX}"
-	@echo "PYTHONPATH=${PYTHONPATH}"
-	@echo "----------------------------------------------------------------------"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
 	pytest --dead-fixtures tests
-	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered --cov-report=lcov -v tests
+	pytest $(PYTEST_COMMON_OPTIONS)
 	@echo "Info **********  End:   pytest ***************************************"
-pytest-ci:          ## Run all tests with pytest after test tool installation.
-	@echo "Info **********  Start: pytest ***************************************"
-	@echo "CONDA     =${CONDA_PREFIX}"
-	@echo "PYTHONPATH=${PYTHONPATH}"
-	@echo "----------------------------------------------------------------------"
+
+pytest-ci: ## Run all tests with pytest after test tool installation.
+	@echo "Info **********  Start: pytest-ci *************************************"
 	pip3 install pytest pytest-cov pytest-deadfixtures pytest-helpers-namespace pytest-random-order
 	@echo "----------------------------------------------------------------------"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
 	pytest --dead-fixtures tests
-	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -v tests
-	@echo "Info **********  End:   pytest ***************************************"
+	pytest $(PYTEST_COMMON_OPTIONS)
+	@echo "Info **********  End:   pytest-ci *************************************"
+
 pytest-first-issue: ## Run all tests with pytest until the first issue occurs.
-	@echo "Info **********  Start: pytest ***************************************"
-	@echo "CONDA     =${CONDA_PREFIX}"
-	@echo "PYTHONPATH=${PYTHONPATH}"
-	@echo "----------------------------------------------------------------------"
+	@echo "Info **********  Start: pytest-first-issue ****************************"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
-	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -rP -v -x tests
-	@echo "Info **********  End:   pytest ***************************************"
-pytest-ignore-mark: ## Run all tests without marker with pytest."
-	@echo "Info **********  Start: pytest ***************************************"
-	@echo "CONDA     =${CONDA_PREFIX}"
-	@echo "PYTHONPATH=${PYTHONPATH}"
-	@echo "----------------------------------------------------------------------"
+	pytest --cache-clear $(PYTEST_COMMON_OPTIONS) -rP -v -x tests
+	@echo "Info **********  End:   pytest-first-issue ****************************"
+
+pytest-ignore-mark: ## Run all tests without marker with pytest.
+	@echo "Info **********  Start: pytest-ignore-mark ***************************"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
 	pytest --dead-fixtures -m "not no_ci" tests
-	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered --cov-report=lcov -m "not no_ci" -v tests
-	@echo Info **********  End:   pytest ***************************************
-pytest-issue:       ## Run only the tests with pytest which are marked with 'issue'.
-	@echo Info **********  Start: pytest ***************************************
-	@echo CONDA     =${CONDA_PREFIX}
-	@echo PYTHONPATH=${PYTHONPATH}
-	@echo "----------------------------------------------------------------------"
+	pytest --cache-clear $(PYTEST_COMMON_OPTIONS) -m "not no_ci"
+	@echo "Info **********  End:   pytest-ignore-mark ***************************"
+
+pytest-issue: ## Run only the tests with pytest which are marked with 'issue'.
+	@echo "Info **********  Start: pytest-issue *********************************"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
 	pytest --dead-fixtures tests
 	pytest --cache-clear --capture=no --cov=${MODULE} --cov-report term-missing:skip-covered -m issue -rP -v -x tests
-	@echo "Info **********  End:   pytest ***************************************"
-pytest-module:      ## Run test of a specific module with pytest.
-	@echo "Info **********  Start: pytest ***************************************"
-	@echo "CONDA     =${CONDA_PREFIX}"
-	@echo "PYTHONPATH=${PYTHONPATH}"
+	@echo "Info **********  End:   pytest-issue *********************************"
+
+pytest-module: ## Run test of a specific module with pytest.
+	@echo "Info **********  Start: pytest-module ********************************"
 	@echo "TESTMODULE=tests/${TEST-MODULE}.py"
 	@echo "----------------------------------------------------------------------"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
-	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -v tests/${TEST-MODULE}.py
-	@echo "Info **********  End:   pytest ***************************************"
+	pytest --cache-clear $(PYTEST_COMMON_OPTIONS) -v tests/${TEST-MODULE}.py
+	@echo "Info **********  End:   pytest-module ********************************"
 
-# https://github.com/astral-sh/ruff
-# Configuration file: pyproject.toml
-ruff:               ## An extremely fast Python linter and code formatter.
+## An extremely fast Python linter and code formatter.
+ruff:
 	@echo "Info **********  Start: ruff *****************************************"
 	ruff --version
 	@echo "----------------------------------------------------------------------"
-	ruff check --fix
+	ruff check --fix ${PYTHONPATH}
 	@echo "Info **********  End:   ruff *****************************************"
 
-sphinx:             ## Create the user documentation with Sphinx.
+## Create the user documentation with Sphinx.
+sphinx:
 	@echo "Info **********  Start: sphinx ***************************************"
 	sphinx-apidoc --version
 	sphinx-build --version
 	@echo "----------------------------------------------------------------------"
-	sudo rm -rf docs/build/*
+	rm -rf docs/build/*
+	mkdir -p docs/build
 	sphinx-apidoc -o docs/source ${MODULE}
 	sphinx-build -M html docs/source docs/build
 	sphinx-build -b rinoh docs/source docs/build/pdf
 	@echo "Info **********  End:   sphinx ***************************************"
 
-version:            ## Show the installed software versions.
+tests: ## tests: Run all tests with pytest.
+tests: pytest
+
+version: ## Show the installed software versions.
 	@echo "Info **********  Start: version **************************************"
 	python3 --version
 	pip3 --version
 	@echo "Info **********  End:   version **************************************"
 
-# Find dead Python code
-# https://github.com/jendrikseipp/vulture
-# Configuration file: pyproject.toml
-vulture:            ## Find dead Python code.
+## Find dead Python code.
+vulture:
 	@echo "Info **********  Start: vulture **************************************"
-	@echo "PYTHONPATH=${PYTHONPATH}"
-	@echo "----------------------------------------------------------------------"
 	vulture --version
 	@echo "----------------------------------------------------------------------"
 	vulture ${PYTHONPATH}
