@@ -6,7 +6,7 @@ on:
 
 env:
   IO_AWS_CLI: 'false'
-  IO_CONDA: 'false'
+  IO_CONDA: 'true'
   IO_COVERALLS: 'false'
   IO_DOCKER: 'false'
   IO_ODBC: 'false'
@@ -123,7 +123,6 @@ jobs:
       - name: Install dependencies - Conda - prod
         if: ${{ env.IO_CONDA == 'true' }}
         run: |
-          which conda
           make conda-prod
 
       - name: Install dependencies - Mamba - prod
@@ -134,7 +133,8 @@ jobs:
       - name: Compile the Python code - Conda - prod
         if: ${{ env.IO_CONDA == 'true' }}
         run: |
-          source $CONDA_PREFIX/etc/profile.d/conda.sh
+          conda init --all
+          source ~/.bashrc
           conda activate $MODULE
           make compileall
 
@@ -149,7 +149,8 @@ jobs:
       - name: Run pytest - Conda - prod
         if: ${{ env.IO_CONDA == 'true' }}
         run: |
-          source $CONDA_PREFIX/etc/profile.d/conda.sh
+          conda init --all
+          source ~/.bashrc
           conda activate $MODULE
           make pytest-ci
 
@@ -172,7 +173,8 @@ jobs:
       - name: Run pytest - Conda - dev
         if: ${{ env.IO_CONDA == 'true' }}
         run: |
-          source $CONDA_PREFIX/etc/profile.d/conda.sh
+          conda init --all
+          source ~/.bashrc
           conda activate $MODULE
           make black lint docs tests
 
