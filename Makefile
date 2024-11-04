@@ -319,16 +319,13 @@ pylint:
 	pylint --rcfile=.pylintrc ${PYTHONPATH}
 	@echo "Info **********  End:   Pylint ***************************************"
 
-# Pytest: Run tests.
-PYTEST_COMMON_OPTIONS=--cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered --cov-report=lcov -v tests
-
 ## Run all tests with pytest.
 pytest:
 	@echo "Info **********  Start: pytest ***************************************"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
 	pytest --dead-fixtures tests
-	pytest $(PYTEST_COMMON_OPTIONS)
+	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered --cov-report=lcov -v tests
 	@echo "Info **********  End:   pytest ***************************************"
 
 pytest-ci: ## Run all tests with pytest after test tool installation.
@@ -338,14 +335,14 @@ pytest-ci: ## Run all tests with pytest after test tool installation.
 	pytest --version
 	@echo "----------------------------------------------------------------------"
 	pytest --dead-fixtures tests
-	pytest $(PYTEST_COMMON_OPTIONS)
+	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -v tests
 	@echo "Info **********  End:   pytest-ci *************************************"
 
 pytest-first-issue: ## Run all tests with pytest until the first issue occurs.
 	@echo "Info **********  Start: pytest-first-issue ****************************"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
-	pytest --cache-clear $(PYTEST_COMMON_OPTIONS) -rP -v -x tests
+	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -rP -v -x tests
 	@echo "Info **********  End:   pytest-first-issue ****************************"
 
 pytest-ignore-mark: ## Run all tests without marker with pytest.
@@ -353,7 +350,7 @@ pytest-ignore-mark: ## Run all tests without marker with pytest.
 	pytest --version
 	@echo "----------------------------------------------------------------------"
 	pytest --dead-fixtures -m "not no_ci" tests
-	pytest --cache-clear $(PYTEST_COMMON_OPTIONS) -m "not no_ci"
+	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered --cov-report=lcov -m "not no_ci" -v tests
 	@echo "Info **********  End:   pytest-ignore-mark ***************************"
 
 pytest-issue: ## Run only the tests with pytest which are marked with 'issue'.
@@ -370,7 +367,7 @@ pytest-module: ## Run test of a specific module with pytest.
 	@echo "----------------------------------------------------------------------"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
-	pytest --cache-clear $(PYTEST_COMMON_OPTIONS) -v tests/${TEST-MODULE}.py
+	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -v tests/${TEST-MODULE}.py
 	@echo "Info **********  End:   pytest-module ********************************"
 
 ## An extremely fast Python linter and code formatter.
