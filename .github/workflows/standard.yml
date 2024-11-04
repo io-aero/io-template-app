@@ -122,11 +122,15 @@ jobs:
 
       - name: Install dependencies - Conda - prod
         if: ${{ env.IO_CONDA == 'true' }}
-        run: make conda-prod
+        run: |
+          which conda
+          make conda-prod
 
       - name: Install dependencies - Mamba - prod
         if: ${{ env.IO_CONDA == 'false' }}
-        run: make mamba-prod
+        run: |
+          which mamba
+          make mamba-prod
 
       - name: Compile the Python code - Conda - prod
         if: ${{ env.IO_CONDA == 'true' }}
