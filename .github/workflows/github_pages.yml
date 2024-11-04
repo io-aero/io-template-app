@@ -5,7 +5,7 @@ on:
     branches: [ 'main' ]
 
 env:
-  IO_CONDA: 'false'
+  IO_CONDA: 'true'
   MODULE: 'iotemplateapp'
   PYPI_PAT: ${{ secrets.PYPI_PAT }}
 
