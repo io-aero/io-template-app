@@ -6,7 +6,7 @@ on:
 
 env:
   IO_AWS_CLI: 'false'
-  IO_CONDA: 'false'
+  IO_CONDA: 'true'
   IO_COVERALLS: 'false'
   IO_DOCKER: 'false'
   IO_ODBC: 'false'
