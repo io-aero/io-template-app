@@ -262,6 +262,17 @@ mamba-dev: ## Create a new environment for development.
 	mamba list
 	@echo "Info **********  End:   Miniforge create development environment *****"
 
+mamba-prod: ## Create a new environment for production.
+	@echo "Info **********  Start: Miniforge create production environment ******"
+	mamba --version
+	@echo "----------------------------------------------------------------------"
+	mamba env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
+	mamba env create -f config/environment.yml
+	@echo "----------------------------------------------------------------------"
+	mamba info --envs
+	mamba list
+	@echo "Info **********  End:   Miniforge create production environment ******"
+
 ## Find typing issues with Mypy.
 mypy:
 	@echo "Info **********  Start: Mypy *****************************************"
