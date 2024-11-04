@@ -258,7 +258,11 @@ mamba-dev: ## Create a new environment for development.
 	${MAMBA_EXE} env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
 	${MAMBA_EXE} env create -f config/environment_dev.yml
 	@echo "----------------------------------------------------------------------"
-	${MAMBA_EXE} info --envs
+ifeq ($(MAMBA_EXE), /home/runner/micromamba-bin/micromamba)
+	$(MAMBA_EXE) env list
+else
+	$(MAMBA_EXE) info --envs
+endif
 	${MAMBA_EXE} list
 	@echo "Info **********  End:   Miniforge create development environment *****"
 
@@ -269,8 +273,12 @@ mamba-prod: ## Create a new environment for production.
 	${MAMBA_EXE} env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
 	${MAMBA_EXE} env create -f config/environment.yml
 	@echo "----------------------------------------------------------------------"
-	${MAMBA_EXE} info --envs
-	${MAMBA_EXE} list
+ifeq ($(MAMBA_EXE), /home/runner/micromamba-bin/micromamba)
+	$(MAMBA_EXE) env list
+else
+	$(MAMBA_EXE) info --envs
+endif
+	$(MAMBA_EXE) list
 	@echo "Info **********  End:   Miniforge create production environment ******"
 
 ## Find typing issues with Mypy.
