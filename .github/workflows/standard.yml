@@ -24,14 +24,6 @@ jobs:
         python-version: ["3.12"]
 
     steps:
-      - name: Set IO_MAMBA based on IO_CONDA
-        run: |
-          if [ "${{ env.IO_CONDA }}" == "true" ]; then
-            echo "IO_MAMBA=false" >> $GITHUB_ENV
-          else
-            echo "IO_MAMBA=true" >> $GITHUB_ENV
-          fi
-
       - name: Log the Operating System
         run: |
           echo "Running on OS: ${{ runner.os }}"
@@ -43,7 +35,6 @@ jobs:
           echo "IO_CONDA    = ${{ env.IO_CONDA }}"
           echo "IO_DOCKER   = ${{ env.IO_DOCKER }}"
           echo "IO_LOCAL    = ${{ vars.IO_LOCAL }}"
-          echo "IO_MAMBA    = ${{ env.IO_MAMBA }}"
           echo "IO_ODBC     = ${{ env.IO_ODBC }}"
           echo "MODULE      = ${{ env.MODULE }}"
 
@@ -101,7 +92,7 @@ jobs:
           unzip awscliv2.zip
           sudo ./aws/install
 
-      - name: Set up Miniconda
+      - name: Set up Miniconda - Conda
         if: ${{ env.IO_CONDA == 'true' }}
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -109,19 +100,15 @@ jobs:
           miniconda-version: "latest"
           python-version: ${{ matrix.python-version }}
 
-      - name: Set up Micromamba
-        if: ${{ env.IO_MAMBA == 'true' }}
+      - name: Set up Micromamba - Mamba
+        if: ${{ env.IO_CONDA == 'false' }}
         uses: mamba-org/setup-micromamba@v1
         with:
-          micromamba-version: 'latest' # any version from https://github.com/mamba-org/micromamba-releases
+          micromamba-version: 'latest'
           environment-file: config/environment_dev.yml  # Ensure this file exists
           init-shell: bash
           cache-environment: true
           post-cleanup: 'all'
-
-      - name: Add Micromamba to PATH
-        if: ${{ env.IO_MAMBA == 'true' }}
-        run: echo "${{ steps.mamba-setup.outputs.bin-directory }}" >> $GITHUB_PATH
 
       - name: Install Docker
         if: ${{ env.IO_DOCKER == 'true' }}
@@ -138,36 +125,34 @@ jobs:
         run: make conda-prod
 
       - name: Install dependencies - Mamba - prod
-        if: ${{ env.IO_MAMBA == 'true' }}
+        if: ${{ env.IO_CONDA == 'false' }}
         run: make mamba-prod
 
-      - name: Compile the Python code - prod
+      - name: Compile the Python code - Conda - prod
         if: ${{ env.IO_CONDA == 'true' }}
         run: |
-          conda init --all
-          source ~/$SHELL_CONFIG
+          source $CONDA_PREFIX/etc/profile.d/conda.sh
           conda activate $MODULE
           make compileall
 
-      - name: Compile the Python code - prod
-        if: ${{ env.IO_MAMBA == 'true' }}
+      - name: Compile the Python code - Mamba - prod
+        if: ${{ env.IO_CONDA == 'false' }}
         run: |
+          source ~/.bashrc
           mamba activate $MODULE
           make compileall
 
-      - name: Run pytest - prod
+      - name: Run pytest - Conda - prod
         if: ${{ env.IO_CONDA == 'true' }}
         run: |
-          conda init --all
-          source ~/$SHELL_CONFIG
+          source $CONDA_PREFIX/etc/profile.d/conda.sh
           conda activate $MODULE
           make pytest-ci
 
-      - name: Run pytest - prod
-        if: ${{ env.IO_MAMBA == 'true' }}
+      - name: Run pytest - Mamba - prod
+        if: ${{ env.IO_CONDA == 'false' }}
         run: |
-          maba init --all
-          source ~/$SHELL_CONFIG
+          source ~/.bashrc
           mamba activate $MODULE
           make pytest-ci
 
@@ -176,23 +161,21 @@ jobs:
         run: make conda-dev
 
       - name: Install dependencies - Mamba - dev
-        if: ${{ env.IO_MAMBA == 'true' }}
+        if: ${{ env.IO_CONDA == 'false' }}
         run: make mamba-dev
 
-      - name: Run pytest - dev
+      - name: Run pytest - Conda - dev
         if: ${{ env.IO_CONDA == 'true' }}
         run: |
-          conda init --all
-          source ~/$SHELL_CONFIG
+          source $CONDA_PREFIX/etc/profile.d/conda.sh
           conda activate $MODULE
           make black lint docs tests
 
-      - name: Run pytest - dev
-        if: ${{ env.IO_MAMBA == 'true' }}
+      - name: Run pytest - Mamba - dev
+        if: ${{ env.IO_CONDA == 'false' }}
         run: |
-          maba init --all
-          source ~/$SHELL_CONFIG
-          maba activate $MODULE
+          source ~/.bashrc
+          mamba activate $MODULE
           make black lint docs tests
 
       - name: Coveralls
