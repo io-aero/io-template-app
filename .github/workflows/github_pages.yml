@@ -20,23 +20,14 @@ jobs:
         python-version: ["3.12"]
 
     steps:
-      - name: Set IO_MAMBA based on IO_CONDA
+      - name: Log the Operating System
         run: |
-          if [ "${{ env.IO_CONDA }}" == "true" ]; then
-            echo "IO_MAMBA=false" >> $GITHUB_ENV
-          else
-            echo "IO_MAMBA=true" >> $GITHUB_ENV
-          fi
+          echo "Running on OS: ${{ runner.os }}"
 
       - name: Show the environment variables
         run: |
           echo "IO_CONDA    = ${{ env.IO_CONDA }}"
-          echo "IO_MAMBA    = ${{ env.IO_MAMBA }}"
           echo "MODULE      = ${{ env.MODULE }}"
-          # Removed echoing PYPI_PAT for security
-        # Optional: If you need to verify PYPI_PAT is set without echoing it
-        # run: |
-        #   if [ -z "${{ secrets.PYPI_PAT }}" ]; then echo "PYPI_PAT is not set"; exit 1; fi
 
       - name: Set Timezone
         run: echo "TZ=UTC" >> $GITHUB_ENV
@@ -46,57 +37,66 @@ jobs:
         with:
           fetch-depth: 1  # no history, just HEAD
 
+      - name: Set Locale
+        run: |
+          echo "SHELL_CONFIG=.bashrc" >> $GITHUB_ENV
+          sudo apt-get update
+          sudo apt-get install -y locales
+          sudo locale-gen en_US.UTF-8
+          sudo update-locale LANG=en_US.UTF-8
+
+      - name: Preparing scripts
+        run: |
+          sudo apt-get update && sudo apt-get install -y dos2unix
+          chmod +x scripts/run_prep_*.sh
+          dos2unix scripts/run_prep_*.sh
+          ./scripts/run_prep_bash_scripts.sh
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Set up Miniconda
+      - name: Set up Miniconda - Conda
         if: ${{ env.IO_CONDA == 'true' }}
         uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
           miniconda-version: "latest"
           python-version: ${{ matrix.python-version }}
-          environment-file: config/environment_dev.yml  # Ensure this file exists
-          activate-environment: ${{ env.MODULE }}
-          cache-conda: true
-          use-only-tar-bz2: true
 
-      - name: Set up Micromamba
-        if: ${{ env.IO_MAMBA == 'true' }}
+      - name: Set up Micromamba - Mamba
+        if: ${{ env.IO_CONDA == 'false' }}
         uses: mamba-org/setup-micromamba@v1
         with:
-          micromamba-version: '2.0.2-2' # any version from https://github.com/mamba-org/micromamba-releases
+          micromamba-version: 'latest'
           environment-file: config/environment_dev.yml  # Ensure this file exists
-          init-shell: >-
-            bash
+          init-shell: bash
           cache-environment: true
           post-cleanup: 'all'
 
       - name: Install dependencies - Conda - dev
         if: ${{ env.IO_CONDA == 'true' }}
         run: make conda-dev
-        shell: bash -l {0}
 
       - name: Install dependencies - Mamba - dev
-        if: ${{ env.IO_MAMBA == 'true' }}
+        if: ${{ env.IO_CONDA == 'false' }}
         run: make mamba-dev
 
-      - name: Run docs - dev
+      - name: Run docs - Conda - dev
         if: ${{ env.IO_CONDA == 'true' }}
         run: |
-          set -x  # Enable debug mode
-          source /root/miniconda3/etc/profile.d/conda.sh
-          conda activate ${{ env.MODULE }}
+          source $CONDA_PREFIX/etc/profile.d/conda.sh
+          conda activate $MODULE
           make black docs
 
-      - name: Run docs - dev
-        if: ${{ env.IO_MAMBA == 'true' }}
+      - name: Run docs - Mamba - dev
+        if: ${{ env.IO_CONDA == 'false' }}
         run: |
-          set -x  # Enable debug mode
-          mamba activate ${{ env.MODULE }}
+          eval "$(micromamba shell hook --shell bash)"
+          micromamba activate $MODULE
           make black docs
+        shell: bash
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
