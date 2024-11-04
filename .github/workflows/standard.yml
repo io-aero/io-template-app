@@ -11,6 +11,7 @@ env:
   IO_DOCKER: 'false'
   IO_ODBC: 'false'
   IO_LOCAL: 'false'  # Defined IO_LOCAL here
+  IO_MAMBA: not IO_CONDA
   MODULE: 'iotemplateapp'
   PYPI_PAT: ${{ secrets.PYPI_PAT }}
 
@@ -36,6 +37,7 @@ jobs:
           echo "IO_CONDA    = ${{ env.IO_CONDA }}"
           echo "IO_DOCKER   = ${{ env.IO_DOCKER }}"
           echo "IO_LOCAL    = ${{ env.IO_LOCAL }}"
+          echo "IO_MAMBA    = ${{ env.IO_MAMBA }}"
           echo "IO_ODBC     = ${{ env.IO_ODBC }}"
           echo "MODULE      = ${{ env.MODULE }}"
 
