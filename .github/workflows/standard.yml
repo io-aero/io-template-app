@@ -108,16 +108,12 @@ jobs:
           auto-update-conda: true
           miniconda-version: "latest"
           python-version: ${{ matrix.python-version }}
-          environment-file: config/environment_dev.yml  # Correct path
-          activate-environment: dev         # Name of your environment
-          cache-conda: true
-          use-only-tar-bz2: true
 
       - name: Set up Micromamba
         if: ${{ env.IO_MAMBA == 'true' }}
         uses: mamba-org/setup-micromamba@v1
         with:
-          micromamba-version: '2.0.2-2' # any version from https://github.com/mamba-org/micromamba-releases
+          micromamba-version: 'latest' # any version from https://github.com/mamba-org/micromamba-releases
           environment-file: config/environment_dev.yml  # Ensure this file exists
           init-shell: >-
             bash
@@ -137,7 +133,6 @@ jobs:
       - name: Install dependencies - Conda - prod
         if: ${{ env.IO_CONDA == 'true' }}
         run: make conda-prod
-        shell: bash -l {0 }
 
       - name: Install dependencies - Mamba - prod
         if: ${{ env.IO_MAMBA == 'true' }}
@@ -146,42 +141,36 @@ jobs:
       - name: Compile the Python code - prod
         if: ${{ env.IO_CONDA == 'true' }}
         run: |
-          set -x  # Enable debug mode
-          conda activate ${{ env.MODULE }}
+          conda init --all
+          source ~/$SHELL_CONFIG
+          conda activate $MODULE
           make compileall
 
       - name: Compile the Python code - prod
         if: ${{ env.IO_MAMBA == 'true' }}
         run: |
-          set -x  # Enable debug mode
-          mamba activate ${{ env.MODULE }}
-          make compileall
-
-      - name: Compile the Python code - prod
-        if: ${{ env.IOMAMBA == 'true' }}
-        run: |
-          set -x  # Enable debug mode
-          mamba activate ${{ env.MODULE }}
+          mamba activate $MODULE
           make compileall
 
       - name: Run pytest - prod
         if: ${{ env.IO_CONDA == 'true' }}
         run: |
-          set -x  # Enable debug mode
-          conda activate ${{ env.MODULE }}
+          conda init --all
+          source ~/$SHELL_CONFIG
+          conda activate $MODULE
           make pytest-ci
 
       - name: Run pytest - prod
         if: ${{ env.IO_MAMBA == 'true' }}
         run: |
-          set -x  # Enable debug mode
-          mamba activate ${{ env.MODULE }}
+          maba init --all
+          source ~/$SHELL_CONFIG
+          mamba activate $MODULE
           make pytest-ci
 
       - name: Install dependencies - Conda - dev
         if: ${{ env.IO_CONDA == 'true' }}
         run: make conda-dev
-        shell: bash -l {0 }
 
       - name: Install dependencies - Mamba - dev
         if: ${{ env.IO_MAMBA == 'true' }}
@@ -190,15 +179,17 @@ jobs:
       - name: Run pytest - dev
         if: ${{ env.IO_CONDA == 'true' }}
         run: |
-          set -x  # Enable debug mode
-          conda activate ${{ env.MODULE }}
+          conda init --all
+          source ~/$SHELL_CONFIG
+          conda activate $MODULE
           make black lint docs tests
 
       - name: Run pytest - dev
         if: ${{ env.IO_MAMBA == 'true' }}
         run: |
-          set -x  # Enable debug mode
-          mamba activate ${{ env.MODULE }}
+          maba init --all
+          source ~/$SHELL_CONFIG
+          maba activate $MODULE
           make black lint docs tests
 
       - name: Coveralls
