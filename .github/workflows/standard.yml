@@ -115,10 +115,13 @@ jobs:
         with:
           micromamba-version: 'latest' # any version from https://github.com/mamba-org/micromamba-releases
           environment-file: config/environment_dev.yml  # Ensure this file exists
-          init-shell: >-
-            bash
+          init-shell: bash
           cache-environment: true
           post-cleanup: 'all'
+
+      - name: Add Micromamba to PATH
+        if: ${{ env.IO_MAMBA == 'true' }}
+        run: echo "${{ steps.mamba-setup.outputs.bin-directory }}" >> $GITHUB_PATH
 
       - name: Install Docker
         if: ${{ env.IO_DOCKER == 'true' }}
