@@ -141,10 +141,13 @@ jobs:
       - name: Compile the Python code - Mamba - prod
         if: ${{ env.IO_CONDA == 'false' }}
         run: |
-          eval "$(${MAMBA_EXE} shell hook --shell bash)"
-          $MAMBA_EXE activate $MODULE
+          $ eval "$(micromamba shell hook --shell bash)"
+          $ micromamba activate
+          $ micromamba shell init --shell bash --root-prefix=~/.local/share/mamba
+#          eval "$(${MAMBA_EXE} shell hook --shell bash)"
+#          $MAMBA_EXE activate $MODULE
           make compileall
-        shell: bash
+#        shell: bash
 
       - name: Run pytest - Conda - prod
         if: ${{ env.IO_CONDA == 'true' }}

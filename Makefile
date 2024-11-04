@@ -30,6 +30,7 @@ MODULE=iotemplateapp
 PYTHONPATH=${MODULE} docs scripts tests
 
 ARCH:=$(shell uname -m)
+MAMBA_EXE ?= mamba
 OS:=$(shell uname -s)
 
 ifeq (${OS},Linux)
