@@ -18,7 +18,6 @@
         lint \
         mypy-stubgen \
         pre-push \
-        pytest \
         pytest-ci \
         pytest-first-issue \
         pytest-ignore-mark \
@@ -66,7 +65,7 @@ endef
 ## Show this help.
 help:
 	@echo "========================================================================"
-	@echo "Available Makefile Targets:"
+	@echo "Recommended Makefile Targets:"
 	@echo "------------------------------------------------------------------------"
 	@awk 'BEGIN { ESC = sprintf("%c", 27); } /^[a-zA-Z0-9_-]+:.*?## .*$$/ { \
 		target = $$1; \
