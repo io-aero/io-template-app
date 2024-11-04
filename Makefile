@@ -159,7 +159,6 @@ conda-dev: ## Create a new environment for development.
 	@echo "Info **********  Start: Miniconda create development environment *****"
 	conda config --set always_yes true
 	conda --version
-	@echo "PYPI_PAT=${PYPI_PAT}"
 	@echo "----------------------------------------------------------------------"
 	conda env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
 	conda env create -f config/environment_dev.yml
@@ -251,6 +250,17 @@ format: black docformatter
 
 lint: ## lint: Lint the code with ruff, Bandit, Vulture, Pylint and Mypy.
 lint: ruff bandit vulture pylint mypy
+
+mamba-dev: ## Create a new environment for development.
+	@echo "Info **********  Start: Miniforge create development environment *****"
+	mamba --version
+	@echo "----------------------------------------------------------------------"
+	mamba env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
+	mamba env create -f config/environment_dev.yml
+	@echo "----------------------------------------------------------------------"
+	mamba info --envs
+	mamba list
+	@echo "Info **********  End:   Miniforge create development environment *****"
 
 ## Find typing issues with Mypy.
 mypy:

@@ -6,6 +6,7 @@ on:
 
 env:
   IO_AWS_CLI: 'false'
+  IO_CONDA: 'true'
   IO_COVERALLS: 'false'
   IO_DOCKER: 'false'
   IO_ODBC: 'false'
@@ -32,6 +33,7 @@ jobs:
         run: |
           echo "IO_AWS_CLI  = ${{ env.IO_AWS_CLI }}"
           echo "IO_COVERALLS= ${{ env.IO_COVERALLS }}"
+          echo "IO_CONDA    = ${{ env.IO_CONDA }}"
           echo "IO_DOCKER   = ${{ env.IO_DOCKER }}"
           echo "IO_LOCAL    = ${{ env.IO_LOCAL }}"
           echo "IO_ODBC     = ${{ env.IO_ODBC }}"
@@ -92,6 +94,7 @@ jobs:
           sudo ./aws/install
 
       - name: Set up Miniconda
+        if: ${{ env.IO_CONDA == 'true' }}
         uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
@@ -113,10 +116,12 @@ jobs:
           sudo apt-get install -y unixodbc-dev
 
       - name: Install dependencies - Conda - prod
+        if: ${{ env.IO_CONDA == 'true' }}
         run: make conda-prod
         shell: bash -l {0 }
 
       - name: Compile the Python code - prod
+        if: ${{ env.IO_CONDA == 'true' }}
         run: |
           set -x  # Enable debug mode
           source /root/miniconda3/etc/profile.d/conda.sh
@@ -125,6 +130,7 @@ jobs:
         shell: bash -l {0 }
 
       - name: Run pytest - prod
+        if: ${{ env.IO_CONDA == 'true' }}
         run: |
           set -x  # Enable debug mode
           source /root/miniconda3/etc/profile.d/conda.sh
@@ -133,10 +139,12 @@ jobs:
         shell: bash -l {0 }
 
       - name: Install dependencies - Conda - dev
+        if: ${{ env.IO_CONDA == 'true' }}
         run: make conda-dev
         shell: bash -l {0 }
 
       - name: Run pytest - dev
+        if: ${{ env.IO_CONDA == 'true' }}
         run: |
           set -x  # Enable debug mode
           source /root/miniconda3/etc/profile.d/conda.sh

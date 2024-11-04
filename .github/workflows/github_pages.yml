@@ -5,6 +5,7 @@ on:
     branches: [ 'main' ]
 
 env:
+  IO_CONDA: 'true'
   MODULE: 'iotemplateapp'
   PYPI_PAT: ${{ secrets.PYPI_PAT }}
 
@@ -21,6 +22,7 @@ jobs:
     steps:
       - name: Show the environment variables
         run: |
+          echo "IO_CONDA    = ${{ env.IO_CONDA }}"
           echo "MODULE      = $MODULE"
           # Removed echoing PYPI_PAT for security
         # Optional: If you need to verify PYPI_PAT is set without echoing it
@@ -41,6 +43,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Set up Miniconda
+        if: ${{ env.IO_CONDA == 'true' }}
         uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
@@ -52,10 +55,12 @@ jobs:
           use-only-tar-bz2: true
 
       - name: Install dependencies - Conda - dev
+        if: ${{ env.IO_CONDA == 'true' }}
         run: make conda-dev
         shell: bash -l {0}
 
       - name: Run docs - dev
+        if: ${{ env.IO_CONDA == 'true' }}
         run: |
           set -x  # Enable debug mode
           source /root/miniconda3/etc/profile.d/conda.sh
