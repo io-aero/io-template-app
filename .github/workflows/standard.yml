@@ -144,6 +144,7 @@ jobs:
           eval "$(${MAMBA_EXE} shell hook --shell bash)"
           $MAMBA_EXE activate $MODULE
           make compileall
+        shell: bash
 
       - name: Run pytest - Conda - prod
         if: ${{ env.IO_CONDA == 'true' }}
@@ -158,6 +159,7 @@ jobs:
           eval "$(${MAMBA_EXE} shell hook --shell bash)"
           $MAMBA_EXE activate $MODULE
           make pytest-ci
+        shell: bash
 
       - name: Install dependencies - Conda - dev
         if: ${{ env.IO_CONDA == 'true' }}
@@ -180,6 +182,7 @@ jobs:
           eval "$(${MAMBA_EXE} shell hook --shell bash)"
           $MAMBA_EXE activate $MODULE
           make black lint docs tests
+        shell: bash
 
       - name: Coveralls
         if: ${{ env.IO_COVERALLS == 'true' }}
