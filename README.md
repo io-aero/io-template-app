@@ -62,31 +62,31 @@ Detailed instructions can be found in the [documentation](https://io-aero.github
 ```
 
 ```
-    ========================================================================
-    Recommended Makefile Targets:
-    ------------------------------------------------------------------------
-      action                    action: Run the GitHub Actions locally.
-      conda-dev                 Create a new environment for development.
-      conda-prod                Create a new environment for production.
-      dev                       dev: Format, lint and test the code.
-      docker                    Create a docker image.
-      docs                      docs: Create the user documentation.
-      everything                everything: Do everything pre-checkin
-      final                     final: Format, lint and test the code and create the documentation.
-      format                    format: Format the code with Black and docformatter.
-      lint                      lint: Lint the code with ruff, Bandit, Vulture, Pylint and Mypy.
-      mamba-dev                 Create a new environment for development.
-      mamba-prod                Create a new environment for production.
-      mypy-stubgen              Autogenerate stub files.
-      pre-push                  pre-push: Preparatory work for the pushing process.
-      pytest-ci                 Run all tests with pytest after test tool installation.
-      pytest-first-issue        Run all tests with pytest until the first issue occurs.
-      pytest-ignore-mark        Run all tests without marker with pytest.
-      pytest-issue              Run only the tests with pytest which are marked with 'issue'.
-      pytest-module             Run test of a specific module with pytest.
-      tests                     tests: Run all tests with pytest.
-      version                   Show the installed software versions.
-    ========================================================================
+========================================================================
+Recommended Makefile Targets:
+------------------------------------------------------------------------
+action                    action: Run the GitHub Actions locally.
+conda-dev                 Create a new environment for development.
+conda-prod                Create a new environment for production.
+dev                       dev: Format, lint and test the code.
+docker                    Create a docker image.
+docs                      docs: Create the user documentation.
+everything                everything: Do everything pre-checkin
+final                     final: Format, lint and test the code and create the documentation.
+format                    format: Format the code with Black and docformatter.
+lint                      lint: Lint the code with ruff, Bandit, Vulture, Pylint and Mypy.
+mamba-dev                 Create a new environment for development.
+mamba-prod                Create a new environment for production.
+mypy-stubgen              Autogenerate stub files.
+pre-push                  pre-push: Preparatory work for the pushing process.
+pytest-ci                 Run all tests with pytest after test tool installation.
+pytest-first-issue        Run all tests with pytest until the first issue occurs.
+pytest-ignore-mark        Run all tests without marker with pytest.
+pytest-issue              Run only the tests with pytest which are marked with 'issue'.
+pytest-module             Run test of a specific module with pytest.
+tests                     tests: Run all tests with pytest.
+version                   Show the installed software versions.
+========================================================================
 ```
 
 ## Operation
