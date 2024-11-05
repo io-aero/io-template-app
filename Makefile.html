@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="iotemplateapp" href="modules.html" /><link rel="prev" title="Advanced Usage" href="advanced_usage.html" />
 
     <link rel="shortcut icon" href="_static/IO-Aero_1_Favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>Makefile Documentation - IO-TEMPLATE-APP 2-0-7 documentation</title>
+        <title>Makefile Documentation - IO-TEMPLATE-APP 2-0-8 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
@@ -166,7 +166,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">IO-TEMPLATE-APP 2-0-7 documentation</div></a>
+      <a href="index.html"><div class="brand">IO-TEMPLATE-APP 2-0-8 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -330,8 +330,6 @@
 <ul class="simple">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">conda-dev</span></code></strong>: Sets up a development Conda environment.</p></li>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">conda-prod</span></code></strong>: Sets up a production Conda environment.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">mamba-dev</span></code></strong>: Sets up a development Manba environment.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">mamba-prod</span></code></strong>: Sets up a production Mamba environment.</p></li>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">next-version</span></code></strong>: Increments the project’s version.</p></li>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">version</span></code></strong>: Displays versions of installed dependencies.</p></li>
 </ul>
@@ -363,7 +361,6 @@ Make sure all tools required by the Makefile are installed in your environment.<
 <li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">everything</span></code>: Runs a comprehensive check (development and documentation).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pre-push</span></code>: Prepares code for committing to the repository by ensuring code quality and documentation.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">conda-dev</span></code> or <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">conda-prod</span></code>: Creates Conda environments for development or production.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">mamba-dev</span></code> or <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">mamba-prod</span></code>: Creates Mamba environments for development or production.</p></li>
 </ul>
 </li>
 <li><p><strong>Testing Specifics</strong>:</p>
@@ -389,7 +386,6 @@ Make sure all tools required by the Makefile are installed in your environment.<
 <li><p><strong>Coveralls</strong>: Reports test coverage to coveralls.io, which is essential for understanding code coverage metrics in CI/CD pipelines.</p></li>
 <li><p><strong>Docformatter</strong>: Formats docstrings to comply with PEP 257, enhancing readability and consistency in documentation.</p></li>
 <li><p><strong>Docker</strong> and <strong>docker2exe</strong>: Docker is essential for containerizing applications. <code class="docutils literal notranslate"><span class="pre">docker2exe</span></code> helps create executables from Docker images, which is useful for building standalone applications.</p></li>
-<li><p><strong>Mamba</strong>: Manages isolated environments with different dependencies, ensuring compatibility across development, testing, and production setups.</p></li>
 <li><p><strong>Mypy</strong>: Provides static type checking, reducing runtime errors and improving code clarity.</p></li>
 <li><p><strong>Pylint</strong>: Performs a comprehensive linting process, identifying code smells and enforcing PEP 8 compliance.</p></li>
 <li><p><strong>Pytest</strong>: Runs tests in an organized manner, and various configurations allow different testing scopes, from unit tests to CI-oriented tests.</p></li>
@@ -513,7 +509,7 @@ Make sure all tools required by the Makefile are installed in your environment.<
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=0024d49c"></script>
+</div><script src="_static/documentation_options.js?v=e83e775e"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>

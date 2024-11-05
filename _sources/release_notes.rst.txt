@@ -36,10 +36,6 @@ Applied Software
      - 27.3.1
      -
      -
-   * - Mamba
-     - 1.5.9
-     -
-     -
    * - Miniconda
      - 24.9.2
      -
