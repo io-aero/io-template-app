@@ -237,8 +237,8 @@ docker-executable:
 	cp settings.io_aero.toml                      app-${DOCKER2EXE_DIR}/
 	@echo "Info **********  End:   Docker Executable ******************************"
 
-docs: ## docs: Format and create the user documentation.
-docs: docformatter sphinx
+docs: ## docs: Create the user documentation.
+docs: sphinx
 
 everything: ## everything: Do everything pre-checkin
 everything: check-tools dev docs

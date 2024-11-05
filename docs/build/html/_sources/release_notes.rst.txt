@@ -16,25 +16,10 @@ Release Notes
    Detailed Open Issues
    ~~~~~~~~~~~~~~~~~~~~
 
-Version 2.0.0
+Version 2.0.7
 -------------
 
-Release Date: dd.mm.2024
-
-New Features
-~~~~~~~~~~~~
-
--  TODO
-
-Modified Features
-~~~~~~~~~~~~~~~~~
-
--  TODO
-
-Deleted Features
-~~~~~~~~~~~~~~~~
-
--  TODO
+Release Date: 05.11.2024
 
 Applied Software
 ~~~~~~~~~~~~~~~~
@@ -47,12 +32,12 @@ Applied Software
      - Version
      - Remark
      - Status
-   * - DBeaver - optional
-     - 24.2.4
-     -
-     - upgrade
    * - Docker
      - 27.3.1
+     -
+     -
+   * - Mamba
+     - 1.5.9
      -
      -
    * - Miniconda
