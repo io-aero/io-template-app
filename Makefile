@@ -83,19 +83,19 @@ help:
 
 ## Ensure all required tools are installed.
 check-tools:
-	$(call CHECK_TOOL,ruff)
+	$(call CHECK_TOOL,bandit)
 	$(call CHECK_TOOL,black)
+	$(call CHECK_TOOL,coveralls)
 	$(call CHECK_TOOL,docformatter)
+	$(call CHECK_TOOL,docker)
 	$(call CHECK_TOOL,mypy)
 	$(call CHECK_TOOL,pylint)
-	$(call CHECK_TOOL,vulture)
-	$(call CHECK_TOOL,bandit)
 	$(call CHECK_TOOL,pytest)
-	$(call CHECK_TOOL,docker)
-	$(call CHECK_TOOL,stubgen)
-	$(call CHECK_TOOL,coveralls)
+	$(call CHECK_TOOL,ruff)
 	$(call CHECK_TOOL,sphinx-apidoc)
 	$(call CHECK_TOOL,sphinx-build)
+	$(call CHECK_TOOL,stubgen)
+	$(call CHECK_TOOL,vulture)
 
 ## Clean build artifacts and temporary files.
 clean:
