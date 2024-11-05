@@ -30,7 +30,6 @@ Each target in the Makefile is documented below:
 
 - **`format`**: Formats code using `Black` and `docformatter`.
 - **`lint`**: Runs a suite of linters, including `ruff`, `Bandit`, `Vulture`, `Pylint`, and `Mypy`.
-- **`isort`**: Organizes imports in a standard format.
 - **`black`**: Formats Python code for consistency.
 - **`docformatter`**: Formats docstrings to comply with PEP 257.
 - **`ruff`**: Runs an optimized linter and formatter.
@@ -55,6 +54,8 @@ Each target in the Makefile is documented below:
 
 - **`conda-dev`**: Sets up a development Conda environment.
 - **`conda-prod`**: Sets up a production Conda environment.
+- **`mamba-dev`**: Sets up a development Manba environment.
+- **`mamba-prod`**: Sets up a production Mamba environment.
 - **`next-version`**: Increments the project’s version.
 - **`version`**: Displays versions of installed dependencies.
 
@@ -79,6 +80,7 @@ Each target in the Makefile is documented below:
    - `make everything`: Runs a comprehensive check (development and documentation).
    - `make pre-push`: Prepares code for committing to the repository by ensuring code quality and documentation.
    - `make conda-dev` or `make conda-prod`: Creates Conda environments for development or production.
+   - `make mamba-dev` or `make mamba-prod`: Creates Mamba environments for development or production.
 
 3. **Testing Specifics**:
    - `make tests`: Runs all tests.
@@ -108,7 +110,7 @@ Each tool and its relevance to the development process is explained below:
 
 8. **Docker** and **docker2exe**: Docker is essential for containerizing applications. `docker2exe` helps create executables from Docker images, which is useful for building standalone applications.
 
-9. **Isort**: Organizes imports in a standard order, improving readability and reducing import-related errors.
+9. **Mamba**: Manages isolated environments with different dependencies, ensuring compatibility across development, testing, and production setups.
 
 10. **Mypy**: Provides static type checking, reducing runtime errors and improving code clarity.
 
