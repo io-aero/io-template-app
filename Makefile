@@ -30,7 +30,6 @@ MODULE=iotemplateapp
 PYTHONPATH=${MODULE} docs scripts tests
 
 ARCH:=$(shell uname -m)
-MAMBA_EXE ?= mamba
 OS:=$(shell uname -s)
 
 ifeq (${OS},Linux)
@@ -251,36 +250,6 @@ format: black docformatter
 
 lint: ## lint: Lint the code with ruff, Bandit, Vulture, Pylint and Mypy.
 lint: ruff bandit vulture pylint mypy
-
-mamba-dev: ## Create a new environment for development.
-	@echo "Info **********  Start: Miniforge create development environment *****"
-	${MAMBA_EXE} --version
-	@echo "----------------------------------------------------------------------"
-	${MAMBA_EXE} env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
-	${MAMBA_EXE} env create -f config/environment_dev.yml
-	@echo "----------------------------------------------------------------------"
-ifeq ($(MAMBA_EXE), /home/runner/micromamba-bin/micromamba)
-	$(MAMBA_EXE) env list
-else
-	$(MAMBA_EXE) info --envs
-endif
-	${MAMBA_EXE} list
-	@echo "Info **********  End:   Miniforge create development environment *****"
-
-mamba-prod: ## Create a new environment for production.
-	@echo "Info **********  Start: Miniforge create production environment ******"
-	${MAMBA_EXE} --version
-	@echo "----------------------------------------------------------------------"
-	${MAMBA_EXE} env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
-	${MAMBA_EXE} env create -f config/environment.yml
-	@echo "----------------------------------------------------------------------"
-ifeq ($(MAMBA_EXE), /home/runner/micromamba-bin/micromamba)
-	$(MAMBA_EXE) env list
-else
-	$(MAMBA_EXE) info --envs
-endif
-	$(MAMBA_EXE) list
-	@echo "Info **********  End:   Miniforge create production environment ******"
 
 ## Find typing issues with Mypy.
 mypy:

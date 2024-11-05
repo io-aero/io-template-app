@@ -54,8 +54,6 @@ Each target in the Makefile is documented below:
 
 - **`conda-dev`**: Sets up a development Conda environment.
 - **`conda-prod`**: Sets up a production Conda environment.
-- **`mamba-dev`**: Sets up a development Manba environment.
-- **`mamba-prod`**: Sets up a production Mamba environment.
 - **`next-version`**: Increments the project’s version.
 - **`version`**: Displays versions of installed dependencies.
 
@@ -80,7 +78,6 @@ Each target in the Makefile is documented below:
    - `make everything`: Runs a comprehensive check (development and documentation).
    - `make pre-push`: Prepares code for committing to the repository by ensuring code quality and documentation.
    - `make conda-dev` or `make conda-prod`: Creates Conda environments for development or production.
-   - `make mamba-dev` or `make mamba-prod`: Creates Mamba environments for development or production.
 
 3. **Testing Specifics**:
    - `make tests`: Runs all tests.
@@ -110,19 +107,17 @@ Each tool and its relevance to the development process is explained below:
 
 8. **Docker** and **docker2exe**: Docker is essential for containerizing applications. `docker2exe` helps create executables from Docker images, which is useful for building standalone applications.
 
-9. **Mamba**: Manages isolated environments with different dependencies, ensuring compatibility across development, testing, and production setups.
+9. **Mypy**: Provides static type checking, reducing runtime errors and improving code clarity.
 
-10. **Mypy**: Provides static type checking, reducing runtime errors and improving code clarity.
+10. **Pylint**: Performs a comprehensive linting process, identifying code smells and enforcing PEP 8 compliance.
 
-11. **Pylint**: Performs a comprehensive linting process, identifying code smells and enforcing PEP 8 compliance.
+11. **Pytest**: Runs tests in an organized manner, and various configurations allow different testing scopes, from unit tests to CI-oriented tests.
 
-12. **Pytest**: Runs tests in an organized manner, and various configurations allow different testing scopes, from unit tests to CI-oriented tests.
+12. **Ruff**: A fast Python linter with a broad range of checks, offering a high-performance alternative to other linters.
 
-13. **Ruff**: A fast Python linter with a broad range of checks, offering a high-performance alternative to other linters.
+13. **Sphinx**: Generates documentation from docstrings and reStructuredText, providing an essential resource for developers and end-users.
 
-14. **Sphinx**: Generates documentation from docstrings and reStructuredText, providing an essential resource for developers and end-users.
-
-15. **Vulture**: Detects unused code, which helps keep the codebase clean and optimized.
+14. **Vulture**: Detects unused code, which helps keep the codebase clean and optimized.
 
 ### Necessity and Redundancy
 
