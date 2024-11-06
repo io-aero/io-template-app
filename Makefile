@@ -299,7 +299,9 @@ pytest:
 
 pytest-ci: ## Run all tests with pytest after test tool installation.
 	@echo "Info **********  Start: pytest-ci *************************************"
-	pip3 install openpyxl pytest pytest-benchmark pytest-cov pytest-deadfixtures pytest-helpers-namespace pytest-random-order
+	pip3 install openpyxl
+	pip3 install pytest pytest-benchmark pytest-cov pytest-deadfixtures pytest-helpers-namespace pytest-random-order
+	pip3 install requests
 	@echo "----------------------------------------------------------------------"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
