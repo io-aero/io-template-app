@@ -2,11 +2,11 @@
 
 set -e
 
-# ---------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 #
-# run_io_template_app.sh: Process IO-TEMPLATE-APP tasks.
+# run_io_template_app_aws.sh: Process IO-TEMPLATE-APP tasks.
 #
-# ---------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------
 # Set environment name
@@ -16,13 +16,13 @@ export MODULE=iotemplateapp
 # ------------------------------------------------------------------------
 # Set environment for Dynaconf
 # ------------------------------------------------------------------------
-ENV_FOR_DYNACONF=$1
-export ENV_FOR_DYNACONF
+export ENV_FOR_DYNACONF=prod
 
 # ------------------------------------------------------------------------
 # Initialize task variables
 # ------------------------------------------------------------------------
-export IO_AERO_TASK_DEFAULT=version
+export IO_AERO_TASK=${1:-} # Default to empty if no argument is passed
+export IO_AERO_TASK_DEFAULT="version"
 
 # ------------------------------------------------------------------------
 # Set Python path
@@ -30,47 +30,46 @@ export IO_AERO_TASK_DEFAULT=version
 export PYTHONPATH=.
 
 # ------------------------------------------------------------------------
-# Prompt for task if not provided as a second argument
+# Handle task input
 # ------------------------------------------------------------------------
-if [ -z "$2" ]; then
+if [ -z "$1" ]; then
     echo "==================================================================="
     echo "version - Show the IO-TEMPLATE-APP version"
     echo "-------------------------------------------------------------------"
-    read -p "Enter the desired task [default: ${IO_AERO_TASK_DEFAULT}] " IO_AERO_TASK
-    IO_AERO_TASK=${IO_AERO_TASK:-$IO_AERO_TASK_DEFAULT}
+    read -p "Enter the desired task [default: ${IO_AERO_TASK_DEFAULT}]: " IO_AERO_TASK
+    export IO_AERO_TASK=${IO_AERO_TASK}
+
+    if [ -z "${IO_AERO_TASK}" ]; then
+        export IO_AERO_TASK=${IO_AERO_TASK_DEFAULT}
+    fi
 else
-    IO_AERO_TASK=$2
+    export IO_AERO_TASK=$1
 fi
 
 # ------------------------------------------------------------------------
 # Path to the log file
 # ------------------------------------------------------------------------
-log_file="run_io_template_app_${ENV_FOR_DYNACONF}_${IO_AERO_TASK}.log"
+log_file="run_io_template_app_aws_${IO_AERO_TASK}.log"
 
 # ------------------------------------------------------------------------
 # Function for logging messages
 # ------------------------------------------------------------------------
 log_message() {
     local message="$1"
-    local timestamp
-    timestamp=$(date +"%d.%m.%Y %H:%M:%S")
-    echo "$timestamp: $message" >> "$log_file"
+    echo "$(date +"%d.%m.%Y %H:%M:%S"): $message" >> "$log_file"
 }
 
 # ------------------------------------------------------------------------
-# Clear previous log files if they exist
+# Clean up old log files
 # ------------------------------------------------------------------------
 [ -f logging_io_aero.log ] && rm -f logging_io_aero.log
-[ -f "$log_file" ] && rm -f "$log_file"
+[ -f "${log_file}" ] && rm -f "${log_file}"
 
 # ------------------------------------------------------------------------
-# Redirect stdout and stderr to log file
+# Redirect standard output and error to log file
 # ------------------------------------------------------------------------
-exec > >(while read -r line; do log_message "$line"; done) \
-     2> >(while read -r line; do log_message "$line"; done)
+exec > >(while read -r line; do log_message "$line"; done) 2> >(while read -r line; do log_message "$line"; done)
 
-# ------------------------------------------------------------------------
-# Display header information
 echo "==================================================================="
 echo "Start $0"
 echo "-------------------------------------------------------------------"
@@ -93,25 +92,29 @@ echo "-------------------------------------------------------------------"
 date +"DATE TIME : %d.%m.%Y %H:%M:%S"
 echo "==================================================================="
 
-# ------------------------------------------------------------------------
-# Execute task
-# ------------------------------------------------------------------------
+# -----------------------------------------------------------------------
+# Task handling
+# -----------------------------------------------------------------------
+# version: Show the IO-TEMPLATE-APP version
+# -----------------------------------------------------------------------
 if [[ "${IO_AERO_TASK}" =~ ^(version)$ ]]; then
-    if ! python3 scripts/launcher.py -t "${IO_AERO_TASK}"; then
-        log_message "Error executing launcher.py with task ${IO_AERO_TASK}" "ERROR"
+    if ! ./dist/linux/iotemplateapp -t "${IO_AERO_TASK}"; then
         exit 255
     fi
+
+# ------------------------------------------------------------------------
+# Program abort due to wrong input.
+# ------------------------------------------------------------------------
 else
-    echo "Processing aborted: unknown task='${IO_AERO_TASK}'"
-    log_message "Processing aborted: unknown task='${IO_AERO_TASK}'" "ERROR"
+    echo "Unknown task '${IO_AERO_TASK}'" >&2
     exit 255
 fi
 
-# ------------------------------------------------------------------------
-# Completion message
-echo "-----------------------------------------------------------------------"
+echo "-------------------------------------------------------------------"
 date +"DATE TIME : %d.%m.%Y %H:%M:%S"
-echo "-----------------------------------------------------------------------"
+echo "-------------------------------------------------------------------"
 echo "End   $0"
-echo "======================================================================="
+echo "==================================================================="
+
+# Close the log file
 log_message "Script finished."

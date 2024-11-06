@@ -297,7 +297,7 @@ pytest:
 	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered --cov-report=lcov -v tests
 	@echo "Info **********  End:   pytest ***************************************"
 
-pytest-ci: ## Run all tests with pytest after test tool installation.
+pytest-ci: ## Run all tests after test tool installation.
 	@echo "Info **********  Start: pytest-ci *************************************"
 	pip3 install openpyxl
 	pip3 install pytest pytest-benchmark pytest-cov pytest-deadfixtures pytest-helpers-namespace pytest-random-order
@@ -309,14 +309,14 @@ pytest-ci: ## Run all tests with pytest after test tool installation.
 	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -v tests
 	@echo "Info **********  End:   pytest-ci *************************************"
 
-pytest-first-issue: ## Run all tests with pytest until the first issue occurs.
+pytest-first-issue: ## Run all tests until the first issue occurs.
 	@echo "Info **********  Start: pytest-first-issue ****************************"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
 	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered -rP -v -x tests
 	@echo "Info **********  End:   pytest-first-issue ****************************"
 
-pytest-ignore-mark: ## Run all tests without marker with pytest.
+pytest-ignore-mark: ## Run all tests without marker.
 	@echo "Info **********  Start: pytest-ignore-mark ***************************"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
@@ -324,7 +324,7 @@ pytest-ignore-mark: ## Run all tests without marker with pytest.
 	pytest --cache-clear --cov=${MODULE} --cov-report term-missing:skip-covered --cov-report=lcov -m "not no_ci" -v tests
 	@echo "Info **********  End:   pytest-ignore-mark ***************************"
 
-pytest-issue: ## Run only the tests with pytest which are marked with 'issue'.
+pytest-issue: ## Run only the tests which are marked with 'issue'.
 	@echo "Info **********  Start: pytest-issue *********************************"
 	pytest --version
 	@echo "----------------------------------------------------------------------"
@@ -332,7 +332,7 @@ pytest-issue: ## Run only the tests with pytest which are marked with 'issue'.
 	pytest --cache-clear --capture=no --cov=${MODULE} --cov-report term-missing:skip-covered -m issue -rP -v -x tests
 	@echo "Info **********  End:   pytest-issue *********************************"
 
-pytest-module: ## Run test of a specific module with pytest.
+pytest-module: ## Run the tests of a specific module.
 	@echo "Info **********  Start: pytest-module ********************************"
 	@echo "TESTMODULE=tests/${TEST-MODULE}.py"
 	@echo "----------------------------------------------------------------------"
@@ -362,7 +362,7 @@ sphinx:
 	sphinx-build -b rinoh docs/source docs/build/pdf
 	@echo "Info **********  End:   sphinx ***************************************"
 
-tests: ## tests: Run all tests with pytest.
+tests: ## tests: Run all tests.
 tests: pytest
 
 version: ## Show the installed software versions.
