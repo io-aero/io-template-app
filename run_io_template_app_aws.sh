@@ -4,7 +4,7 @@ set -e
 
 # ------------------------------------------------------------------------
 #
-# run_io_template_app_dev.sh: Process IO-TEMPLATE-APP tasks.
+# run_io_template_app_aws.sh: Process IO-TEMPLATE-APP tasks.
 #
 # ------------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ export MODULE=iotemplateapp
 # ------------------------------------------------------------------------
 # Set environment for Dynaconf
 # ------------------------------------------------------------------------
-export ENV_FOR_DYNACONF=dev
+export ENV_FOR_DYNACONF=prod
 
 # ------------------------------------------------------------------------
 # Initialize task variables
@@ -49,7 +49,7 @@ fi
 # ------------------------------------------------------------------------
 # Path to the log file
 # ------------------------------------------------------------------------
-log_file="run_io_template_app_dev_${IO_AERO_TASK}.log"
+log_file="run_io_template_app_aws_${IO_AERO_TASK}.log"
 
 # ------------------------------------------------------------------------
 # Function for logging messages
@@ -98,7 +98,7 @@ echo "==================================================================="
 # version: Show the IO-TEMPLATE-APP version
 # -----------------------------------------------------------------------
 if [[ "${IO_AERO_TASK}" =~ ^(version)$ ]]; then
-    if ! python scripts/launcher.py -t "${IO_AERO_TASK}"; then
+    if ! ./dist/linux/iotemplateapp -t "${IO_AERO_TASK}"; then
         exit 255
     fi
 
