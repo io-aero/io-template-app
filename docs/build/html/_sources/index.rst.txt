@@ -21,7 +21,7 @@ Development
 -----------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
 
    Makefile
@@ -32,7 +32,7 @@ API Documentation
 Here, you will find detailed API documentation, which includes information about all modules within the IO-TEMPLATE-APP, allowing developers to understand the functionalities available.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    modules
 
@@ -40,7 +40,7 @@ Tool Evaluations
 ----------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    tool_evaluations/index
 
