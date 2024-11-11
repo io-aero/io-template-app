@@ -1,0 +1,759 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Locking Package Versions" href="locking_package_versions.html" /><link rel="prev" title="Combine Conda and Poetry" href="combine_conda_and_poetry.html" />
+
+    <link rel="shortcut icon" href="../_static/IO-Aero_1_Favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>Combine Conda and Poetry - Migration from Conda and Pip - IO-TEMPLATE-APP 2-0-10 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">IO-TEMPLATE-APP 2-0-10 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/IO-Aero_1_Logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration_io_template_app.html">Configuration IO-TEMPLATE-APP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration_logging.html">Configuration Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps.html">First Steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_usage.html">Advanced Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Makefile.html">Makefile Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../modules.html">iotemplateapp</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of iotemplateapp</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../iotemplateapp.html">iotemplateapp package</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tool Evaluations</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Tool Evaluations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="centralized_configuration.html">Centralized Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="combine_conda_and_poetry.html">Combine Conda and Poetry</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Combine Conda and Poetry - Migration from Conda and Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locking_package_versions.html">Locking Package Versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="makefile_pro_and_con.html">Make &amp; Makefile - Pro and Con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pylint_limitations.html">Pylint Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_packagemanager.html">Python Package Manager Alternatives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repository_structure.html">Repository Structure: Mono, Poly, Hybrid or Micro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ruff_vs_black.html">Ruff vs. Black: A Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ruff_vs_pylint.html">Ruff vs. Pylint: A Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tool_coverage_by_ruff.html">Tool Coverage by Ruff</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">End-User License Agreement</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="combine-conda-and-poetry-migration-from-conda-and-pip">
+<h1>Combine Conda and Poetry - Migration from Conda and Pip<a class="headerlink" href="#combine-conda-and-poetry-migration-from-conda-and-pip" title="Link to this heading">¶</a></h1>
+<p>To integrate <strong>Conda</strong> and <strong>Poetry</strong> in your Python development workflow, you’ll leverage Conda for environment management and handling non-Python dependencies, while Poetry will manage Python-specific dependencies and packaging. This approach combines the strengths of both tools, ensuring a robust and reproducible development environment.</p>
+<p>Below is a comprehensive guide on how to transition your existing <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">environment_dev.yml</span></code> files to use Conda and Poetry together.</p>
+<hr class="docutils" />
+<section id="overview-of-the-integration">
+<h2><strong>1. Overview of the Integration</strong><a class="headerlink" href="#overview-of-the-integration" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Conda</strong>:</p>
+<ul>
+<li><p><strong>Role</strong>: Manage environments, Python versions, and non-Python dependencies.</p></li>
+<li><p><strong>Advantages</strong>:</p>
+<ul>
+<li><p>Handles complex dependencies, including system-level libraries.</p></li>
+<li><p>Facilitates reproducible environments across different machines.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Poetry</strong>:</p>
+<ul>
+<li><p><strong>Role</strong>: Manage Python dependencies, handle packaging, and versioning.</p></li>
+<li><p><strong>Advantages</strong>:</p>
+<ul>
+<li><p>Simplifies dependency resolution with <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> and <code class="docutils literal notranslate"><span class="pre">poetry.lock</span></code>.</p></li>
+<li><p>Provides tools for building and publishing Python packages.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="setting-up-conda-environment-with-poetry">
+<h2><strong>2. Setting Up Conda Environment with Poetry</strong><a class="headerlink" href="#setting-up-conda-environment-with-poetry" title="Link to this heading">¶</a></h2>
+<section id="create-a-base-environment-yml">
+<h3><strong>2.1. Create a Base <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code></strong><a class="headerlink" href="#create-a-base-environment-yml" title="Link to this heading">¶</a></h3>
+<p>Your Conda <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> will handle the Python environment, install Poetry, and include any non-Python dependencies. Here’s how you can structure it:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iotemplateapp</span>
+<span class="nt">channels</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.12</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pyyaml</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomli</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomli-w</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualenv</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">poetry</span>
+<span class="w">  </span><span class="c1"># Add any additional non-Python dependencies here</span>
+</pre></div>
+</div>
+<p><strong>Notes:</strong></p>
+<ul class="simple">
+<li><p><strong>Poetry Installation</strong>: Installing Poetry via Conda ensures it’s available in your environment. Alternatively, you can install it via <code class="docutils literal notranslate"><span class="pre">pip</span></code> if preferred.</p></li>
+<li><p><strong>Non-Python Dependencies</strong>: If you have system-level dependencies (e.g., <code class="docutils literal notranslate"><span class="pre">gcc</span></code>, <code class="docutils literal notranslate"><span class="pre">ffmpeg</span></code>), list them under <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> before the <code class="docutils literal notranslate"><span class="pre">pip</span></code> section.</p></li>
+</ul>
+</section>
+<section id="create-the-conda-environment">
+<h3><strong>2.2. Create the Conda Environment</strong><a class="headerlink" href="#create-the-conda-environment" title="Link to this heading">¶</a></h3>
+<p>Run the following command to create the environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml
+</pre></div>
+</div>
+<p>Activate the environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>iotemplateapp
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="configuring-poetry">
+<h2><strong>3. Configuring Poetry</strong><a class="headerlink" href="#configuring-poetry" title="Link to this heading">¶</a></h2>
+<section id="initialize-poetry-in-your-project">
+<h3><strong>3.1. Initialize Poetry in Your Project</strong><a class="headerlink" href="#initialize-poetry-in-your-project" title="Link to this heading">¶</a></h3>
+<p>Navigate to your project directory and initialize a new Poetry project:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>path/to/your/project
+poetry<span class="w"> </span>init
+</pre></div>
+</div>
+<p>Follow the prompts to set up your <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. This file will manage your Python dependencies.</p>
+</section>
+<section id="configure-poetry-to-use-conda-s-python-interpreter">
+<h3><strong>3.2. Configure Poetry to Use Conda’s Python Interpreter</strong><a class="headerlink" href="#configure-poetry-to-use-conda-s-python-interpreter" title="Link to this heading">¶</a></h3>
+<p>Ensure Poetry uses the Python interpreter from your active Conda environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>env<span class="w"> </span>use<span class="w"> </span><span class="k">$(</span>which<span class="w"> </span>python<span class="k">)</span>
+</pre></div>
+</div>
+<p>This links Poetry’s environment to the Conda-managed Python interpreter, ensuring consistency.</p>
+</section>
+<section id="define-dependencies-in-pyproject-toml">
+<h3><strong>3.3. Define Dependencies in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code></strong><a class="headerlink" href="#define-dependencies-in-pyproject-toml" title="Link to this heading">¶</a></h3>
+<p>Your <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> should specify both production and development dependencies. Here’s an example based on your provided <code class="docutils literal notranslate"><span class="pre">environment_dev.yml</span></code>:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[tool.poetry]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;iotemplateapp&quot;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Your project description&quot;</span>
+<span class="n">authors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Your Name &lt;you@example.com&gt;&quot;</span><span class="p">]</span>
+
+<span class="k">[tool.poetry.dependencies]</span>
+<span class="n">python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^3.12&quot;</span>
+<span class="n">pyyaml</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^6.0&quot;</span>
+<span class="n">tomli</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^2.0&quot;</span>
+<span class="n">tomli-w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^0.7&quot;</span>
+<span class="c1"># Private Git Repository Dependency</span>
+<span class="n">io-common</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;https://github.com/io-aero/io-common.git&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">branch</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">extras</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[],</span><span class="w"> </span><span class="n">develop</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span>
+
+<span class="k">[tool.poetry.dev-dependencies]</span>
+<span class="n">bandit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^1.7&quot;</span>
+<span class="n">black</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^23.3&quot;</span>
+<span class="n">coverage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^7.2&quot;</span>
+<span class="n">coveralls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^3.3&quot;</span>
+<span class="n">docformatter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^1.7&quot;</span>
+<span class="n">furo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^2023.4.28&quot;</span>
+<span class="n">mypy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^1.4&quot;</span>
+<span class="n">myst-parser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^0.19&quot;</span>
+<span class="n">ordered-set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^4.1&quot;</span>
+<span class="n">pylint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^2.17&quot;</span>
+<span class="n">pytest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^7.4&quot;</span>
+<span class="n">pytest-cov</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^4.0&quot;</span>
+<span class="n">pytest-deadfixtures</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^1.5&quot;</span>
+<span class="n">pytest-helpers-namespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^1.1&quot;</span>
+<span class="n">pytest-random-order</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^1.0&quot;</span>
+<span class="n">rinohtype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^0.9&quot;</span>
+<span class="n">ruff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^0.0.291&quot;</span>
+<span class="n">sphinx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^7.2&quot;</span>
+<span class="n">sphinx-autoapi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^1.11.1&quot;</span>
+<span class="n">types-pyyaml</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^6.0.12&quot;</span>
+<span class="n">types-toml</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^0.10.13&quot;</span>
+<span class="n">vulture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^2.5&quot;</span>
+
+<span class="k">[build-system]</span>
+<span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;poetry-core&gt;=1.0.0&quot;</span><span class="p">]</span>
+<span class="n">build-backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;poetry.core.masonry.api&quot;</span>
+</pre></div>
+</div>
+<p><strong>Handling Private Git Dependencies:</strong></p>
+<p>To include a private Git repository (e.g., <code class="docutils literal notranslate"><span class="pre">io-common</span></code>), you need to handle authentication securely. Here are two approaches:</p>
+<ol class="arabic">
+<li><p><strong>Using Environment Variables in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>:</strong></p>
+<p>Unfortunately, Poetry doesn’t natively support environment variable interpolation in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. Instead, you can use Poetry’s <a class="reference external" href="https://python-poetry.org/docs/dependency-groups/">dependency groups</a> or manage authentication via Git credentials.</p>
+</li>
+<li><p><strong>Using Git Credential Helpers:</strong></p>
+<p>Configure Git to use credential helpers that can securely store and provide your credentials when accessing private repositories.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>credential.helper<span class="w"> </span>store
+</pre></div>
+</div>
+<p>Then, clone the repository manually once to store the credentials:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/io-aero/io-common.git
+</pre></div>
+</div>
+<p>After this, Poetry should be able to access the repository without embedding credentials in the URL.</p>
+</li>
+</ol>
+<p><strong>Alternatively, Use Poetry’s <code class="docutils literal notranslate"><span class="pre">source</span></code> Configuration:</strong></p>
+<p>You can define custom sources with authentication in Poetry’s configuration.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>config<span class="w"> </span>http-basic.io-aero<span class="w"> </span>IoAeroMachineUser<span class="w"> </span><span class="nv">$PYPI_PAT</span>
+</pre></div>
+</div>
+<p>Then, reference the package without embedding credentials:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">io-common</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;https://github.com/io-aero/io-common.git&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">branch</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This approach keeps your credentials out of <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.</p>
+</section>
+<section id="install-dependencies-with-poetry">
+<h3><strong>3.4. Install Dependencies with Poetry</strong><a class="headerlink" href="#install-dependencies-with-poetry" title="Link to this heading">¶</a></h3>
+<p>After configuring <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>, install the dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>install
+</pre></div>
+</div>
+<p>This command will create a <code class="docutils literal notranslate"><span class="pre">poetry.lock</span></code> file, ensuring reproducible installs across environments.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="handling-development-vs-production-environments">
+<h2><strong>4. Handling Development vs. Production Environments</strong><a class="headerlink" href="#handling-development-vs-production-environments" title="Link to this heading">¶</a></h2>
+<section id="production-environment">
+<h3><strong>4.1. Production Environment</strong><a class="headerlink" href="#production-environment" title="Link to this heading">¶</a></h3>
+<p>For production, you typically exclude development dependencies to keep the environment lean.</p>
+<p><strong>Steps:</strong></p>
+<ol class="arabic">
+<li><p><strong>Create a Separate Conda Environment for Production:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># environment_prod.yml</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iotemplateapp</span>
+<span class="nt">channels</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.12</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pyyaml</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomli</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomli-w</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualenv</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">poetry</span>
+<span class="w">  </span><span class="c1"># Add any additional non-Python dependencies here</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Initialize and Install with Poetry Without Dev Dependencies:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment_prod.yml
+conda<span class="w"> </span>activate<span class="w"> </span>iotemplateapp
+poetry<span class="w"> </span>install<span class="w"> </span>--no-dev
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="development-environment">
+<h3><strong>4.2. Development Environment</strong><a class="headerlink" href="#development-environment" title="Link to this heading">¶</a></h3>
+<p>For development, include both production and development dependencies.</p>
+<p><strong>Steps:</strong></p>
+<ol class="arabic">
+<li><p><strong>Use the Existing <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code>:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># environment_dev.yml</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iotemplateapp</span>
+<span class="nt">channels</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.12</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pyyaml</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomli</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomli-w</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualenv</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">poetry</span>
+<span class="w">  </span><span class="c1"># Add any additional non-Python dependencies here</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Initialize and Install with Poetry Including Dev Dependencies:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment_dev.yml
+conda<span class="w"> </span>activate<span class="w"> </span>iotemplateapp
+poetry<span class="w"> </span>install
+</pre></div>
+</div>
+</li>
+</ol>
+<p><strong>Note:</strong> Ensure that your <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> differentiates between production and development dependencies using <code class="docutils literal notranslate"><span class="pre">[tool.poetry.dependencies]</span></code> and <code class="docutils literal notranslate"><span class="pre">[tool.poetry.dev-dependencies]</span></code>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="example-workflow">
+<h2><strong>5. Example Workflow</strong><a class="headerlink" href="#example-workflow" title="Link to this heading">¶</a></h2>
+<section id="production-setup">
+<h3><strong>5.1. Production Setup</strong><a class="headerlink" href="#production-setup" title="Link to this heading">¶</a></h3>
+<ol class="arabic">
+<li><p><strong>Create <code class="docutils literal notranslate"><span class="pre">environment_prod.yml</span></code>:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iotemplateapp</span>
+<span class="nt">channels</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.12</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pyyaml</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomli</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomli-w</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualenv</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">poetry</span>
+<span class="w">  </span><span class="c1"># Add any additional non-Python dependencies here</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Create and Activate the Environment:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment_prod.yml
+conda<span class="w"> </span>activate<span class="w"> </span>iotemplateapp
+</pre></div>
+</div>
+</li>
+<li><p><strong>Configure Poetry and Install Dependencies:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>env<span class="w"> </span>use<span class="w"> </span><span class="k">$(</span>which<span class="w"> </span>python<span class="k">)</span>
+poetry<span class="w"> </span>install<span class="w"> </span>--no-dev
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="development-setup">
+<h3><strong>5.2. Development Setup</strong><a class="headerlink" href="#development-setup" title="Link to this heading">¶</a></h3>
+<ol class="arabic">
+<li><p><strong>Create <code class="docutils literal notranslate"><span class="pre">environment_dev.yml</span></code>:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iotemplateapp</span>
+<span class="nt">channels</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.12</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pyyaml</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomli</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tomli-w</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualenv</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">poetry</span>
+<span class="w">  </span><span class="c1"># Add any additional non-Python dependencies here</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Create and Activate the Environment:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment_dev.yml
+conda<span class="w"> </span>activate<span class="w"> </span>iotemplateapp
+</pre></div>
+</div>
+</li>
+<li><p><strong>Configure Poetry and Install Dependencies:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>env<span class="w"> </span>use<span class="w"> </span><span class="k">$(</span>which<span class="w"> </span>python<span class="k">)</span>
+poetry<span class="w"> </span>install
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="best-practices-and-recommendations">
+<h2><strong>6. Best Practices and Recommendations</strong><a class="headerlink" href="#best-practices-and-recommendations" title="Link to this heading">¶</a></h2>
+<section id="avoid-mixing-package-managers-for-python-packages">
+<h3><strong>6.1. Avoid Mixing Package Managers for Python Packages</strong><a class="headerlink" href="#avoid-mixing-package-managers-for-python-packages" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Do Not Install Python Packages with Both Conda and Poetry/Pip</strong>: This can lead to dependency conflicts and unpredictable behavior.</p></li>
+<li><p><strong>Use Conda for Non-Python Dependencies Only</strong>: Let Poetry handle all Python-specific packages.</p></li>
+</ul>
+</section>
+<section id="securely-manage-private-repositories">
+<h3><strong>6.2. Securely Manage Private Repositories</strong><a class="headerlink" href="#securely-manage-private-repositories" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Use Git Credential Helpers</strong>: To avoid embedding sensitive information in configuration files.</p></li>
+<li><p><strong>Leverage Poetry’s Authentication Mechanisms</strong>: Configure credentials using Poetry’s settings to keep them secure.</p></li>
+</ul>
+</section>
+<section id="automate-environment-setup">
+<h3><strong>6.3. Automate Environment Setup</strong><a class="headerlink" href="#automate-environment-setup" title="Link to this heading">¶</a></h3>
+<p>Create scripts or Makefiles to streamline the setup process, reducing manual errors and ensuring consistency across team members.</p>
+<p><strong>Example <code class="docutils literal notranslate"><span class="pre">setup.sh</span></code>:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Create Conda environment</span>
+conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment_dev.yml
+
+<span class="c1"># Activate environment</span>
+conda<span class="w"> </span>activate<span class="w"> </span>iotemplateapp
+
+<span class="c1"># Configure Poetry to use Conda&#39;s Python</span>
+poetry<span class="w"> </span>env<span class="w"> </span>use<span class="w"> </span><span class="k">$(</span>which<span class="w"> </span>python<span class="k">)</span>
+
+<span class="c1"># Install dependencies</span>
+poetry<span class="w"> </span>install
+</pre></div>
+</div>
+<p>Make the script executable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod<span class="w"> </span>+x<span class="w"> </span>setup.sh
+</pre></div>
+</div>
+<p>Run the setup:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.sh
+</pre></div>
+</div>
+</section>
+<section id="regularly-update-dependencies">
+<h3><strong>6.4. Regularly Update Dependencies</strong><a class="headerlink" href="#regularly-update-dependencies" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Poetry</strong>: Use <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">update</span></code> to keep Python dependencies up-to-date.</p></li>
+<li><p><strong>Conda</strong>: Update Conda packages as needed, ensuring compatibility with Poetry-managed dependencies.</p></li>
+</ul>
+</section>
+<section id="document-the-workflow">
+<h3><strong>6.5. Document the Workflow</strong><a class="headerlink" href="#document-the-workflow" title="Link to this heading">¶</a></h3>
+<p>Maintain clear documentation for your team on how to set up and work within the Conda and Poetry integrated environment. Include instructions for environment creation, activating environments, and managing dependencies.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="final-thoughts">
+<h2><strong>7. Final Thoughts</strong><a class="headerlink" href="#final-thoughts" title="Link to this heading">¶</a></h2>
+<p>Combining <strong>Conda</strong> and <strong>Poetry</strong> offers a powerful and flexible environment for Python development, especially in complex projects requiring both Python and non-Python dependencies. By following the structured approach outlined above, you can achieve:</p>
+<ul class="simple">
+<li><p><strong>Reproducible Environments</strong>: Ensuring consistency across development, testing, and production.</p></li>
+<li><p><strong>Efficient Dependency Management</strong>: Leveraging Poetry’s robust handling of Python packages.</p></li>
+<li><p><strong>Scalability and Flexibility</strong>: Easily managing both Python and system-level dependencies without conflicts.</p></li>
+</ul>
+<p>Remember to regularly maintain and update your dependencies, secure your private repositories, and streamline your workflow to maximize the benefits of this integrated setup.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="locking_package_versions.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Locking Package Versions</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="combine_conda_and_poetry.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Combine Conda and Poetry</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022 - 2024, IO-Aero
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Combine Conda and Poetry - Migration from Conda and Pip</a><ul>
+<li><a class="reference internal" href="#overview-of-the-integration"><strong>1. Overview of the Integration</strong></a></li>
+<li><a class="reference internal" href="#setting-up-conda-environment-with-poetry"><strong>2. Setting Up Conda Environment with Poetry</strong></a><ul>
+<li><a class="reference internal" href="#create-a-base-environment-yml"><strong>2.1. Create a Base <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code></strong></a></li>
+<li><a class="reference internal" href="#create-the-conda-environment"><strong>2.2. Create the Conda Environment</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuring-poetry"><strong>3. Configuring Poetry</strong></a><ul>
+<li><a class="reference internal" href="#initialize-poetry-in-your-project"><strong>3.1. Initialize Poetry in Your Project</strong></a></li>
+<li><a class="reference internal" href="#configure-poetry-to-use-conda-s-python-interpreter"><strong>3.2. Configure Poetry to Use Conda’s Python Interpreter</strong></a></li>
+<li><a class="reference internal" href="#define-dependencies-in-pyproject-toml"><strong>3.3. Define Dependencies in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code></strong></a></li>
+<li><a class="reference internal" href="#install-dependencies-with-poetry"><strong>3.4. Install Dependencies with Poetry</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#handling-development-vs-production-environments"><strong>4. Handling Development vs. Production Environments</strong></a><ul>
+<li><a class="reference internal" href="#production-environment"><strong>4.1. Production Environment</strong></a></li>
+<li><a class="reference internal" href="#development-environment"><strong>4.2. Development Environment</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example-workflow"><strong>5. Example Workflow</strong></a><ul>
+<li><a class="reference internal" href="#production-setup"><strong>5.1. Production Setup</strong></a></li>
+<li><a class="reference internal" href="#development-setup"><strong>5.2. Development Setup</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#best-practices-and-recommendations"><strong>6. Best Practices and Recommendations</strong></a><ul>
+<li><a class="reference internal" href="#avoid-mixing-package-managers-for-python-packages"><strong>6.1. Avoid Mixing Package Managers for Python Packages</strong></a></li>
+<li><a class="reference internal" href="#securely-manage-private-repositories"><strong>6.2. Securely Manage Private Repositories</strong></a></li>
+<li><a class="reference internal" href="#automate-environment-setup"><strong>6.3. Automate Environment Setup</strong></a></li>
+<li><a class="reference internal" href="#regularly-update-dependencies"><strong>6.4. Regularly Update Dependencies</strong></a></li>
+<li><a class="reference internal" href="#document-the-workflow"><strong>6.5. Document the Workflow</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#final-thoughts"><strong>7. Final Thoughts</strong></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=0356543f"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
+    </body>
+</html>
