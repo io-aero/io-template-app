@@ -4,14 +4,15 @@ Tool Evaluations
 .. toctree::
    :maxdepth: 1
 
-   centralized_configuration
+   repository_structure
+   mono_repo_approach
+   locking_package_versions
+   python_packagemanager
    combine_conda_and_poetry
    combine_conda_and_poetry_migration
-   locking_package_versions
    makefile_pro_and_con
-   pylint_limitations
-   python_packagemanager
-   repository_structure
+   centralized_configuration
+   tool_coverage_by_ruff
    ruff_vs_black
    ruff_vs_pylint
-   tool_coverage_by_ruff
+   pylint_limitations
