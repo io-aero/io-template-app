@@ -40,7 +40,7 @@ Tool Evaluations
 ----------------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    tool_evaluations/index
 

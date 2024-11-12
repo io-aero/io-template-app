@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Tool Coverage by Ruff" href="tool_coverage_by_ruff.html" /><link rel="prev" title="Make &amp; Makefile - Pro and Con" href="makefile_pro_and_con.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Locking Package Versions" href="locking_package_versions.html" /><link rel="prev" title="Repository Structure: Mono, Poly, Hybrid or Micro" href="repository_structure.html" />
 
     <link rel="shortcut icon" href="../_static/IO-Aero_1_Favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>Centralized Configuration - IO-TEMPLATE-APP 1-4-8 documentation</title>
+        <title>Monorepository Approach - IO-TEMPLATE-APP 1-4-8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
@@ -221,13 +221,13 @@
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tool Evaluations</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Tool Evaluations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="repository_structure.html">Repository Structure: Mono, Poly, Hybrid or Micro</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mono_repo_approach.html">Monorepository Approach</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Monorepository Approach</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locking_package_versions.html">Locking Package Versions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_packagemanager.html">Python Package Manager Alternatives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="combine_conda_and_poetry.html">Combine Conda and Poetry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="combine_conda_and_poetry_migration.html">Combine Conda and Poetry - Migration from Conda and Pip</a></li>
 <li class="toctree-l2"><a class="reference internal" href="makefile_pro_and_con.html">Make &amp; Makefile - Pro and Con</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Centralized Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centralized_configuration.html">Centralized Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tool_coverage_by_ruff.html">Tool Coverage by Ruff</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ruff_vs_black.html">Ruff vs. Black: A Comparison</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ruff_vs_pylint.html">Ruff vs. Pylint: A Comparison</a></li>
@@ -274,139 +274,149 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="centralized-configuration">
-<h1>Centralized Configuration<a class="headerlink" href="#centralized-configuration" title="Link to this heading">¶</a></h1>
-<p>When working in a team environment, especially on larger projects, maintaining consistency in code quality and style is crucial. Tools like <strong>Ruff</strong> and <strong>Pylint</strong> are essential for enforcing coding standards, identifying potential issues, and ensuring that the codebase remains maintainable and readable. However, a common dilemma arises: <strong>Should the configuration and exception handling for these tools be standardized across the entire team, or should individual developers have the flexibility to tailor them to their preferences?</strong></p>
-<section id="recommended-approach-centralized-configuration-with-limited-flexibility">
-<h2><strong>Recommended Approach: Centralized Configuration with Limited Flexibility</strong><a class="headerlink" href="#recommended-approach-centralized-configuration-with-limited-flexibility" title="Link to this heading">¶</a></h2>
-<p><strong>Centralizing the configuration and exception handling for Ruff and Pylint is generally advisable for the following reasons:</strong></p>
-<section id="ensures-consistency-across-the-codebase">
-<h3><strong>1. Ensures Consistency Across the Codebase</strong><a class="headerlink" href="#ensures-consistency-across-the-codebase" title="Link to this heading">¶</a></h3>
-<ul class="simple">
-<li><p><strong>Uniform Standards</strong>: A standardized configuration enforces the same coding standards and practices across all team members, leading to a more cohesive and maintainable codebase.</p></li>
-<li><p><strong>Reduced Cognitive Load</strong>: Developers don’t need to remember different rules or configurations, allowing them to focus more on writing code rather than adjusting tool settings.</p></li>
-</ul>
-</section>
-<section id="facilitates-code-reviews-and-collaboration">
-<h3><strong>2. Facilitates Code Reviews and Collaboration</strong><a class="headerlink" href="#facilitates-code-reviews-and-collaboration" title="Link to this heading">¶</a></h3>
-<ul class="simple">
-<li><p><strong>Predictable Behavior</strong>: With a centralized configuration, code reviews become more straightforward as all team members adhere to the same linting rules, minimizing unexpected feedback.</p></li>
-<li><p><strong>Easier Onboarding</strong>: New team members can quickly get up to speed with the project’s standards without navigating personalized tool configurations.</p></li>
-</ul>
-</section>
-<section id="enhances-code-quality-and-reliability">
-<h3><strong>3. Enhances Code Quality and Reliability</strong><a class="headerlink" href="#enhances-code-quality-and-reliability" title="Link to this heading">¶</a></h3>
-<ul class="simple">
-<li><p><strong>Comprehensive Coverage</strong>: A team-wide configuration can be carefully curated to include all necessary checks, ensuring that important issues are not overlooked.</p></li>
-<li><p><strong>Avoids Inconsistencies</strong>: Prevents scenarios where some parts of the codebase are strictly linted while others are lenient, which can lead to fragmented code quality.</p></li>
-</ul>
-</section>
-<section id="streamlines-ci-cd-integration">
-<h3><strong>4. Streamlines CI/CD Integration</strong><a class="headerlink" href="#streamlines-ci-cd-integration" title="Link to this heading">¶</a></h3>
-<ul class="simple">
-<li><p><strong>Consistent Automation</strong>: Continuous Integration/Continuous Deployment (CI/CD) pipelines can rely on a consistent set of linting rules, reducing discrepancies between local development environments and automated checks.</p></li>
-<li><p><strong>Simplified Maintenance</strong>: Managing a single configuration file is easier than tracking and merging individual configurations, especially as the team grows.</p></li>
-</ul>
-</section>
-</section>
-<section id="allowing-limited-developer-flexibility">
-<h2><strong>Allowing Limited Developer Flexibility</strong><a class="headerlink" href="#allowing-limited-developer-flexibility" title="Link to this heading">¶</a></h2>
-<p>While centralized configurations are beneficial, it’s also important to recognize that developers may have legitimate reasons for needing some flexibility. Here’s how to balance both:</p>
-<section id="use-a-base-configuration-with-overrides">
-<h3><strong>1. Use a Base Configuration with Overrides</strong><a class="headerlink" href="#use-a-base-configuration-with-overrides" title="Link to this heading">¶</a></h3>
-<ul class="simple">
-<li><p><strong>Base Rules</strong>: Define a comprehensive base configuration that all team members must adhere to.</p></li>
-<li><p><strong>Local Overrides</strong>: Allow individual developers to have additional, non-conflicting rules or settings in their local environments. However, ensure that these local overrides do not affect the shared codebase or CI/CD processes.</p></li>
-</ul>
-</section>
-<section id="provide-mechanisms-for-exception-requests">
-<h3><strong>2. Provide Mechanisms for Exception Requests</strong><a class="headerlink" href="#provide-mechanisms-for-exception-requests" title="Link to this heading">¶</a></h3>
-<ul class="simple">
-<li><p><strong>Exception Process</strong>: Establish a clear process for developers to request exceptions or propose changes to the linting rules. This ensures that any deviations are intentional, justified, and reviewed by the team.</p></li>
-<li><p><strong>Documentation</strong>: Maintain thorough documentation on why certain rules exist and under what circumstances exceptions can be made.</p></li>
-</ul>
-</section>
-<section id="utilize-tool-specific-features-for-flexibility">
-<h3><strong>3. Utilize Tool-Specific Features for Flexibility</strong><a class="headerlink" href="#utilize-tool-specific-features-for-flexibility" title="Link to this heading">¶</a></h3>
+          <section id="monorepository-approach">
+<h1>Monorepository Approach<a class="headerlink" href="#monorepository-approach" title="Link to this heading">¶</a></h1>
+<p>A <strong>monorepository (monorepo)</strong> approach involves maintaining the code for multiple projects, often related or interdependent, within a single version control repository. This contrasts with the polyrepo approach, where each project resides in its own repository. Monorepos can encompass various types of applications, including server-side Python applications, mobile apps, and web applications.</p>
+<section id="implementing-a-monorepo-in-python">
+<h2><strong>Implementing a Monorepo in Python</strong><a class="headerlink" href="#implementing-a-monorepo-in-python" title="Link to this heading">¶</a></h2>
+<p>When adopting a monorepo approach for Python projects, consider the following steps and best practices:</p>
+<ol class="arabic">
+<li><p><strong>Repository Structure:</strong></p>
 <ul>
-<li><p><strong>Ruff and Pylint Configurations</strong>: Both tools support configuration inheritance and plugin systems. Utilize these features to create a modular and flexible configuration that can accommodate team-wide standards while allowing for specific adjustments when necessary.</p>
-<ul>
-<li><p><strong>Ruff Example</strong>:</p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="c1"># pyproject.toml</span>
-<span class="k">[tool.ruff]</span>
-<span class="n">extend-select</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;I&quot;</span><span class="p">]</span>
-<span class="n">ignore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;E501&quot;</span><span class="p">]</span>
+<li><p><strong>Logical Organization:</strong> Structure your repository to clearly separate different projects or components. A common structure might look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">monorepo</span>
+  <span class="o">/</span><span class="n">services</span>
+    <span class="o">/</span><span class="n">service_a</span>
+      <span class="o">/</span><span class="n">app</span>
+      <span class="o">/</span><span class="n">tests</span>
+      <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+    <span class="o">/</span><span class="n">service_b</span>
+      <span class="o">/</span><span class="n">app</span>
+      <span class="o">/</span><span class="n">tests</span>
+      <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+  <span class="o">/</span><span class="n">libs</span>
+    <span class="o">/</span><span class="n">common_lib</span>
+      <span class="o">/</span><span class="n">src</span>
+      <span class="o">/</span><span class="n">tests</span>
+      <span class="n">setup</span><span class="o">.</span><span class="n">py</span>
+  <span class="o">/</span><span class="n">tools</span>
+    <span class="o">/</span><span class="n">scripts</span>
+    <span class="o">/</span><span class="n">deployment</span>
+  <span class="n">README</span><span class="o">.</span><span class="n">md</span>
+  <span class="n">setup</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
 </li>
-<li><p><strong>Pylint Example</strong>:</p>
-<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># .pylintrc</span>
-<span class="k">[MESSAGES CONTROL]</span>
-<span class="na">disable</span><span class="o">=</span><span class="s">missing-docstring,invalid-name</span>
-</pre></div>
-</div>
-</li>
+<li><p><strong>Separation of Concerns:</strong> Ensure that each service or application has its own directory with isolated dependencies and configurations to prevent cross-contamination.</p></li>
 </ul>
 </li>
-</ul>
-</section>
-<section id="promote-team-discussions-and-consensus">
-<h3><strong>4. Promote Team Discussions and Consensus</strong><a class="headerlink" href="#promote-team-discussions-and-consensus" title="Link to this heading">¶</a></h3>
+<li><p><strong>Dependency Management:</strong></p>
 <ul class="simple">
-<li><p><strong>Regular Meetings</strong>: Hold regular team meetings to discuss and review linting rules, ensuring that configurations evolve based on collective input and consensus.</p></li>
-<li><p><strong>Feedback Channels</strong>: Create channels (e.g., Slack, email threads) where developers can provide feedback on the linting rules and suggest improvements.</p></li>
+<li><p><strong>Virtual Environments:</strong> Use virtual environments (e.g., <code class="docutils literal notranslate"><span class="pre">venv</span></code>, <code class="docutils literal notranslate"><span class="pre">pipenv</span></code>, or <code class="docutils literal notranslate"><span class="pre">poetry</span></code>) for each Python project or service to manage dependencies separately.</p></li>
+<li><p><strong>Centralized Dependencies:</strong> Alternatively, use tools like <code class="docutils literal notranslate"><span class="pre">poetry</span></code> workspaces or <code class="docutils literal notranslate"><span class="pre">pip-tools</span></code> to manage dependencies centrally while allowing for specific overrides per project.</p></li>
+</ul>
+</li>
+<li><p><strong>Build and Testing:</strong></p>
+<ul class="simple">
+<li><p><strong>Automated Testing:</strong> Implement continuous integration (CI) pipelines that can selectively run tests for the affected projects based on changes.</p></li>
+<li><p><strong>Build Tools:</strong> Utilize build tools that support monorepos, such as <code class="docutils literal notranslate"><span class="pre">Bazel</span></code> or <code class="docutils literal notranslate"><span class="pre">Make</span></code>, to handle complex build processes efficiently.</p></li>
+</ul>
+</li>
+<li><p><strong>Code Sharing:</strong></p>
+<ul class="simple">
+<li><p><strong>Shared Libraries:</strong> Place shared code in common libraries within the monorepo to promote reuse and consistency.</p></li>
+<li><p><strong>Versioning:</strong> Manage shared libraries’ versions carefully to ensure backward compatibility and smooth integration across different projects.</p></li>
+</ul>
+</li>
+<li><p><strong>Version Control Practices:</strong></p>
+<ul class="simple">
+<li><p><strong>Consistent Commit History:</strong> Maintain a coherent commit history that reflects changes across all projects, making it easier to track dependencies and integrations.</p></li>
+<li><p><strong>Branching Strategy:</strong> Adopt a branching strategy (like GitFlow) that accommodates multiple projects within the same repository.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="best-practices-for-monorepos">
+<h2><strong>Best Practices for Monorepos</strong><a class="headerlink" href="#best-practices-for-monorepos" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Modularization:</strong></p>
+<ul class="simple">
+<li><p>Break down the codebase into well-defined modules or packages to enhance maintainability and scalability.</p></li>
+</ul>
+</li>
+<li><p><strong>Clear Ownership:</strong></p>
+<ul class="simple">
+<li><p>Assign clear ownership of different parts of the repository to specific teams or individuals to streamline accountability and collaboration.</p></li>
+</ul>
+</li>
+<li><p><strong>Documentation:</strong></p>
+<ul class="simple">
+<li><p>Maintain comprehensive documentation for the repository structure, build processes, and contribution guidelines to facilitate onboarding and development.</p></li>
+</ul>
+</li>
+<li><p><strong>Tooling Support:</strong></p>
+<ul class="simple">
+<li><p>Leverage tools that support large codebases, such as advanced IDEs, code linters, and formatters, to maintain code quality and consistency.</p></li>
+</ul>
+</li>
+<li><p><strong>Performance Optimization:</strong></p>
+<ul class="simple">
+<li><p>Monitor and optimize repository performance, especially as the codebase grows. Techniques include shallow clones, sparse checkouts, and caching strategies in CI pipelines.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="including-diverse-applications-in-a-monorepo">
+<h2><strong>Including Diverse Applications in a Monorepo</strong><a class="headerlink" href="#including-diverse-applications-in-a-monorepo" title="Link to this heading">¶</a></h2>
+<p>While a monorepo can technically accommodate diverse types of applications (e.g., server apps, mobile apps, web apps), there are considerations to keep in mind:</p>
+<ol class="arabic simple">
+<li><p><strong>Interdependency:</strong></p>
+<ul class="simple">
+<li><p>If the applications share common libraries or components, a monorepo can simplify dependency management and integration.</p></li>
+</ul>
+</li>
+<li><p><strong>Team Structure:</strong></p>
+<ul class="simple">
+<li><p>Ensure that your team structure aligns with the repository structure. Diverse applications might require different expertise, so clear boundaries within the monorepo are essential.</p></li>
+</ul>
+</li>
+<li><p><strong>Build and Deployment Complexity:</strong></p>
+<ul class="simple">
+<li><p>Managing different build processes and deployment pipelines within a single repository can become complex. Tools like <code class="docutils literal notranslate"><span class="pre">Bazel</span></code> or custom scripts can help manage this complexity.</p></li>
+</ul>
+</li>
+<li><p><strong>Scalability:</strong></p>
+<ul class="simple">
+<li><p>Large monorepos with diverse applications can become challenging to manage as they grow. Evaluate whether the benefits of a monorepo outweigh the potential difficulties in your specific context.</p></li>
+</ul>
+</li>
+<li><p><strong>Access Control:</strong></p>
+<ul class="simple">
+<li><p>Implement appropriate access controls to restrict or grant access to different parts of the repository based on team roles and responsibilities.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="when-to-use-a-monorepo-for-diverse-applications">
+<h2><strong>When to Use a Monorepo for Diverse Applications</strong><a class="headerlink" href="#when-to-use-a-monorepo-for-diverse-applications" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Shared Codebase:</strong> When multiple applications share a significant amount of code or libraries.</p></li>
+<li><p><strong>Unified CI/CD:</strong> When you want to streamline continuous integration and deployment processes across applications.</p></li>
+<li><p><strong>Consistent Standards:</strong> When maintaining consistent coding standards, tooling, and workflows across diverse applications is a priority.</p></li>
+<li><p><strong>Simplified Dependency Management:</strong> When managing dependencies across applications benefits from a unified approach.</p></li>
 </ul>
 </section>
-</section>
-<section id="advantages-of-centralized-configuration">
-<h2><strong>Advantages of Centralized Configuration</strong><a class="headerlink" href="#advantages-of-centralized-configuration" title="Link to this heading">¶</a></h2>
-<ol class="arabic simple">
-<li><p><strong>Consistency</strong>: Uniform linting rules ensure that the entire codebase follows the same standards, making it easier to read and maintain.</p></li>
-<li><p><strong>Efficiency</strong>: Reduces the time spent resolving style conflicts during code reviews, as everyone adheres to the same guidelines.</p></li>
-<li><p><strong>Quality Assurance</strong>: Ensures that critical linting rules are enforced, reducing the likelihood of bugs and enhancing overall code quality.</p></li>
-<li><p><strong>Simplified Onboarding</strong>: New team members can quickly adopt the project’s standards without needing to configure their tools extensively.</p></li>
-</ol>
-</section>
-<section id="disadvantages-of-centralized-configuration">
-<h2><strong>Disadvantages of Centralized Configuration</strong><a class="headerlink" href="#disadvantages-of-centralized-configuration" title="Link to this heading">¶</a></h2>
-<ol class="arabic simple">
-<li><p><strong>Reduced Flexibility</strong>: May limit individual developers’ ability to tailor tools to their personal workflows, potentially affecting productivity.</p></li>
-<li><p><strong>Potential for Frustration</strong>: Strict rules that don’t account for different coding styles or preferences can lead to frustration and reduced morale.</p></li>
-<li><p><strong>Maintenance Overhead</strong>: Requires regular updates and reviews to ensure that the linting configuration remains relevant and effective.</p></li>
-</ol>
-</section>
-<section id="advantages-of-allowing-developer-freedom">
-<h2><strong>Advantages of Allowing Developer Freedom</strong><a class="headerlink" href="#advantages-of-allowing-developer-freedom" title="Link to this heading">¶</a></h2>
-<ol class="arabic simple">
-<li><p><strong>Personal Productivity</strong>: Developers can configure tools to match their workflows, potentially increasing productivity and satisfaction.</p></li>
-<li><p><strong>Flexibility</strong>: Allows for experimentation with different linting rules and practices that may better suit specific aspects of the project.</p></li>
-<li><p><strong>Adaptability</strong>: Individual configurations can adapt to various sub-projects or modules within a larger codebase, accommodating diverse requirements.</p></li>
-</ol>
-</section>
-<section id="disadvantages-of-allowing-developer-freedom">
-<h2><strong>Disadvantages of Allowing Developer Freedom</strong><a class="headerlink" href="#disadvantages-of-allowing-developer-freedom" title="Link to this heading">¶</a></h2>
-<ol class="arabic simple">
-<li><p><strong>Inconsistency</strong>: Diverse linting configurations can lead to a fragmented codebase with inconsistent styles and standards.</p></li>
-<li><p><strong>Increased Complexity</strong>: Managing multiple configurations can complicate the development process and make it harder to enforce team-wide standards.</p></li>
-<li><p><strong>Conflict in Code Reviews</strong>: Inconsistent linting rules can lead to unnecessary conflicts and disagreements during code reviews.</p></li>
-<li><p><strong>Difficulty in Automation</strong>: Automated tools and CI/CD pipelines may struggle to enforce consistent standards if individual configurations vary significantly.</p></li>
-</ol>
-</section>
-<section id="best-practices-for-managing-linting-configurations-in-a-team">
-<h2><strong>Best Practices for Managing Linting Configurations in a Team</strong><a class="headerlink" href="#best-practices-for-managing-linting-configurations-in-a-team" title="Link to this heading">¶</a></h2>
-<ol class="arabic simple">
-<li><p><strong>Establish a Core Configuration</strong>: Define a comprehensive set of linting rules that align with the team’s coding standards and best practices. This should be the default configuration for all team members.</p></li>
-<li><p><strong>Version Control Configuration Files</strong>: Store the linting configuration files (e.g., <code class="docutils literal notranslate"><span class="pre">.pylintrc</span></code>, <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> for Ruff) in the repository to ensure that everyone uses the same settings.</p></li>
-<li><p><strong>Use Configuration Inheritance</strong>: Allow individual developers to extend the base configuration if necessary, but ensure that core rules remain enforced.</p></li>
-<li><p><strong>Automate Linting in CI/CD</strong>: Integrate linting checks into the CI/CD pipeline to automatically enforce standards and catch deviations early.</p></li>
-<li><p><strong>Educate the Team</strong>: Provide training or documentation on the importance of linting rules and how to adhere to them, fostering a culture of code quality.</p></li>
-<li><p><strong>Regularly Review and Update Rules</strong>: Periodically assess the effectiveness of linting rules and make adjustments based on team feedback and evolving project needs.</p></li>
-<li><p><strong>Handle Exceptions Transparently</strong>: When exceptions are necessary, document them clearly and ensure they are reviewed and approved by the team to maintain overall consistency.</p></li>
-</ol>
+<section id="when-to-consider-separate-repositories">
+<h2><strong>When to Consider Separate Repositories</strong><a class="headerlink" href="#when-to-consider-separate-repositories" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Independent Projects:</strong> When applications are largely independent with minimal shared code.</p></li>
+<li><p><strong>Diverse Technology Stacks:</strong> When applications use vastly different technology stacks that require separate tooling and configurations.</p></li>
+<li><p><strong>Team Autonomy:</strong> When teams require autonomy to manage their own repositories without impacting others.</p></li>
+</ul>
 </section>
 <section id="conclusion">
 <h2><strong>Conclusion</strong><a class="headerlink" href="#conclusion" title="Link to this heading">¶</a></h2>
-<p><strong>Centralizing the configuration and exception handling for Ruff and Pylint is generally the best approach for team environments.</strong> It ensures consistency, maintains code quality, and simplifies collaboration and automation processes. However, allowing limited flexibility through configuration inheritance and a structured exception process can accommodate individual preferences without compromising the team’s standards. By striking the right balance, teams can maintain high code quality while respecting individual workflows and enhancing overall productivity.</p>
+<p>A monorepo approach can be highly effective for Python projects, especially when there is significant overlap or interdependency among the applications. It promotes code reuse, simplifies dependency management, and fosters a unified development environment. However, incorporating diverse application types (server, mobile, web) into a single monorepo requires careful planning, clear organization, and robust tooling to manage the increased complexity. Assess your project’s specific needs, team structure, and long-term scalability before deciding whether a monorepo is the right fit for your organization.</p>
 </section>
 </section>
 
@@ -415,23 +425,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="tool_coverage_by_ruff.html">
+          <a class="next-page" href="locking_package_versions.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Tool Coverage by Ruff</div>
+                <div class="title">Locking Package Versions</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="makefile_pro_and_con.html">
+          <a class="prev-page" href="repository_structure.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Make &amp; Makefile - Pro and Con</div>
+                <div class="title">Repository Structure: Mono, Poly, Hybrid or Micro</div>
                 
               </div>
             </a>
@@ -465,26 +475,12 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Centralized Configuration</a><ul>
-<li><a class="reference internal" href="#recommended-approach-centralized-configuration-with-limited-flexibility"><strong>Recommended Approach: Centralized Configuration with Limited Flexibility</strong></a><ul>
-<li><a class="reference internal" href="#ensures-consistency-across-the-codebase"><strong>1. Ensures Consistency Across the Codebase</strong></a></li>
-<li><a class="reference internal" href="#facilitates-code-reviews-and-collaboration"><strong>2. Facilitates Code Reviews and Collaboration</strong></a></li>
-<li><a class="reference internal" href="#enhances-code-quality-and-reliability"><strong>3. Enhances Code Quality and Reliability</strong></a></li>
-<li><a class="reference internal" href="#streamlines-ci-cd-integration"><strong>4. Streamlines CI/CD Integration</strong></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#allowing-limited-developer-flexibility"><strong>Allowing Limited Developer Flexibility</strong></a><ul>
-<li><a class="reference internal" href="#use-a-base-configuration-with-overrides"><strong>1. Use a Base Configuration with Overrides</strong></a></li>
-<li><a class="reference internal" href="#provide-mechanisms-for-exception-requests"><strong>2. Provide Mechanisms for Exception Requests</strong></a></li>
-<li><a class="reference internal" href="#utilize-tool-specific-features-for-flexibility"><strong>3. Utilize Tool-Specific Features for Flexibility</strong></a></li>
-<li><a class="reference internal" href="#promote-team-discussions-and-consensus"><strong>4. Promote Team Discussions and Consensus</strong></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#advantages-of-centralized-configuration"><strong>Advantages of Centralized Configuration</strong></a></li>
-<li><a class="reference internal" href="#disadvantages-of-centralized-configuration"><strong>Disadvantages of Centralized Configuration</strong></a></li>
-<li><a class="reference internal" href="#advantages-of-allowing-developer-freedom"><strong>Advantages of Allowing Developer Freedom</strong></a></li>
-<li><a class="reference internal" href="#disadvantages-of-allowing-developer-freedom"><strong>Disadvantages of Allowing Developer Freedom</strong></a></li>
-<li><a class="reference internal" href="#best-practices-for-managing-linting-configurations-in-a-team"><strong>Best Practices for Managing Linting Configurations in a Team</strong></a></li>
+<li><a class="reference internal" href="#">Monorepository Approach</a><ul>
+<li><a class="reference internal" href="#implementing-a-monorepo-in-python"><strong>Implementing a Monorepo in Python</strong></a></li>
+<li><a class="reference internal" href="#best-practices-for-monorepos"><strong>Best Practices for Monorepos</strong></a></li>
+<li><a class="reference internal" href="#including-diverse-applications-in-a-monorepo"><strong>Including Diverse Applications in a Monorepo</strong></a></li>
+<li><a class="reference internal" href="#when-to-use-a-monorepo-for-diverse-applications"><strong>When to Use a Monorepo for Diverse Applications</strong></a></li>
+<li><a class="reference internal" href="#when-to-consider-separate-repositories"><strong>When to Consider Separate Repositories</strong></a></li>
 <li><a class="reference internal" href="#conclusion"><strong>Conclusion</strong></a></li>
 </ul>
 </li>
