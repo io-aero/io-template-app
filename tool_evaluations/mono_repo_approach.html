@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Monorepository Approach" href="mono_repo_approach.html" /><link rel="prev" title="Tool Evaluations" href="index.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Locking Package Versions" href="locking_package_versions.html" /><link rel="prev" title="Repository Structure: Mono, Poly, Hybrid or Micro" href="repository_structure.html" />
 
     <link rel="shortcut icon" href="../_static/IO-Aero_1_Favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>Repository Structure: Mono, Poly, Hybrid or Micro - IO-TEMPLATE-APP 2-0-11 documentation</title>
+        <title>Monorepository Approach - IO-TEMPLATE-APP 2-0-11 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
@@ -220,8 +220,8 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tool Evaluations</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Tool Evaluations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Repository Structure: Mono, Poly, Hybrid or Micro</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mono_repo_approach.html">Monorepository Approach</a></li>
+<li class="toctree-l2"><a class="reference internal" href="repository_structure.html">Repository Structure: Mono, Poly, Hybrid or Micro</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Monorepository Approach</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locking_package_versions.html">Locking Package Versions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_packagemanager.html">Python Package Manager Alternatives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="combine_conda_and_poetry.html">Combine Conda and Poetry</a></li>
@@ -274,98 +274,149 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="repository-structure-mono-poly-hybrid-or-micro">
-<h1>Repository Structure: Mono, Poly, Hybrid or Micro<a class="headerlink" href="#repository-structure-mono-poly-hybrid-or-micro" title="Link to this heading">¶</a></h1>
-<p>A <strong>monorepository</strong> (monorepo) is a single repository that stores code for multiple projects, components, or services. All the code, usually for an organization or team, resides within this one repository, although it may be organized in subdirectories or modules.</p>
-<section id="monorepository-advantages">
-<h2>Monorepository: Advantages<a class="headerlink" href="#monorepository-advantages" title="Link to this heading">¶</a></h2>
-<ol class="arabic simple">
-<li><p><strong>Unified Codebase</strong>: All projects are in a single place, making it easier to discover, navigate, and share code across teams.</p></li>
-<li><p><strong>Consistent Versioning</strong>: Changes in dependencies can be managed consistently across all projects, reducing compatibility issues.</p></li>
-<li><p><strong>Improved Collaboration</strong>: Team members can more easily make and test changes across different projects, facilitating code reuse.</p></li>
-<li><p><strong>Single Source of Truth</strong>: All code is in one repository, simplifying branch management and CI/CD pipelines.</p></li>
-<li><p><strong>Simplified Dependency Management</strong>: Internal libraries can be updated without complex package management processes, as they can be directly referenced within the repository.</p></li>
-<li><p><strong>Standardized Tools</strong>: A monorepo can enforce standard tooling and configurations across projects, promoting consistency in development and builds.</p></li>
-</ol>
-</section>
-<section id="monorepository-disadvantages">
-<h2>Monorepository: Disadvantages<a class="headerlink" href="#monorepository-disadvantages" title="Link to this heading">¶</a></h2>
-<ol class="arabic simple">
-<li><p><strong>Scalability Issues</strong>: As the monorepo grows, it can become cumbersome to clone, manage, and build, especially for larger organizations.</p></li>
-<li><p><strong>Complex CI/CD Pipelines</strong>: A large monorepo can lead to more complex and slower CI/CD processes since changes may affect multiple projects.</p></li>
-<li><p><strong>Permission Management</strong>: With everything in one place, it may be difficult to manage permissions for teams who don’t need access to all parts of the repository.</p></li>
-<li><p><strong>Tooling and Infrastructure Requirements</strong>: Monorepos require advanced tooling and infrastructure, like build systems and version control, which can handle their size and complexity.</p></li>
-</ol>
-</section>
-<section id="alternatives-to-monorepositories">
-<h2>Alternatives to Monorepositories<a class="headerlink" href="#alternatives-to-monorepositories" title="Link to this heading">¶</a></h2>
-<ol class="arabic simple">
-<li><p><strong>Polyrepository (Polyrepo)</strong></p>
+          <section id="monorepository-approach">
+<h1>Monorepository Approach<a class="headerlink" href="#monorepository-approach" title="Link to this heading">¶</a></h1>
+<p>A <strong>monorepository (monorepo)</strong> approach involves maintaining the code for multiple projects, often related or interdependent, within a single version control repository. This contrasts with the polyrepo approach, where each project resides in its own repository. Monorepos can encompass various types of applications, including server-side Python applications, mobile apps, and web applications.</p>
+<section id="implementing-a-monorepo-in-python">
+<h2><strong>Implementing a Monorepo in Python</strong><a class="headerlink" href="#implementing-a-monorepo-in-python" title="Link to this heading">¶</a></h2>
+<p>When adopting a monorepo approach for Python projects, consider the following steps and best practices:</p>
+<ol class="arabic">
+<li><p><strong>Repository Structure:</strong></p>
+<ul>
+<li><p><strong>Logical Organization:</strong> Structure your repository to clearly separate different projects or components. A common structure might look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">monorepo</span>
+  <span class="o">/</span><span class="n">services</span>
+    <span class="o">/</span><span class="n">service_a</span>
+      <span class="o">/</span><span class="n">app</span>
+      <span class="o">/</span><span class="n">tests</span>
+      <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+    <span class="o">/</span><span class="n">service_b</span>
+      <span class="o">/</span><span class="n">app</span>
+      <span class="o">/</span><span class="n">tests</span>
+      <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+  <span class="o">/</span><span class="n">libs</span>
+    <span class="o">/</span><span class="n">common_lib</span>
+      <span class="o">/</span><span class="n">src</span>
+      <span class="o">/</span><span class="n">tests</span>
+      <span class="n">setup</span><span class="o">.</span><span class="n">py</span>
+  <span class="o">/</span><span class="n">tools</span>
+    <span class="o">/</span><span class="n">scripts</span>
+    <span class="o">/</span><span class="n">deployment</span>
+  <span class="n">README</span><span class="o">.</span><span class="n">md</span>
+  <span class="n">setup</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Separation of Concerns:</strong> Ensure that each service or application has its own directory with isolated dependencies and configurations to prevent cross-contamination.</p></li>
+</ul>
+</li>
+<li><p><strong>Dependency Management:</strong></p>
 <ul class="simple">
-<li><p><strong>Description</strong>: Each project or service has its own separate repository, commonly used by smaller teams or for smaller, distinct services.</p></li>
-<li><p><strong>Advantages</strong>:</p>
-<ul>
-<li><p><strong>Scalability</strong>: Each project is isolated, making repositories faster to clone and work with.</p></li>
-<li><p><strong>Simplified CI/CD</strong>: Smaller repositories typically lead to faster, simpler CI/CD setups.</p></li>
-<li><p><strong>Flexible Permissions</strong>: Permissions can be set on a per-repository basis, which is helpful when projects need different access controls.</p></li>
-<li><p><strong>Independent Versioning</strong>: Each project can maintain its own versioning and release cycle, allowing more control over dependencies.</p></li>
+<li><p><strong>Virtual Environments:</strong> Use virtual environments (e.g., <code class="docutils literal notranslate"><span class="pre">venv</span></code>, <code class="docutils literal notranslate"><span class="pre">pipenv</span></code>, or <code class="docutils literal notranslate"><span class="pre">poetry</span></code>) for each Python project or service to manage dependencies separately.</p></li>
+<li><p><strong>Centralized Dependencies:</strong> Alternatively, use tools like <code class="docutils literal notranslate"><span class="pre">poetry</span></code> workspaces or <code class="docutils literal notranslate"><span class="pre">pip-tools</span></code> to manage dependencies centrally while allowing for specific overrides per project.</p></li>
 </ul>
 </li>
-<li><p><strong>Disadvantages</strong>:</p>
-<ul>
-<li><p><strong>Duplication of Code</strong>: Shared code or libraries might be duplicated across repositories.</p></li>
-<li><p><strong>Dependency Management Complexity</strong>: Managing dependencies across multiple repositories can become complicated, especially as services scale.</p></li>
-<li><p><strong>Tooling Fragmentation</strong>: Different repositories might use different tooling and configurations, leading to inconsistencies across the organization.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Hybrid Repository Strategy</strong></p>
+<li><p><strong>Build and Testing:</strong></p>
 <ul class="simple">
-<li><p><strong>Description</strong>: Combines monorepo and polyrepo by grouping related projects in a monorepo while keeping others in separate repositories.</p></li>
-<li><p><strong>Advantages</strong>:</p>
-<ul>
-<li><p><strong>Flexibility</strong>: Allows large projects or tightly coupled services to stay together, while unrelated projects remain independent.</p></li>
-<li><p><strong>Modular Growth</strong>: Easier to manage growth and scalability concerns.</p></li>
-<li><p><strong>Optimized CI/CD</strong>: CI/CD can be optimized to handle both large and small repositories according to their needs.</p></li>
+<li><p><strong>Automated Testing:</strong> Implement continuous integration (CI) pipelines that can selectively run tests for the affected projects based on changes.</p></li>
+<li><p><strong>Build Tools:</strong> Utilize build tools that support monorepos, such as <code class="docutils literal notranslate"><span class="pre">Bazel</span></code> or <code class="docutils literal notranslate"><span class="pre">Make</span></code>, to handle complex build processes efficiently.</p></li>
 </ul>
 </li>
-<li><p><strong>Disadvantages</strong>:</p>
-<ul>
-<li><p><strong>Inconsistent Workflow</strong>: Requires balancing two types of repository management, which can be complex.</p></li>
-<li><p><strong>Dependency Challenges</strong>: Managing dependencies across monorepos and polyrepos requires careful planning.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Microrepository Approach</strong></p>
+<li><p><strong>Code Sharing:</strong></p>
 <ul class="simple">
-<li><p><strong>Description</strong>: Each component or small module is stored in its own repository, common in organizations heavily using microservices.</p></li>
-<li><p><strong>Advantages</strong>:</p>
-<ul>
-<li><p><strong>Granular Control</strong>: Teams can manage individual components independently, allowing for flexible updates and permissions.</p></li>
-<li><p><strong>High Reusability</strong>: Each microrepository is self-contained and can be reused across projects.</p></li>
+<li><p><strong>Shared Libraries:</strong> Place shared code in common libraries within the monorepo to promote reuse and consistency.</p></li>
+<li><p><strong>Versioning:</strong> Manage shared libraries’ versions carefully to ensure backward compatibility and smooth integration across different projects.</p></li>
 </ul>
 </li>
-<li><p><strong>Disadvantages</strong>:</p>
-<ul>
-<li><p><strong>Dependency Hell</strong>: High interdependence between repositories can lead to complex dependency issues.</p></li>
-<li><p><strong>Management Overhead</strong>: Having numerous repositories makes version control, permissions, and coordination challenging.</p></li>
-</ul>
-</li>
+<li><p><strong>Version Control Practices:</strong></p>
+<ul class="simple">
+<li><p><strong>Consistent Commit History:</strong> Maintain a coherent commit history that reflects changes across all projects, making it easier to track dependencies and integrations.</p></li>
+<li><p><strong>Branching Strategy:</strong> Adopt a branching strategy (like GitFlow) that accommodates multiple projects within the same repository.</p></li>
 </ul>
 </li>
 </ol>
 </section>
-<section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
+<section id="best-practices-for-monorepos">
+<h2><strong>Best Practices for Monorepos</strong><a class="headerlink" href="#best-practices-for-monorepos" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Modularization:</strong></p>
 <ul class="simple">
-<li><p><strong>Monorepo</strong>: Best for organizations with strong internal dependencies and a need for consistency across projects.</p></li>
-<li><p><strong>Polyrepo</strong>: Suitable for independent projects where isolation and faster build times are priorities.</p></li>
-<li><p><strong>Hybrid</strong>: Good for organizations needing flexibility and selective grouping of projects.</p></li>
-<li><p><strong>Microrepo</strong>: Ideal for highly modular architectures, especially microservices, where each component evolves independently.</p></li>
+<li><p>Break down the codebase into well-defined modules or packages to enhance maintainability and scalability.</p></li>
 </ul>
-<p>The choice depends on team size, project dependencies, and the overall complexity of the software architecture.</p>
+</li>
+<li><p><strong>Clear Ownership:</strong></p>
+<ul class="simple">
+<li><p>Assign clear ownership of different parts of the repository to specific teams or individuals to streamline accountability and collaboration.</p></li>
+</ul>
+</li>
+<li><p><strong>Documentation:</strong></p>
+<ul class="simple">
+<li><p>Maintain comprehensive documentation for the repository structure, build processes, and contribution guidelines to facilitate onboarding and development.</p></li>
+</ul>
+</li>
+<li><p><strong>Tooling Support:</strong></p>
+<ul class="simple">
+<li><p>Leverage tools that support large codebases, such as advanced IDEs, code linters, and formatters, to maintain code quality and consistency.</p></li>
+</ul>
+</li>
+<li><p><strong>Performance Optimization:</strong></p>
+<ul class="simple">
+<li><p>Monitor and optimize repository performance, especially as the codebase grows. Techniques include shallow clones, sparse checkouts, and caching strategies in CI pipelines.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="including-diverse-applications-in-a-monorepo">
+<h2><strong>Including Diverse Applications in a Monorepo</strong><a class="headerlink" href="#including-diverse-applications-in-a-monorepo" title="Link to this heading">¶</a></h2>
+<p>While a monorepo can technically accommodate diverse types of applications (e.g., server apps, mobile apps, web apps), there are considerations to keep in mind:</p>
+<ol class="arabic simple">
+<li><p><strong>Interdependency:</strong></p>
+<ul class="simple">
+<li><p>If the applications share common libraries or components, a monorepo can simplify dependency management and integration.</p></li>
+</ul>
+</li>
+<li><p><strong>Team Structure:</strong></p>
+<ul class="simple">
+<li><p>Ensure that your team structure aligns with the repository structure. Diverse applications might require different expertise, so clear boundaries within the monorepo are essential.</p></li>
+</ul>
+</li>
+<li><p><strong>Build and Deployment Complexity:</strong></p>
+<ul class="simple">
+<li><p>Managing different build processes and deployment pipelines within a single repository can become complex. Tools like <code class="docutils literal notranslate"><span class="pre">Bazel</span></code> or custom scripts can help manage this complexity.</p></li>
+</ul>
+</li>
+<li><p><strong>Scalability:</strong></p>
+<ul class="simple">
+<li><p>Large monorepos with diverse applications can become challenging to manage as they grow. Evaluate whether the benefits of a monorepo outweigh the potential difficulties in your specific context.</p></li>
+</ul>
+</li>
+<li><p><strong>Access Control:</strong></p>
+<ul class="simple">
+<li><p>Implement appropriate access controls to restrict or grant access to different parts of the repository based on team roles and responsibilities.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="when-to-use-a-monorepo-for-diverse-applications">
+<h2><strong>When to Use a Monorepo for Diverse Applications</strong><a class="headerlink" href="#when-to-use-a-monorepo-for-diverse-applications" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Shared Codebase:</strong> When multiple applications share a significant amount of code or libraries.</p></li>
+<li><p><strong>Unified CI/CD:</strong> When you want to streamline continuous integration and deployment processes across applications.</p></li>
+<li><p><strong>Consistent Standards:</strong> When maintaining consistent coding standards, tooling, and workflows across diverse applications is a priority.</p></li>
+<li><p><strong>Simplified Dependency Management:</strong> When managing dependencies across applications benefits from a unified approach.</p></li>
+</ul>
+</section>
+<section id="when-to-consider-separate-repositories">
+<h2><strong>When to Consider Separate Repositories</strong><a class="headerlink" href="#when-to-consider-separate-repositories" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Independent Projects:</strong> When applications are largely independent with minimal shared code.</p></li>
+<li><p><strong>Diverse Technology Stacks:</strong> When applications use vastly different technology stacks that require separate tooling and configurations.</p></li>
+<li><p><strong>Team Autonomy:</strong> When teams require autonomy to manage their own repositories without impacting others.</p></li>
+</ul>
+</section>
+<section id="conclusion">
+<h2><strong>Conclusion</strong><a class="headerlink" href="#conclusion" title="Link to this heading">¶</a></h2>
+<p>A monorepo approach can be highly effective for Python projects, especially when there is significant overlap or interdependency among the applications. It promotes code reuse, simplifies dependency management, and fosters a unified development environment. However, incorporating diverse application types (server, mobile, web) into a single monorepo requires careful planning, clear organization, and robust tooling to manage the increased complexity. Assess your project’s specific needs, team structure, and long-term scalability before deciding whether a monorepo is the right fit for your organization.</p>
 </section>
 </section>
 
@@ -374,23 +425,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="mono_repo_approach.html">
+          <a class="next-page" href="locking_package_versions.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Monorepository Approach</div>
+                <div class="title">Locking Package Versions</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="index.html">
+          <a class="prev-page" href="repository_structure.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Tool Evaluations</div>
+                <div class="title">Repository Structure: Mono, Poly, Hybrid or Micro</div>
                 
               </div>
             </a>
@@ -424,11 +475,13 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Repository Structure: Mono, Poly, Hybrid or Micro</a><ul>
-<li><a class="reference internal" href="#monorepository-advantages">Monorepository: Advantages</a></li>
-<li><a class="reference internal" href="#monorepository-disadvantages">Monorepository: Disadvantages</a></li>
-<li><a class="reference internal" href="#alternatives-to-monorepositories">Alternatives to Monorepositories</a></li>
-<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#">Monorepository Approach</a><ul>
+<li><a class="reference internal" href="#implementing-a-monorepo-in-python"><strong>Implementing a Monorepo in Python</strong></a></li>
+<li><a class="reference internal" href="#best-practices-for-monorepos"><strong>Best Practices for Monorepos</strong></a></li>
+<li><a class="reference internal" href="#including-diverse-applications-in-a-monorepo"><strong>Including Diverse Applications in a Monorepo</strong></a></li>
+<li><a class="reference internal" href="#when-to-use-a-monorepo-for-diverse-applications"><strong>When to Use a Monorepo for Diverse Applications</strong></a></li>
+<li><a class="reference internal" href="#when-to-consider-separate-repositories"><strong>When to Consider Separate Repositories</strong></a></li>
+<li><a class="reference internal" href="#conclusion"><strong>Conclusion</strong></a></li>
 </ul>
 </li>
 </ul>
