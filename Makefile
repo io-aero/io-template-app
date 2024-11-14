@@ -157,11 +157,10 @@ compileall:
 
 conda-dev: ## Create a new environment for development.
 	@echo "Info **********  Start: Miniconda create development environment *****"
-	conda config --set always_yes true
 	conda --version
 	@echo "----------------------------------------------------------------------"
-	conda env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
-	conda env create -f config/environment_dev.yml
+	conda config --set always_yes true
+	conda env create -f config/environment_dev.yml || conda env update --prune -f config/environment_dev.yml
 	@echo "----------------------------------------------------------------------"
 	conda info --envs
 	conda list
@@ -169,11 +168,10 @@ conda-dev: ## Create a new environment for development.
 
 conda-prod: ## Create a new environment for production.
 	@echo "Info **********  Start: Miniconda create production environment ******"
-	conda config --set always_yes true
 	conda --version
 	@echo "----------------------------------------------------------------------"
-	conda env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
-	conda env create -f config/environment.yml
+	conda config --set always_yes true
+	conda env create -f config/environment.yml || conda env update --prune -f config/environment.yml
 	@echo "----------------------------------------------------------------------"
 	conda info --envs
 	conda list
