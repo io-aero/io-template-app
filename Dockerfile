@@ -57,10 +57,10 @@ RUN /opt/conda/bin/conda env create -f environment.yml
 COPY ${REPO_MODULE}/ ./${REPO_MODULE}/
 COPY scripts/ ./scripts/
 COPY scripts/entrypoint.sh .
-COPY logging_cfg.yaml .
-COPY pyproject.toml .
+COPY config/logging_cfg.yaml .
+COPY config/pyproject.toml .
 COPY run_${REPO_UNDERS}.sh .
-COPY settings.io_aero.toml .
+COPY config/settings.io_aero.toml .
 
 # Set environment variables for the application
 ENV ENV_FOR_DYNACONF=prod

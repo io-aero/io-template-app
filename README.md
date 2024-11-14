@@ -146,7 +146,6 @@ Further IO-Aero software documentation can be found under the following links.
 | .dockerignore            | Configuration of files and folders to be ignored.                     |
 | .gitattributes           | Handling of the os-specific file properties.                          |
 | .gitignore               | Configuration of files and folders to be ignored.                     |
-| .pylintrc                | pylint configuration file.                                            |
 | Dockerfile               | Configuration file to create a Docker image.                          |
 | LICENSE.md               | Text of the licence terms.                                            |
 | logging_cfg.yaml         | Configuration of the Logger functionality.                            |

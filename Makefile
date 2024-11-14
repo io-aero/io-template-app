@@ -120,12 +120,12 @@ action-std:
 	bin/act.exe --version
 	@echo "----------------------------------------------------------------------"
 	bin/act.exe --quiet \
-				--secret-file .act_secrets \
+				--secret-file config/.act_secrets \
 				--var IO_LOCAL='true' \
 				-P ubuntu-latest=catthehacker/ubuntu:act-latest \
 				-W .github/workflows/github_pages.yml
 	bin/act.exe --quiet \
-				--secret-file .act_secrets \
+				--secret-file config/.act_secrets \
 				--var IO_LOCAL='true' \
 				-P ubuntu-latest=catthehacker/ubuntu:act-latest \
 				-W .github/workflows/standard.yml
@@ -285,7 +285,7 @@ pylint:
 	@echo "Info **********  Start: Pylint ***************************************"
 	pylint --version
 	@echo "----------------------------------------------------------------------"
-	pylint --rcfile=.pylintrc ${PYTHONPATH}
+	pylint --rcfile=config/.pylintrc ${PYTHONPATH}
 	@echo "Info **********  End:   Pylint ***************************************"
 
 ## Run all tests with pytest.
