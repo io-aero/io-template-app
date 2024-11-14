@@ -12,7 +12,6 @@ dependencies:
     - git+https://IoAeroMachineUser:${PYPI_PAT}@github.com/io-aero/io-common.git
     # Development dependencies
     - bandit
-    - black
     - coverage
     - coveralls
     - docformatter

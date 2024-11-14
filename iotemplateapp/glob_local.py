@@ -13,13 +13,13 @@ io_logger.initialise_logger()
 
 # pylint: disable=line-too-long
 ARG_TASK = "task"
-"""str: A constant key used to reference the 'task' argument in function calls and command line arguments throughout the software."""  # noqa: E501
+"""str: A constant key used to reference the 'task' argument in function calls and command line arguments throughout the software."""
 
 ARG_TASK_CHOICE = ""
-"""str: Initially set to an empty string, this variable is intended to hold the user's choice of task once determined at runtime."""  # noqa: E501
+"""str: Initially set to an empty string, this variable is intended to hold the user's choice of task once determined at runtime."""
 
 ARG_TASK_VERSION = "version"
-"""str: A constant key used to reference the 'version' argument for tasks, indicating the version of the task being used."""  # noqa: E501
+"""str: A constant key used to reference the 'version' argument for tasks, indicating the version of the task being used."""
 
 CHECK_VALUE_TEST = io_settings.settings.check_value == "test"
 """bool: A boolean indicating whether the check value from io_settings is 'test'."""
@@ -52,7 +52,7 @@ IO_TEMPLATE_APP_VERSION = "9.9.9"
 """str: The current version number of the IO-Aero template application."""
 
 LOCALE = "en_US.UTF-8"
-"""str: Default locale setting for the system to 'en_US.UTF-8', ensuring consistent language and regional format settings."""  # noqa: E501
+"""str: Default locale setting for the system to 'en_US.UTF-8', ensuring consistent language and regional format settings."""
 
 # Warning messages.
 # WARN_00_999 = "WARN.00.999 ...
