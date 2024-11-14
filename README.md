@@ -130,11 +130,9 @@ Further IO-Aero software documentation can be found under the following links.
 | .vscode           | Visual Studio Code configuration files.              |
 | config            | Configuration files.                                 |
 | data              | Application data related files.                      |
-| dist              | Dynamic link library version of **IO-TEMPLATE-APP**. |
 | docs              | Documentation files.                                 |
 | examples          | Scripts for examples and special tests.              |
 | iotemplateapp     | Python script files.                                 |
-| libs              | Contains libraries that are not used via pip.        |
 | resources         | Selected manuals and software.                       |
 | scripts           | Scripts supporting Ubuntu Bash.                      |
 | tests             | Scripts and data for examples and tests.             |
@@ -143,20 +141,9 @@ Further IO-Aero software documentation can be found under the following links.
 
 | File                     | Functionality                                                         |
 |--------------------------|-----------------------------------------------------------------------|
-| .dockerignore            | Configuration of files and folders to be ignored.                     |
-| .gitattributes           | Handling of the os-specific file properties.                          |
-| .gitignore               | Configuration of files and folders to be ignored.                     |
-| .pylintrc                | pylint configuration file.                                            |
-| Dockerfile               | Configuration file to create a Docker image.                          |
 | LICENSE.md               | Text of the licence terms.                                            |
-| logging_cfg.yaml         | Configuration of the Logger functionality.                            |
 | Makefile                 | Tasks to be executed with the make command.                           |
-| pyproject.toml           | Optional configuration data for the software quality tools.           |
 | README.md                | This file.                                                            |
-| run_io_template_app      | Main script for using the functionality.                              |
 | run_io_template_app_dev  | Main script for using the functionality in a development environment. |
 | run_io_template_app_prod | Main script for using the functionality in a productive environment.  |
 | run_io_template_app_test | Main script for using the functionality in a test environment.        |
-| run_iotemplateapp        | Main script for using the functionality based on a Docker executable. |
-| settings.io_aero.toml    | Configuration data.                                                   |
-| setup.cfg                | Configuration data.                                                   |

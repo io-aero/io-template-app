@@ -120,12 +120,12 @@ action-std:
 	bin/act.exe --version
 	@echo "----------------------------------------------------------------------"
 	bin/act.exe --quiet \
-				--secret-file .act_secrets \
+				--secret-file config/.act_secrets \
 				--var IO_LOCAL='true' \
 				-P ubuntu-latest=catthehacker/ubuntu:act-latest \
 				-W .github/workflows/github_pages.yml
 	bin/act.exe --quiet \
-				--secret-file .act_secrets \
+				--secret-file config/.act_secrets \
 				--var IO_LOCAL='true' \
 				-P ubuntu-latest=catthehacker/ubuntu:act-latest \
 				-W .github/workflows/standard.yml
@@ -157,11 +157,10 @@ compileall:
 
 conda-dev: ## Create a new environment for development.
 	@echo "Info **********  Start: Miniconda create development environment *****"
-	conda config --set always_yes true
 	conda --version
 	@echo "----------------------------------------------------------------------"
-	conda env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
-	conda env create -f config/environment_dev.yml
+	conda config --set always_yes true
+	conda env create -f config/environment_dev.yml || conda env update --prune -f config/environment_dev.yml
 	@echo "----------------------------------------------------------------------"
 	conda info --envs
 	conda list
@@ -169,11 +168,10 @@ conda-dev: ## Create a new environment for development.
 
 conda-prod: ## Create a new environment for production.
 	@echo "Info **********  Start: Miniconda create production environment ******"
-	conda config --set always_yes true
 	conda --version
 	@echo "----------------------------------------------------------------------"
-	conda env remove -n ${MODULE} >/dev/null 2>&1 || echo "Environment '${MODULE}' does not exist."
-	conda env create -f config/environment.yml
+	conda config --set always_yes true
+	conda env create -f config/environment.yml || conda env update --prune -f config/environment.yml
 	@echo "----------------------------------------------------------------------"
 	conda info --envs
 	conda list
@@ -285,7 +283,7 @@ pylint:
 	@echo "Info **********  Start: Pylint ***************************************"
 	pylint --version
 	@echo "----------------------------------------------------------------------"
-	pylint --rcfile=.pylintrc ${PYTHONPATH}
+	pylint --rcfile=config/.pylintrc ${PYTHONPATH}
 	@echo "Info **********  End:   Pylint ***************************************"
 
 ## Run all tests with pytest.
