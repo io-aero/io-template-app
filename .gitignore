@@ -1,6 +1,6 @@
 *.bak
 *.log
-.coverage
+.coverage*
 .history/
 .idea/
 .mypy_cache/
