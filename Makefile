@@ -83,7 +83,6 @@ help:
 ## Ensure all required tools are installed.
 check-tools:
 	$(call CHECK_TOOL,bandit)
-	$(call CHECK_TOOL,black)
 	$(call CHECK_TOOL,coveralls)
 	$(call CHECK_TOOL,docformatter)
 	$(call CHECK_TOOL,docker)
@@ -138,14 +137,6 @@ bandit:
 	@echo "----------------------------------------------------------------------"
 	bandit -c pyproject.toml -r ${PYTHONPATH} --severity-level high --severity-level medium
 	@echo "Info **********  End:   Bandit ***************************************"
-
-## Format the code with Black.
-black:
-	@echo "Info **********  Start: black ****************************************"
-	black --version
-	@echo "----------------------------------------------------------------------"
-	black ${PYTHONPATH}
-	@echo "Info **********  End:   black ****************************************"
 
 ## Byte-compile the Python libraries.
 compileall:
@@ -245,8 +236,8 @@ everything: check-tools dev docs
 final: ## final: Format, lint and test the code and create the documentation.
 final: check-tools format lint docs tests
 
-format: ## format: Format the code with Black and docformatter.
-format: black docformatter
+format: ## format: Format the code with docformatter.
+format: docformatter
 
 lint: ## lint: Lint the code with ruff, Bandit, Vulture, Pylint and Mypy.
 lint: ruff bandit vulture pylint mypy
