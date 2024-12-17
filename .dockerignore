@@ -10,7 +10,6 @@ tests
 .dockerignore
 .gitattributes
 .gitignore
-config/.pylintrc
 config/.act_secrets_template
 config/.settings.io_aero_template.toml
 config/environment_dev.yml

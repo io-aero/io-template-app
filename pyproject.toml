@@ -29,7 +29,7 @@ maintainers = [
 name = "iotemplateapp"
 readme = "README.md"
 requires-python = ">=3.10"
-version = "2.0.14"
+version = "2.0.15"
 
 [project.urls]
 "Bug Tracker" = "https://github.com/io-aero/io-template-app/issues"
@@ -44,16 +44,6 @@ skips = [
     "B101",
     "B404",
     "B603",
-]
-
-[tool.black]
-include = "\\.pyi?$"
-line-length = 100
-target-version = [
-    "py310",
-    "py311",
-    "py312",
-    "py313",
 ]
 
 [tool.docformatter]
@@ -92,12 +82,12 @@ extend-ignore = [
 ]
 
 [tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "auto"
 docstring-code-format = false
 docstring-code-line-length = "dynamic"
+indent-style = "space"
+line-ending = "auto"
+quote-style = "double"
+skip-magic-trailing-comma = false
 
 [tool.ruff.lint]
 select = [

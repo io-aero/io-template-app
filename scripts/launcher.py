@@ -28,13 +28,13 @@ _LOCALE = "en_US.UTF-8"
 
 
 # -----------------------------------------------------------------------------
-# Print all settings managed by Dynaconf.
-# -----------------------------------------------------------------------------
+
 def _print_dynaconf_settings() -> None:
     """Print all settings managed by Dynaconf in a specific format.
 
     This function initializes a Dynaconf instance with specified settings files and prints each
-    configuration parameter using a specific message format.
+    configuration parameter using a specific message format. The format of the message is defined in
+    the constant glob_local.INFO_00_007.
 
     """
     # Initialize Dynaconf instance with your config settings
@@ -55,10 +55,16 @@ def _print_dynaconf_settings() -> None:
 
 
 # -----------------------------------------------------------------------------
-# Print the version number from pyproject.toml.
-# -----------------------------------------------------------------------------
+
 def _print_project_version() -> None:
-    """Print the version number from pyproject.toml."""
+    """Print the version number from pyproject.toml.
+
+    This function opens the pyproject.toml file and reads its content using the tomli library. It
+    then extracts the version information from the parsed data and prints it.
+
+    If the version information is not found, it prints a fatal message.
+
+    """
     # Open the pyproject.toml file in read mode
     with Path("pyproject.toml").open("rb") as toml_file:
         # Use tomli.load() to parse the file and store the data in a dictionary
@@ -77,8 +83,7 @@ def _print_project_version() -> None:
 
 
 # -----------------------------------------------------------------------------
-# Initialising the logging functionality.
-# -----------------------------------------------------------------------------
+
 def main(argv: list[str]) -> None:
     """Entry point.
 
@@ -117,8 +122,10 @@ def main(argv: list[str]) -> None:
 
     # Perform the processing
     if templateapp.ARG_TASK == glob_local.ARG_TASK_VERSION:
+        # Print the version number from pyproject.toml
         _print_project_version()
     else:
+        # Terminate the application with a fatal message
         io_utils.terminate_fatal(
             # FATAL.00.926 The task '{task}' is invalid
             glob_local.FATAL_00_926.replace("{task}", templateapp.ARG_TASK),
@@ -138,10 +145,8 @@ def main(argv: list[str]) -> None:
 
     logging.debug(io_glob.LOGGER_END)
 
+# -----------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------
-# Program start.
-# -----------------------------------------------------------------------------
 if __name__ == "__main__":
     # not testable
     main(sys.argv)

@@ -11,7 +11,6 @@ from iocommon import io_logger, io_settings
 
 io_logger.initialise_logger()
 
-# pylint: disable=line-too-long
 ARG_TASK = "task"
 """str: A constant key used to reference the 'task' argument in function calls and command line arguments throughout the software."""
 

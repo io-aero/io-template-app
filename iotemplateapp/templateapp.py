@@ -21,17 +21,24 @@ ARG_TASK = ""
 
 
 # -----------------------------------------------------------------------------
-# Check the command line argument: -t / --task.
-# -----------------------------------------------------------------------------
+
 def check_arg_task(args: argparse.Namespace) -> None:
     """Check the command line argument: -t / --task.
 
-    Args:
-    ----
-        args (argparse.Namespace): Command line arguments.
+    This function checks whether the command line argument 'task' matches the
+    predefined constant 'ARG_TASK_VERSION'. If not, the function terminates the
+    application with a fatal error message.
+
+    Parameters
+        args : argparse.Namespace
+            Command line arguments.
+
+    Notes
+    This function modifies the global variable 'ARG_TASK' if the command line
+    argument 'task' is valid.
 
     """
-    global ARG_TASK  # pylint: disable=global-statement
+    global ARG_TASK
 
     ARG_TASK = args.task.lower()
 
@@ -48,14 +55,25 @@ def check_arg_task(args: argparse.Namespace) -> None:
 
 
 # -----------------------------------------------------------------------------
-# Load the command line arguments into the memory.
-# -----------------------------------------------------------------------------
+
 def get_args() -> None:
-    """Load the command line arguments into the memory."""
+    """Load the command line arguments into the memory.
+
+    The following command line arguments are recognized by the IO-TEMPLATE-APP
+    application:
+
+    -e, --msexcel <msexcel>  the MS Excel file: '
+
+    -t, --task <task>       the task to execute: '
+
+    The values of the command line arguments are loaded into the memory and
+    checked.
+
+    """
     logging.debug(io_glob.LOGGER_START)
 
     parser = argparse.ArgumentParser(
-        description="Perform an IO-IO-XPA-DATA task",
+        description="Perform an IO-TEMPLATE-APP task",
         prog="launcher",
         prefix_chars="--",
         usage="%(prog)s options",
@@ -78,7 +96,7 @@ def get_args() -> None:
         "--task",
         help="the task to execute: '"
         + glob_local.ARG_TASK_VERSION
-        + "' (Show the current version of IO-IO-XPA-DATA)",
+        + "' (Show the current version of IO-TEMPLATE-APP)",
         metavar="task",
         required=True,
         type=str,
@@ -105,59 +123,75 @@ def get_args() -> None:
     logging.debug(io_glob.LOGGER_END)
 
 
-# ------------------------------------------------------------------
-# Create a progress message.
-# ------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 def progress_msg(msg: str) -> None:
     """Create a progress message.
 
+    If the verbosity level is set to true, the specified message is displayed as
+    a progress message.
+
     Args:
-    ----
         msg (str): Progress message.
+
+    Notes:
+    The verbosity level is set to true if the constant
+    `io_settings.settings.is_verbose` is set to true.
 
     """
     if io_settings.settings.is_verbose:
         io_utils.progress_msg_core(msg)
 
 
-# ------------------------------------------------------------------
-# Create a time elapsed message.
-# ------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 def progress_msg_time_elapsed(duration: int, event: str) -> None:
     """Create a time elapsed message.
 
     Args:
-    ----
-        duration (int): Time elapsed in ns.
+        duration (int): Time elapsed in nanoseconds.
         event (str): Event description.
+
+    Notes:
+    The specified event description is used to create a time elapsed message.
+    The specified time elapsed is used to calculate the time elapsed in seconds.
+    The function displays the time elapsed message.
 
     """
     io_utils.progress_msg_time_elapsed(duration, event)
 
 
-# ------------------------------------------------------------------
-# Terminate the application immediately.
-# ------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 def terminate_fatal(error_msg: str) -> None:
     """Terminate the application immediately.
 
+    If an application error occurs, the application is terminated immediately
+    with an error message.
+
     Args:
-    ----
         error_msg (str): Error message.
+
+    Notes:
+    The application is terminated by calling the function
+    `io_utils.terminate_fatal()` with the specified error message.
 
     """
     io_utils.terminate_fatal(error_msg)
 
 
-# ------------------------------------------------------------------
-# Returns the version number of the IO-XPA-DATA application.
-# ------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 def version() -> str:
-    """Return the version number of the IO-XPA-DATA application.
+    """Return the version number of the IO-TEMPLATE-APP application.
 
     Returns
-    -------
-        str: The version number of the IO-XPA-DATA application.
+        str
+            The version number of the IO-TEMPLATE-APP application.
+
+    Notes
+    The version number of the IO-TEMPLATE-APP application is stored in the
+    module `iotemplateapp.glob_local` as the constant `IO_TEMPLATE_APP_VERSION`.
 
     """
     return glob_local.IO_TEMPLATE_APP_VERSION
