@@ -9,7 +9,6 @@ This is the entry point to the library IO-COMMON.
 from iocommon.io_utils import incr_version_pyproject
 
 # -----------------------------------------------------------------------------
-# Program start.
-# -----------------------------------------------------------------------------
+
 if __name__ == "__main__":
     incr_version_pyproject()

@@ -74,7 +74,6 @@ check-tools:
 	$(call CHECK_TOOL,docformatter)
 	$(call CHECK_TOOL,docker)
 	$(call CHECK_TOOL,mypy)
-	$(call CHECK_TOOL,pylint)
 	$(call CHECK_TOOL,pytest)
 	$(call CHECK_TOOL,ruff)
 	$(call CHECK_TOOL,sphinx-apidoc)
@@ -224,8 +223,8 @@ final: check-tools format lint docs tests
 format: ## format: Format the code with docformatter.
 format: docformatter
 
-lint: ## lint: Lint the code with ruff, Bandit, Vulture, Pylint and Mypy.
-lint: ruff bandit vulture pylint mypy
+lint: ## lint: Lint the code with ruff, Bandit, Vulture, and Mypy.
+lint: ruff bandit vulture mypy
 
 ## Find typing issues with Mypy.
 mypy:
@@ -255,14 +254,6 @@ next-version:
 
 pre-push: ## pre-push: Preparatory work for the pushing process.
 pre-push: check-tools format lint tests next-version docs
-
-## Lint the code with Pylint.
-pylint:
-	@echo "Info **********  Start: Pylint ***************************************"
-	pylint --version
-	@echo "----------------------------------------------------------------------"
-	pylint --rcfile=./config/.pylintrc ${PYTHONPATH}
-	@echo "Info **********  End:   Pylint ***************************************"
 
 ## Run all tests with pytest.
 pytest:

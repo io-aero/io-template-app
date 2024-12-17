@@ -74,7 +74,7 @@ docs                      docs: Create the user documentation.
 everything                everything: Do everything pre-checkin
 final                     final: Format, lint and test the code and create the documentation.
 format                    format: Format the code with Black and docformatter.
-lint                      lint: Lint the code with ruff, Bandit, Vulture, Pylint and Mypy.
+lint                      lint: Lint the code with ruff, Bandit, Vulture, and Mypy.
 mypy-stubgen              Autogenerate stub files.
 pre-push                  pre-push: Preparatory work for the pushing process.
 pytest-ci                 Run all tests with pytest after test tool installation.
@@ -104,20 +104,14 @@ Further IO-Aero software documentation can be found under the following links.
 - [IO-AIRPLANE-SIM - Airplane Simulator](https://io-aero.github.io/io-airplane-sim/)
 - [IO-AVSTATS - Aviation Event Statistics](https://io-aero.github.io/io-avstats/) 
 - [IO-AX4-DI - Flight Data Interface](https://github.com/IO-Aero-Projects-2024/io-ax4-di/) 
-- [IO-AX4-UI - Pilot Data Interface](https://github.com/io-swiss/io-ax4-ui/) 
-- [IO-COMMON - Common Elements](https://io-aero.github.io/io-common/) 
 - [IO-DATA-SOURCES - Data Source Documentation](https://io-aero.github.io/io-data-sources/) 
 - [IO-EVAA-MAP-CREATOR - A tool to create EVAA elevation maps](https://io-aero.github.io/io-evaa-map-creator/) 
 - [IO-LANDINGSPOT - Landing spot identification](https://io-aero.github.io/io-landingspot/) 
 - [IO-LIDAR - Lidar Map Processing](https://io-aero.github.io/io-lidar/) 
 - [IO-LIDAR-DATA - Lidar Data Management](https://io-aero.github.io/io-lidar-data/)
 - [IO-MAP-APPS - IO Map Applications](https://io-aero.github.io/io-map-apps/) 
-- [IO-RASTER - Raster Map Processing](https://io-aero.github.io/io-raster/) 
+- [IO-OLYMPUS - Raster Map Processing](https://io-aero.github.io/io-olympus/) 
 - [IO-RESOURCES - All relevant books, articles, etc](https://github.com/io-aero/io-resources/) 
-- [IO-TEMPLATE-APP - Template for Application Repositories](https://io-aero.github.io/io-template-app/)
-- [IO-TEMPLATE-LIB - Template for Library Repositories](https://io-aero.github.io/io-template-lib/)
-- [IO-VECTOR - Vector Map Processing](https://io-aero.github.io/io-vector/) 
-- [IO-XPA-CORE - IO-XPA Data Processing](https://io-aero.github.io/io-xpa-core/)
 - [IO-XPI - X-Plane Interface](https://github.com/IO-Aero-Projects-2024/io-xpi/)
 
 ## Directory and File Structure of this Repository

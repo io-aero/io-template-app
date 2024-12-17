@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Tool Evaluations" href="tool_evaluations/index.html" /><link rel="prev" title="iotemplateapp" href="modules.html" />
 
     <link rel="shortcut icon" href="_static/IO-Aero_1_Favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>iotemplateapp package - IO-TEMPLATE-APP 2-0-14 documentation</title>
+        <title>iotemplateapp package - IO-TEMPLATE-APP 2-0-15 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
@@ -166,7 +166,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">IO-TEMPLATE-APP 2-0-14 documentation</div></a>
+      <a href="index.html"><div class="brand">IO-TEMPLATE-APP 2-0-15 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -433,69 +433,103 @@
 <dt class="sig sig-object py" id="iotemplateapp.templateapp.check_arg_task">
 <span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">check_arg_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Namespace</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.check_arg_task" title="Link to this definition">¶</a></dt>
 <dd><p>Check the command line argument: -t / –task.</p>
-<section id="args">
-<h3>Args:<a class="headerlink" href="#args" title="Link to this heading">¶</a></h3>
-<blockquote>
-<div><p>args (argparse.Namespace): Command line arguments.</p>
-</div></blockquote>
-</section>
+<p>This function checks whether the command line argument ‘task’ matches the
+predefined constant ‘ARG_TASK_VERSION’. If not, the function terminates the
+application with a fatal error message.</p>
+<dl class="simple">
+<dt>Parameters</dt><dd><dl class="simple">
+<dt>args<span class="classifier">argparse.Namespace</span></dt><dd><p>Command line arguments.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>Notes
+This function modifies the global variable ‘ARG_TASK’ if the command line
+argument ‘task’ is valid.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="iotemplateapp.templateapp.get_args">
 <span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">get_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.get_args" title="Link to this definition">¶</a></dt>
 <dd><p>Load the command line arguments into the memory.</p>
+<p>The following command line arguments are recognized by the IO-TEMPLATE-APP
+application:</p>
+<dl class="option-list">
+<dt><kbd><span class="option">-e</span>, <span class="option">--msexcel <var>&lt;msexcel&gt;</var></span></kbd></dt>
+<dd><p>the MS Excel file: ‘</p>
+</dd>
+<dt><kbd><span class="option">-t</span>, <span class="option">--task <var>&lt;task&gt;</var></span></kbd></dt>
+<dd><p>the task to execute: ‘</p>
+</dd>
+</dl>
+<p>The values of the command line arguments are loaded into the memory and
+checked.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="iotemplateapp.templateapp.progress_msg">
 <span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">progress_msg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.progress_msg" title="Link to this definition">¶</a></dt>
 <dd><p>Create a progress message.</p>
-<section id="id1">
-<h3>Args:<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
-<blockquote>
-<div><p>msg (str): Progress message.</p>
-</div></blockquote>
-</section>
+<p>If the verbosity level is set to true, the specified message is displayed as
+a progress message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>str</em>) – Progress message.</p>
+</dd>
+</dl>
+<p>Notes:
+The verbosity level is set to true if the constant
+<cite>io_settings.settings.is_verbose</cite> is set to true.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="iotemplateapp.templateapp.progress_msg_time_elapsed">
 <span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">progress_msg_time_elapsed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.progress_msg_time_elapsed" title="Link to this definition">¶</a></dt>
 <dd><p>Create a time elapsed message.</p>
-<section id="id2">
-<h3>Args:<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
-<blockquote>
-<div><p>duration (int): Time elapsed in ns.
-event (str): Event description.</p>
-</div></blockquote>
-</section>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>int</em>) – Time elapsed in nanoseconds.</p></li>
+<li><p><strong>event</strong> (<em>str</em>) – Event description.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Notes:
+The specified event description is used to create a time elapsed message.
+The specified time elapsed is used to calculate the time elapsed in seconds.
+The function displays the time elapsed message.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="iotemplateapp.templateapp.terminate_fatal">
 <span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">terminate_fatal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.terminate_fatal" title="Link to this definition">¶</a></dt>
 <dd><p>Terminate the application immediately.</p>
-<section id="id3">
-<h3>Args:<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
-<blockquote>
-<div><p>error_msg (str): Error message.</p>
-</div></blockquote>
-</section>
+<p>If an application error occurs, the application is terminated immediately
+with an error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>error_msg</strong> (<em>str</em>) – Error message.</p>
+</dd>
+</dl>
+<p>Notes:
+The application is terminated by calling the function
+<cite>io_utils.terminate_fatal()</cite> with the specified error message.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="iotemplateapp.templateapp.version">
 <span class="sig-prename descclassname"><span class="pre">iotemplateapp.templateapp.</span></span><span class="sig-name descname"><span class="pre">version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#iotemplateapp.templateapp.version" title="Link to this definition">¶</a></dt>
-<dd><p>Return the version number of the IO-XPA-DATA application.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>str</strong></p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>The version number of the IO-XPA-DATA application.</p>
+<dd><p>Return the version number of the IO-TEMPLATE-APP application.</p>
+<dl class="simple">
+<dt>Returns</dt><dd><dl class="simple">
+<dt>str</dt><dd><p>The version number of the IO-TEMPLATE-APP application.</p>
 </dd>
 </dl>
+</dd>
+</dl>
+<p>Notes
+The version number of the IO-TEMPLATE-APP application is stored in the
+module <cite>iotemplateapp.glob_local</cite> as the constant <cite>IO_TEMPLATE_APP_VERSION</cite>.</p>
 </dd></dl>
 
 </section>
@@ -599,7 +633,7 @@ event (str): Event description.</p>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=ff274e98"></script>
+</div><script src="_static/documentation_options.js?v=5b5fca81"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>

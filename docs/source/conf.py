@@ -13,6 +13,8 @@ REPOSITORY_NAME = "io-template-app"
 REPOSITORY_TITLE = "Template for Application Repositories"
 
 
+# -----------------------------------------------------------------------------
+
 def get_version_from_pyproject() -> str:
     """Retrieve the version from pyproject.toml if available.
 
@@ -24,17 +26,23 @@ def get_version_from_pyproject() -> str:
         str: The version string from pyproject.toml, or "unknown" if the file is not found,
         if the file is not structured as expected, or if no version is specified.
 
+    Notes:
+        The `tomli` library requires the file to be opened in binary mode. If the file is
+        opened in text mode, `tomli` will raise a `TOMLDecodeError`.
+
     """
+    # Path to the pyproject.toml file in the project root directory
     pyproject_path = Path(__file__).resolve().parent.parent.parent / "pyproject.toml"
 
     if not pyproject_path.exists():
         return "unknown"
 
     try:
+        # Open the file in binary mode, read it and parse it using `tomli`
         with pyproject_path.open("rb") as f:
             pyproject_data = tomli.load(f)
         # Retrieve the version if available, otherwise return "unknown"
-        version_local: str | None = pyproject_data.get("project", {}).get("version")
+        version_local = pyproject_data.get("project", {}).get("version")
         return version_local if version_local is not None else "unknown"  # noqa: TRY300
     except (tomli.TOMLDecodeError, OSError) as e:
         print(f"==========> Error reading pyproject.toml: {e}")  # noqa: T201
@@ -53,9 +61,8 @@ print("==========>")  # noqa: T201
 
 # -- Project information -----------------------------------------------------
 
-# pylint: disable=invalid-name
 author = "IO-Aero Team"
-copyright = "2022 - 2024, IO-Aero"  # pylint: disable=redefined-builtin # noqa: A001
+copyright = "2022 - 2024, IO-Aero"  # noqa: A001
 github_url = f"https://github.com/io-aero/{REPOSITORY_NAME}"
 project = REPOSITORY_NAME.upper()
 
@@ -69,7 +76,6 @@ else:
     release = version.replace(".", "-")
 
 todays_date = datetime.now(tz=UTC)
-# pylint: enable=invalid-name
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -111,7 +117,6 @@ extlinks = {
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-# pylint: disable=invalid-name
 html_favicon = "img/IO-Aero_1_Favicon.ico"
 html_logo = "img/IO-Aero_1_Logo.png"
 html_show_sourcelink = False
@@ -122,7 +127,6 @@ html_theme_options = {
 
 # The master toctree document.
 master_doc = "index"
-# pylint: enable=invalid-name
 
 # -- Options for PDF output --------------------------------------------------
 rinoh_documents = [
@@ -143,7 +147,9 @@ source_suffix = {
 }
 
 
-class Desc_Sig_Space(inline):  # pylint: disable=invalid-name # noqa: N801
+# -----------------------------------------------------------------------------
+
+class Desc_Sig_Space(inline):  # noqa: N801
 
     """A custom inline node for managing space in document signatures.
 

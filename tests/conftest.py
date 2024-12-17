@@ -1,10 +1,7 @@
-# pylint: disable=E1101
-
 # Copyright (c) 2022-2024 IO-Aero. All rights reserved. Use of this
 # source code is governed by the IO-Aero License, that can
 # be found in the LICENSE.md file.
 
-# pylint: disable=redefined-outer-name
 """Test Configuration and Fixtures.
 
 Setup test configuration and store fixtures.
@@ -33,7 +30,6 @@ io_logger.initialise_logger()
 # -----------------------------------------------------------------------------
 # Fixture - Before any test.
 # -----------------------------------------------------------------------------
-# pylint: disable=protected-access
 @pytest.fixture(scope="session", autouse=True)
 def _fxtr_before_any_test() -> None:
     """Fixture Factory: Before and after any test."""
